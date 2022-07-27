@@ -3,10 +3,10 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve -o",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "(sudo kill $(lsof -t -i:4200) || true) && ng serve -o & cypress open"
   },
   "private": true,
   "dependencies": {
@@ -21,6 +21,7 @@
     "cypress": "^10.3.1",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
+    "wait-on": "^6.0.1",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
