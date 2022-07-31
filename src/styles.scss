@@ -1,26 +1,29 @@
-/* You can add global styles to this file, and also import other style files */
+// Colors
 $primary-light: #359f4e;
 $primary-dark: #267037;
 
 $white-light: #fefefe;
 $white-dark: #f4f9e9;
-
 $black: #070907;
-
 $grey-dark: #4d4f4d;
 
-$font-primary: "Poppins", sans-serif;
+$red-dark: #70263a;
+$orange-dark: #703726;
+$yellow-dark: #5f7026;
 
+// Fonts
+$font-primary: "Poppins", sans-serif;
 $fs-xxl: 5.653rem;
 $fs-xl: 3.998rem;
 $fs-lrg: 2.827rem;
 $fs-med: 1.99rem;
 $fs-sml: 1.414rem;
-$space: 1rem;
+$fs-xs: 1rem;
 $fs-xs-1: 0.5rem;
 $fs-xs-2: 0.25rem;
 $fs-xs-3: 0.1rem;
 
+// Spacing
 $space-xxl: 5.653rem;
 $space-xl: 3.998rem;
 $space-lrg: 2.827rem;
@@ -31,9 +34,11 @@ $space-xs-1: 0.5rem;
 $space-xs-2: 0.25rem;
 $space-xs-3: 0.1rem;
 
+// Box Shadows
 $bs-primary: rgba(99, 99, 99, 0.7) 0px 2px 8px 0px;
 $bs-secondary: rgba(117, 117, 117, 0.2) 0px 2px 2px 0px;
 
+// Border Radius
 $br-lrg: 7px;
 $br-med: 5px;
 $br-sml: 3px;
