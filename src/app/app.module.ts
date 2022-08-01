@@ -8,6 +8,7 @@ import { SignInPageComponent } from './components/sign-in-page/sign-in-page.comp
 import { LogoComponent } from './components/ui/logo/logo.component';
 import { SignInComponent } from './components/sign-in-page/sign-in/sign-in.component';
 import { SignUpComponent } from './components/sign-in-page/sign-up/sign-up.component';
+import { FieldsetComponent } from './components/ui/fieldset/fieldset.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { SignUpComponent } from './components/sign-in-page/sign-up/sign-up.compo
     SignInPageComponent,
     LogoComponent,
     SignInComponent,
-    SignUpComponent
+    SignUpComponent,
+    FieldsetComponent
   ],
   imports: [
     BrowserModule,
