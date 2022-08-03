@@ -54,12 +54,12 @@ fieldset {
 :host ::ng-deep a:link,
 :host ::ng-deep a:visited {
   font-size: var(--fs-xs-1);
-  color: var(--primary-dark);
+  color: var(--primary-light);
   align-self: center;
   margin-top: auto;
 }
 
 :host ::ng-deep a:hover,
 :host ::ng-deep a:active {
-  color: var(--primary-light);
+  color: var(--primary-dark);
 }
