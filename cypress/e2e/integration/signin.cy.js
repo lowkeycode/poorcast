@@ -1,10 +1,10 @@
 describe('sign in page', () => {
   beforeEach(() => {
-    cy.visit('htt[s://localhost:4200')
+    cy.visit('http://localhost:4200')
   })
 
   it('displays the app title', () => {
-    cy.get('.signin__heading').should('have.text', 'poorcast');
+    cy.get('.sign-in__heading').should('have.text', 'Poorcast');
   })
 
   it('displays the signin form', () => {
