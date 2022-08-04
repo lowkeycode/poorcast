@@ -4,7 +4,7 @@ describe('sign in page', () => {
   })
 
   it('displays the app title', () => {
-    cy.get('.sign-in__heading').should('have.text', 'Poorcasting');
+    cy.get('.sign-in__heading').should('have.text', 'Poorcasted');
   })
 
   it('displays the signin form', () => {
