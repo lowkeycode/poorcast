@@ -12,7 +12,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Cypress run
+      - name: Cypress - All
         uses: cypress-io/github-action@v4
         with:
             # record: true
@@ -21,7 +21,5 @@ jobs:
             # COMMIT_INFO_MESSAGE: ${{github.event.pull_request.title}}
             # re-enable PR comment bot
             # COMMIT_INFO_SHA: ${{github.event.pull_request.head.sha}}
-          spec: cypress/e2e/integration/*.cy.js
-          build: npm run build
           start: npm start
           wait-on: 'http://localhost:4200'
