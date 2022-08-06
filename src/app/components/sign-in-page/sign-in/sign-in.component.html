@@ -12,7 +12,12 @@
       <input id="password" type="password">
     </div>
 
-    <button type="button" class="fieldset-btn" (click)="hasAccount()">Don't Have An Account Yet?</button>
+    <div class="btn-container">
+      <button class="btn btn-primary" type="submit">SIGN IN</button>
+      <button class="btn btn-primary" type="submit">GOOGLE</button>
+    </div>
+
+    <button type="button" class="btn-link" (click)="hasAccount()">Don't Have An Account Yet?</button>
     
   </app-fieldset>
 </form>
