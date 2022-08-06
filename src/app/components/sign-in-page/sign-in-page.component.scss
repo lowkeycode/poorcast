@@ -13,8 +13,16 @@
     justify-content: center;
   }
 
-  & app-sign-in {
+  & app-sign-in,
+    app-sign-up {
     padding: var(--space-xs);
+  }
+  
+  .sign-in__heading {
+    text-transform: uppercase;
+    color: var(--grey-dark);
+    font-weight: 600;
+    letter-spacing: 2px;
   }
 
   & app-logo {

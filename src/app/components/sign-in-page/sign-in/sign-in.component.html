@@ -1,17 +1,23 @@
-<h1 class="sign-in__heading">Poorcast</h1>
 
 <form>
   <app-fieldset [legend]="'Sign In'">
+
     <div>
       <label for="email">Email</label>
-      <input type="email">
+      <input id="email" type="email">
     </div>
   
     <div>
-      <label for="email">Password</label>
-      <input type="password">
+      <label for="password">Password</label>
+      <input id="password" type="password">
     </div>
 
-    <a href="#">Don't Have An Account Yet?</a>
+    <div class="btn-container">
+      <button class="btn btn-primary" type="submit">SIGN IN</button>
+      <button class="btn btn-primary" type="submit">GOOGLE</button>
+    </div>
+
+    <button type="button" class="btn-link" (click)="hasAccount()">Don't Have An Account Yet?</button>
+    
   </app-fieldset>
 </form>

@@ -6,10 +6,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./sign-in-page.component.scss']
 })
 export class SignInPageComponent implements OnInit {
+  hasAccount = true;
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  changeToSignUp(event: boolean) {
+    this.hasAccount = event;
+  }
+
+  changeToSignIn(event: boolean) {
+    this.hasAccount = event;
+  }
 }
