@@ -51,15 +51,17 @@ fieldset {
   border: 1px solid var(--primary-dark);
 }
 
-:host ::ng-deep a:link,
-:host ::ng-deep a:visited {
+:host ::ng-deep .fieldset-btn {
   font-size: var(--fs-xs-1);
   color: var(--primary-light);
   align-self: center;
   margin-top: auto;
+  cursor: pointer;
+  text-decoration: underline;
+  background: transparent;
+  border: none;
 }
 
-:host ::ng-deep a:hover,
-:host ::ng-deep a:active {
+:host ::ng-deep .fieldset-btn:hover {
   color: var(--primary-dark);
 }

@@ -1,23 +1,21 @@
-<p>sign-up works!</p>
-<h1 class="sign-in__heading">Poorcast</h1>
-
 <form>
-  <app-fieldset [legend]="'Sign In'">
+  <app-fieldset [legend]="'Sign Up'">
     <div>
       <label for="email">Email</label>
-      <input type="email">
+      <input id="email" type="email">
     </div>
   
     <div>
       <label for="password">Password</label>
-      <input type="password">
+      <input id="password" type="password">
     </div>
 
     <div>
       <label for="confirm">Confirm Password</label>
-      <input type="password">
+      <input id="confirm" type="password">
     </div>
+
+    <button type="button" class="fieldset-btn" (click)="hasAccount()">I Have An Account</button>
     
-    <a href="#">I Have An Account</a>
   </app-fieldset>
 </form>

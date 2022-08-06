@@ -1,19 +1,18 @@
-<h1 class="sign-in__heading">Poorcast</h1>
 
 <form>
   <app-fieldset [legend]="'Sign In'">
 
     <div>
       <label for="email">Email</label>
-      <input type="email">
+      <input id="email" type="email">
     </div>
   
     <div>
       <label for="password">Password</label>
-      <input type="password">
+      <input id="password" type="password">
     </div>
 
-    <a href="#">Don't Have An Account Yet?</a>
+    <button type="button" class="fieldset-btn" (click)="hasAccount()">Don't Have An Account Yet?</button>
     
   </app-fieldset>
 </form>
