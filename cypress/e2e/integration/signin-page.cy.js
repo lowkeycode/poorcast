@@ -14,4 +14,9 @@ describe('sign in page', () => {
   it('displays the raining loading logo', () => {
     cy.get('app-logo').invoke('attr', 'ng-reflect-raining').should('eq', 'true')
   })
+
+  it('displays the sign up form when the "No account yet" button is clicked', () => {
+    cy.get('.btn-link').click();
+    cy.get('app-fieldset').invoke('attr', 'ng-reflect-legend').should('eq', 'Sign Up')
+  })
 })
