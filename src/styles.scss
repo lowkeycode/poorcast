@@ -5,7 +5,7 @@
 
 --white-light: #fefefe;
 --white-dark: #f4f9e9;
---black: #070907;
+--black: rgb(7, 9, 7);
 --grey-dark: #4d4f4d;
 
 --red-dark: #70263a;
@@ -57,7 +57,7 @@ html {
   box-sizing: border-box;
   font-size: 125%;
   font-family: "Poppins", sans-serif;
-  color: --black;
+  color: var(--black);
 }
 
 h1 {
