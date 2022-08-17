@@ -1,0 +1,14 @@
+.side-nav {
+  border: 1px solid red;
+  width: 12rem;
+  padding: var(--space-sml);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: end;
+}
+
+.overview {
+  border: 1px solid blue;
+  flex: 1;
+}

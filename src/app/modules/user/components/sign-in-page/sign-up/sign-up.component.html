@@ -1,0 +1,26 @@
+<form>
+  <app-fieldset [legend]="'Sign Up'">
+    <div>
+      <label for="email">Email</label>
+      <input id="email" type="email">
+    </div>
+  
+    <div>
+      <label for="password">Password</label>
+      <input id="password" type="password">
+    </div>
+
+    <div>
+      <label for="confirm">Confirm Password</label>
+      <input id="confirm" type="password">
+    </div>
+
+    <div class="btn-container">
+      <button  class="btn btn-primary" type="submit">SIGN UP</button>
+      <button class="btn btn-primary" type="button">GOOGLE</button>
+    </div>
+
+    <button class="btn-link" type="button" (click)="hasAccount()">I Have An Account</button>
+    
+  </app-fieldset>
+</form>

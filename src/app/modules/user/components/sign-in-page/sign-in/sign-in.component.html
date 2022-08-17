@@ -1,0 +1,23 @@
+
+<form>
+  <app-fieldset [legend]="'Sign In'">
+
+    <div>
+      <label for="email">Email</label>
+      <input id="email" type="email">
+    </div>
+  
+    <div>
+      <label for="password">Password</label>
+      <input id="password" type="password">
+    </div>
+
+    <div class="btn-container">
+      <button class="btn btn-primary" type="submit" [routerLink]="['/overview']">SIGN IN</button>
+      <button class="btn btn-primary" type="button">GOOGLE</button>
+    </div>
+
+    <button type="button" class="btn-link" (click)="hasAccount()">Don't Have An Account Yet?</button>
+    
+  </app-fieldset>
+</form>
