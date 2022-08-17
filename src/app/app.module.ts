@@ -1,28 +1,25 @@
+import { OverviewModule } from './modules/overview/overview.module';
+import { UserModule } from './modules/user/user.module';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { SignInPageComponent } from './components/sign-in-page/sign-in-page.component';
-import { LogoComponent } from './components/ui/logo/logo.component';
-import { SignInComponent } from './components/sign-in-page/sign-in/sign-in.component';
-import { SignUpComponent } from './components/sign-in-page/sign-up/sign-up.component';
-import { FieldsetComponent } from './components/ui/fieldset/fieldset.component';
+
+const modules = [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    UserModule,
+]
 
 @NgModule({
   declarations: [
     AppComponent,
-    SignInPageComponent,
-    LogoComponent,
-    SignInComponent,
-    SignUpComponent,
-    FieldsetComponent
   ],
   imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule
+    ...modules
   ],
   providers: [],
   bootstrap: [AppComponent]
