@@ -2,3 +2,9 @@
   height: 75%;
   width: 70%;
 }
+
+:host ::ng-deep app-overview-page {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
