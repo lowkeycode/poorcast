@@ -6,6 +6,7 @@ import { SignInComponent } from './components/sign-in-page/sign-in/sign-in.compo
 import { SignInPageComponent } from './components/sign-in-page/sign-in-page.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { GoogleSigninDirective } from './directives/google-signin.directive';
 
 const components = [
   SignInPageComponent,
@@ -22,13 +23,15 @@ const modules = [
 
 @NgModule({
   declarations: [
-    ...components
+    ...components,
+    GoogleSigninDirective
   ],
   imports: [
     ...modules
   ],
   exports: [
-    ...components
+    ...components,
+    GoogleSigninDirective
   ]
 })
 export class UserModule { }

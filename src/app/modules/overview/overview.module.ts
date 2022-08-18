@@ -9,7 +9,7 @@ const components = [
 
 const modules = [
   CommonModule,
-  SharedModule
+  SharedModule,
 ]
 
 

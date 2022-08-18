@@ -1,5 +1,4 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-sign-in',
@@ -8,7 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class SignInComponent implements OnInit {
   @Output() onHasAccount = new EventEmitter();
 
-  constructor(private router: Router, private route: ActivatedRoute) { }
+  constructor() { }
 
   ngOnInit(): void {
   }

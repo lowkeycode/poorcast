@@ -1,5 +1,5 @@
+import { AngularFireAuth } from '@angular/fire/compat/auth'
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-overview-page',
@@ -8,13 +8,10 @@ import { Router } from '@angular/router';
 })
 export class OverviewPageComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(public afAuth: AngularFireAuth) { }
 
   ngOnInit(): void {
   }
 
-  signOut() {
-    this.router.navigate(['/signin'])
-  }
 
 }
