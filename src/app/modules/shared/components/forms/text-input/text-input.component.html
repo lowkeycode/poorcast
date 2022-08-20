@@ -1,0 +1,21 @@
+<div class="input">
+  <label for="{{type}}">{{label}}</label>
+  <input
+    id="{{type}}"
+    type="{{type}}"
+    placeholder="{{label}}"
+    autocomplete="off"
+    [ngClass]="{
+      valid: controlName?.valid && controlName?.dirty,
+      invalid: !controlName?.valid && controlName?.dirty
+    }"
+    (change)="onChange($event)"
+  />
+  <p
+    class="invalid-feedback"
+    *ngIf="controlName?.invalid && controlName?.dirty"
+  >
+    {{ feedBackMsg }}
+  </p>
+</div>
+
