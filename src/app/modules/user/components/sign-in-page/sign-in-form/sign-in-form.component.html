@@ -1,25 +1,7 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
-
   <app-fieldset [legend]="type">
-
     <!-- EMAIL -->
-    <div class="input">
-      <label for="email">Email</label>
-      <input
-        id="email"
-        type="email"
-        placeholder="Email"
-        formControlName="email"
-        autocomplete="off"
-        [ngClass]="{
-        'valid': email?.valid && (email?.dirty || email?.touched),
-        'invalid': !email?.valid && email?.dirty
-      }"
-      />
-      <p class="invalid-feedback" *ngIf="email?.invalid && email?.dirty">
-        Please enter a valid email address.
-      </p>
-    </div>
+    <app-text-input formControlName="email" [controlName]="email" [label]="'Email'" [type]="'email'" [feedBackMsg]="feedbacks['email']"></app-text-input>
 
     <!-- PASSWORD -->
     <div *ngIf="!isReset" class="input">
@@ -31,8 +13,8 @@
         formControlName="password"
         autocomplete="off"
         [ngClass]="{
-      'valid': password?.valid && password?.dirty
-    }"
+          valid: password?.valid && password?.dirty
+        }"
       />
       <p class="invalid-feedback" *ngIf="password?.invalid && password?.dirty">
         Password must be longer than 8 characters.
@@ -49,20 +31,23 @@
         formControlName="confirmPassword"
         autocomplete="off"
         [ngClass]="{
-      'valid': confirmPassword?.dirty && passwordMatches,
-      'invalid': confirmPassword?.dirty && !passwordMatches
-    }"
+          valid: confirmPassword?.dirty && passwordMatches,
+          invalid: confirmPassword?.dirty && !passwordMatches
+        }"
       />
-      <p class="invalid-feedback" *ngIf="confirmPassword?.dirty && !passwordMatches">
+      <p
+        class="invalid-feedback"
+        *ngIf="confirmPassword?.dirty && !passwordMatches"
+      >
         Password doesn't match.
       </p>
     </div>
 
     <!-- BUTTONS -->
     <div class="btn-container">
-      
       <!-- SIGN IN -->
-      <button *ngIf="!isReset"
+      <button
+        *ngIf="!isReset"
         class="btn btn-primary"
         type="submit"
         disabled="form.invalid || !passwordMatches || loading"
@@ -72,7 +57,8 @@
       </button>
 
       <!-- RESET -->
-      <button *ngIf="isReset"
+      <button
+        *ngIf="isReset"
         class="btn btn-primary"
         type="submit"
         disabled="loading"
@@ -81,18 +67,51 @@
       </button>
 
       <!-- GOOGLE -->
-      <button *ngIf="isSignIn" class="btn btn-primary" type="button" appGoogleSignin>
-        GOOGLE
+      <button
+        *ngIf="isSignIn"
+        class="btn btn-google"
+        type="button"
+        appGoogleSignin
+      >
+        GOOGLE SIGN IN
       </button>
     </div>
 
     <!-- FORM LINK NAVIGATION -->
-    <button type="button" class="btn-link" *ngIf="isSignIn"(click)="changeType('Sign Up')">Don't Have An Account Yet?</button>
+    <button
+      type="button"
+      class="btn-link"
+      *ngIf="isSignIn"
+      (click)="changeType('Sign Up')"
+    >
+      Don't Have An Account Yet?
+    </button>
 
-    <button type="button" class="btn-link" *ngIf="isSignUp"(click)="changeType('Sign In')">I Have An Account</button>
+    <button
+      type="button"
+      class="btn-link"
+      *ngIf="isSignUp"
+      (click)="changeType('Sign In')"
+    >
+      I Have An Account
+    </button>
 
-    <button type="button" class="btn-link" *ngIf="isSignUp" (click)="changeType('Reset')">Forgot Your Password?</button>
+    <button
+      type="button"
+      class="btn-link"
+      *ngIf="isSignUp"
+      (click)="changeType('Reset')"
+    >
+      Forgot Your Password?
+    </button>
 
-    <button type="button" class="btn-link" *ngIf="isReset" (click)="changeType('Sign In')">Back To Sign In</button>
+    <button
+      type="button"
+      class="btn-link"
+      *ngIf="isReset"
+      (click)="changeType('Sign In')"
+    >
+      Back To Sign In
+    </button>
   </app-fieldset>
 </form>

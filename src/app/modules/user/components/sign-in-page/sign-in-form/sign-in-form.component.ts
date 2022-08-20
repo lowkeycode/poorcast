@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 type SignInType = 'Sign In' | 'Sign Up' | 'Reset';
+interface FeedBackMsgs  {
+  [key: string]:  string;
+}
 
 @Component({
   selector: 'app-sign-in-form',
@@ -14,11 +17,15 @@ export class SignInFormComponent implements OnInit {
   isLoading = false;
   errorMessage = '';
 
+  feedbacks: FeedBackMsgs = {
+    email: 'Please enter a valid email.'
+  }
+
   constructor(private afAuth: AngularFireAuth, private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      email: new FormControl({ value: null, disabled: false }, [Validators.required, Validators.email]),
       password: ['', [Validators.required, Validators.minLength(8)]],
       confirmPassword: ['']
     })

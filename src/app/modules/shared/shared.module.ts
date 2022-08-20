@@ -1,18 +1,20 @@
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FieldsetComponent } from './components/fieldset/fieldset.component';
 import { LogoComponent } from './components/logo/logo.component';
+import { FieldsetComponent } from './components/forms/fieldset/fieldset.component';
+import { TextInputComponent } from './components/forms/text-input/text-input.component';
 
 const components = [
+  LogoComponent,
   FieldsetComponent,
-  LogoComponent
+  TextInputComponent
 ]
 
 
 @NgModule({
   declarations: [
-    ...components
+    ...components,
   ],
   imports: [
     CommonModule
