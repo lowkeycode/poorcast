@@ -1,4 +1,4 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()" #formDirective="ngForm">
+<form [formGroup]="form" (ngSubmit)="onSubmit()" >
   <app-fieldset [legend]="type">
 
     <!-- EMAIL -->
@@ -43,12 +43,12 @@
     <!-- BUTTONS -->
     <div class="btn-container">
       <!-- SIGN IN -->
+      <!-- ! THE FORM IS INVALID AND DISABLING THIS BUTTON, CREATE A FIELDSET FEEDBACK MESSAGE -->
       <button
         *ngIf="!isReset"
         class="btn btn-primary"
         type="submit"
         [disabled]="form.invalid || !passwordMatches || isLoading"
-        (click)="onClicky()"
       >
         {{ type }}
       </button>
@@ -112,5 +112,5 @@
     </button>
   </app-fieldset>
 
-  <p class="feedback">{{errorMessage}}</p>
+  <p *ngIf="errorMessage" class="feedback">{{errorMessage}}</p>
 </form>

@@ -85,10 +85,6 @@ export class SignInFormComponent implements OnInit {
 
   }
 
-  onClicky() {
-    console.log('cleeked');
-    
-  }
 
   onSubmit() {
     this.isLoading = true;
