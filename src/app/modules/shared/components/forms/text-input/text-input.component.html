@@ -6,14 +6,15 @@
     placeholder="{{label}}"
     autocomplete="off"
     [ngClass]="{
-      valid: controlName?.valid && controlName?.dirty,
-      invalid: !controlName?.valid && controlName?.dirty
+      valid: valid,
+      invalid: invalid
     }"
-    (change)="onChange($event)"
+    (input)="onInput($event)"
+    value="{{inputValue}}"
   />
   <p
     class="invalid-feedback"
-    *ngIf="controlName?.invalid && controlName?.dirty"
+    *ngIf="showFeedback"
   >
     {{ feedBackMsg }}
   </p>

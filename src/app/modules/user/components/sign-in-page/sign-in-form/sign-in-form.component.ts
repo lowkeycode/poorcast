@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { TextInputComponent } from './../../../../shared/components/forms/text-input/text-input.component';
+import { Component, OnInit, QueryList, ViewChildren, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 
@@ -12,13 +13,17 @@ interface FeedBackMsgs  {
   templateUrl: './sign-in-form.component.html',
 })
 export class SignInFormComponent implements OnInit {
+  @ViewChildren(TextInputComponent) inputs!: QueryList<TextInputComponent>;
+
   form!: FormGroup;
   type: SignInType = 'Sign In';
   isLoading = false;
   errorMessage = '';
 
   feedbacks: FeedBackMsgs = {
-    email: 'Please enter a valid email.'
+    email: 'Please enter a valid email.',
+    password: 'Password must be longer than 8 characters.',
+    confirmPassword: 'Password doesn\'t match.'
   }
 
   constructor(private afAuth: AngularFireAuth, private fb: FormBuilder) {}
@@ -26,18 +31,24 @@ export class SignInFormComponent implements OnInit {
   ngOnInit(): void {
     this.form = this.fb.group({
       email: new FormControl({ value: null, disabled: false }, [Validators.required, Validators.email]),
-      password: ['', [Validators.required, Validators.minLength(8)]],
-      confirmPassword: ['']
+      password: new FormControl({ value: null, disabled: false }, [Validators.required, Validators.minLength(8)]),
+      confirmPassword: new FormControl({ value: null, disabled: false })
     })
   }
 
   changeType(val: SignInType) {
     this.type = val;
-    this.form.reset({
-      'email': '',
-      'password': '',
-      'confirmPassword': ''
+
+    this.inputs.forEach(input => {
+      input.writeValue('');
     })
+
+    this.form.reset({
+      email: null,
+      password: null,
+      confirmPassword: null
+    })
+    
   }
 
   get isSignIn() {

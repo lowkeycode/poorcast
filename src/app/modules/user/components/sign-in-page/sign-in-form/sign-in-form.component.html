@@ -1,47 +1,44 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
+<form [formGroup]="form" (ngSubmit)="onSubmit()" #formDirective="ngForm">
   <app-fieldset [legend]="type">
+
     <!-- EMAIL -->
-    <app-text-input formControlName="email" [controlName]="email" [label]="'Email'" [type]="'email'" [feedBackMsg]="feedbacks['email']"></app-text-input>
+    <app-text-input
+      formControlName="email"
+      [controlName]="email"
+      [label]="'Email'"
+      [type]="'email'"
+      [valid]="email?.valid && email?.dirty"
+      [invalid]="!email?.valid && email?.dirty"
+      [feedBackMsg]="feedbacks['email']"
+      [showFeedback]="email?.invalid && email?.dirty"
+    ></app-text-input>
 
     <!-- PASSWORD -->
-    <div *ngIf="!isReset" class="input">
-      <label for="password">Password</label>
-      <input
-        id="password"
-        type="password"
-        placeholder="Password"
-        formControlName="password"
-        autocomplete="off"
-        [ngClass]="{
-          valid: password?.valid && password?.dirty
-        }"
-      />
-      <p class="invalid-feedback" *ngIf="password?.invalid && password?.dirty">
-        Password must be longer than 8 characters.
-      </p>
-    </div>
+    <app-text-input
+      *ngIf="!isReset"
+      formControlName="password"
+      [controlName]="password"
+      [label]="'Password'"
+      [type]="'password'"
+      [valid]="password?.valid && password?.dirty"
+      [invalid]="password?.dirty && password?.invalid"
+      [feedBackMsg]="feedbacks['password']"
+      [showFeedback]="password?.invalid && password?.dirty"
+    ></app-text-input>
+
 
     <!-- CONFIRM PASSWORD -->
-    <div *ngIf="isSignUp" class="input">
-      <label for="confirmPassword">Confirm Password</label>
-      <input
-        id="confirmPassword"
-        type="password"
-        placeholder="Confirm Password"
-        formControlName="confirmPassword"
-        autocomplete="off"
-        [ngClass]="{
-          valid: confirmPassword?.dirty && passwordMatches,
-          invalid: confirmPassword?.dirty && !passwordMatches
-        }"
-      />
-      <p
-        class="invalid-feedback"
-        *ngIf="confirmPassword?.dirty && !passwordMatches"
-      >
-        Password doesn't match.
-      </p>
-    </div>
+    <app-text-input
+    *ngIf="isSignUp"
+    formControlName="confirmPassword"
+    [controlName]="confirmPassword"
+    [label]="'Confirm Password'"
+    [type]="'password'"
+    [valid]="confirmPassword?.dirty && passwordMatches"
+    [invalid]="confirmPassword?.dirty && !passwordMatches"
+    [feedBackMsg]="feedbacks['confirmPassword']"
+    [showFeedback]="confirmPassword?.dirty && !passwordMatches"
+  ></app-text-input>
 
     <!-- BUTTONS -->
     <div class="btn-container">
@@ -115,3 +112,5 @@
     </button>
   </app-fieldset>
 </form>
+
+Form Values: {{ form.value | json }}
