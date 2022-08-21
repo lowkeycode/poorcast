@@ -2,6 +2,7 @@ import { TextInputComponent } from './../../../../shared/components/forms/text-i
 import { Component, OnInit, QueryList, ViewChildren, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { catchError, from } from 'rxjs';
 
 type SignInType = 'Sign In' | 'Sign Up' | 'Reset';
 interface FeedBackMsgs  {
@@ -84,8 +85,52 @@ export class SignInFormComponent implements OnInit {
 
   }
 
-  onSubmit() {
+  onClicky() {
+    console.log('cleeked');
+    
+  }
 
+  onSubmit() {
+    this.isLoading = true;
+
+    console.log('Submitted?');
+    
+
+    const email = this.email?.value;
+    const password = this.password?.value;
+
+    if(this.isSignIn) {
+      from(this.afAuth.signInWithEmailAndPassword(email, password)).pipe(
+        catchError(err => {
+          this.errorMessage = err;
+          throw 'Issue Signing In: ' + err;
+        })
+      ).subscribe(credential => {
+        console.log(credential);
+      });
+    }
+    if(this.isSignUp) {
+      from(this.afAuth.createUserWithEmailAndPassword(email, password)).pipe(
+        catchError(err => {
+          this.errorMessage = err;
+          throw 'Issue Creating User: ' + err;
+        })
+      ).subscribe(credential => {
+        console.log(credential);
+      });
+    }
+    if(this.isReset) {
+      from(this.afAuth.sendPasswordResetEmail(email)).pipe(
+        catchError(err => {
+          this.errorMessage = err;
+          throw 'Issue Resetting Password: ' + err;
+        })
+      ).subscribe(res => {
+        console.log(res);
+      });
+    }
+
+    this.isLoading = false;
   }
 
 }

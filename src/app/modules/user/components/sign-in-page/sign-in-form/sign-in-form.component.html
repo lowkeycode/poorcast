@@ -47,8 +47,8 @@
         *ngIf="!isReset"
         class="btn btn-primary"
         type="submit"
-        disabled="form.invalid || !passwordMatches || loading"
-        [routerLink]="['/overview']"
+        [disabled]="form.invalid || !passwordMatches || isLoading"
+        (click)="onClicky()"
       >
         {{ type }}
       </button>
@@ -58,7 +58,7 @@
         *ngIf="isReset"
         class="btn btn-primary"
         type="submit"
-        disabled="loading"
+        [disabled]="isLoading"
       >
         {{ type }}
       </button>
@@ -111,6 +111,6 @@
       Back To Sign In
     </button>
   </app-fieldset>
-</form>
 
-Form Values: {{ form.value | json }}
+  <p class="feedback">{{errorMessage}}</p>
+</form>
