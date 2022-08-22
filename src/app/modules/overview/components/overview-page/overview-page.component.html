@@ -1,5 +1,5 @@
 <div class="side-nav">
-  <button (click)="this.afAuth.signOut()" routerLink="/signin" class="btn btn-primary" type="submit" >SIGN OUT</button>
+  <button (click)="this.afAuth.signOut()" [routerLink]="['/signin']" class="btn btn-primary" type="submit" >SIGN OUT</button>
 </div>
 <div class="overview">
 

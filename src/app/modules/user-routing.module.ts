@@ -2,10 +2,11 @@ import { OverviewPageComponent } from './overview/components/overview-page/overv
 import { OverviewModule } from './overview/overview.module';
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from "@angular/core";
+import { AuthGuard } from './user/guards/auth.guard';
 
 
 const routes: Routes = [
-    { path: 'overview', component: OverviewPageComponent }
+    { path: 'overview', component: OverviewPageComponent, canActivate: [AuthGuard] }
 ]
 
 const modules = [

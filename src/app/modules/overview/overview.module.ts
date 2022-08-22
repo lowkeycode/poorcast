@@ -2,6 +2,7 @@ import { SharedModule } from './../shared/shared.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OverviewPageComponent } from './components/overview-page/overview-page.component';
+import { RouterModule } from '@angular/router';
 
 const components = [
   OverviewPageComponent
@@ -10,6 +11,7 @@ const components = [
 const modules = [
   CommonModule,
   SharedModule,
+  RouterModule
 ]
 
 

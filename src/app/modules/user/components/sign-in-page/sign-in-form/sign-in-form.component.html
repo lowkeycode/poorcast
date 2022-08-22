@@ -48,7 +48,7 @@
         *ngIf="!isReset"
         class="btn btn-primary"
         type="submit"
-        [disabled]="form.invalid || !passwordMatches || isLoading"
+        [routerLink]="['/overview']"
       >
         {{ type }}
       </button>
