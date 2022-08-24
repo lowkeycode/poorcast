@@ -2,6 +2,7 @@ import { OverviewPageComponent } from './overview/components/overview-page/overv
 import { OverviewModule } from './overview/overview.module';
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from "@angular/core";
+import { AngularFireAuthGuard } from '@angular/fire/compat/auth-guard';
 import { AuthGuard } from './user/guards/auth.guard';
 
 

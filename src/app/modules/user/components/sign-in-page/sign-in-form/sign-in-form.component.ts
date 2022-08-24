@@ -1,3 +1,4 @@
+import { AuthService } from './../../../services/auth.service';
 import { TextInputComponent } from './../../../../shared/components/forms/text-input/text-input.component';
 import { Component, OnInit, QueryList, ViewChildren, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -27,7 +28,7 @@ export class SignInFormComponent implements OnInit {
     confirmPassword: 'Password doesn\'t match.'
   }
 
-  constructor(private afAuth: AngularFireAuth, private fb: FormBuilder) {}
+  constructor(private afAuth: AngularFireAuth, private fb: FormBuilder, private pcAuth: AuthService) {}
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -89,22 +90,16 @@ export class SignInFormComponent implements OnInit {
   onSubmit() {
     this.isLoading = true;
 
-    console.log('Submitted?');
-    
-
     const email = this.email?.value;
     const password = this.password?.value;
 
     if(this.isSignIn) {
-      from(this.afAuth.signInWithEmailAndPassword(email, password)).pipe(
-        catchError(err => {
-          this.errorMessage = err;
-          throw 'Issue Signing In: ' + err;
-        })
-      ).subscribe(credential => {
-        console.log(credential);
+      this.pcAuth.signIn(email, password).subscribe(user => {
+        console.log(user);
       });
     }
+
+
     if(this.isSignUp) {
       from(this.afAuth.createUserWithEmailAndPassword(email, password)).pipe(
         catchError(err => {
@@ -115,6 +110,8 @@ export class SignInFormComponent implements OnInit {
         console.log(credential);
       });
     }
+
+
     if(this.isReset) {
       from(this.afAuth.sendPasswordResetEmail(email)).pipe(
         catchError(err => {
