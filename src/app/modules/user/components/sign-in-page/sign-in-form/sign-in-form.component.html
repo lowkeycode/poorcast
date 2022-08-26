@@ -43,7 +43,6 @@
     <!-- BUTTONS -->
     <div class="btn-container">
       <!-- SIGN IN -->
-      <!-- ! THE FORM IS INVALID AND DISABLING THIS BUTTON, CREATE A FIELDSET FEEDBACK MESSAGE -->
       <button
         *ngIf="!isReset"
         class="btn btn-primary"
@@ -69,6 +68,7 @@
         class="btn btn-google"
         type="button"
         appGoogleSignin
+        [routerLink]="['/overview']"
       >
         GOOGLE SIGN IN
       </button>

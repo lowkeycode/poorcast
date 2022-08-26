@@ -94,33 +94,28 @@ export class SignInFormComponent implements OnInit {
     const password = this.password?.value;
 
     if(this.isSignIn) {
-      this.pcAuth.signIn(email, password).subscribe(user => {
+      this.pcAuth.signInEmailPass(email, password).subscribe(user => {
         console.log(user);
       });
     }
 
-
     if(this.isSignUp) {
-      from(this.afAuth.createUserWithEmailAndPassword(email, password)).pipe(
-        catchError(err => {
-          this.errorMessage = err;
-          throw 'Issue Creating User: ' + err;
-        })
-      ).subscribe(credential => {
-        console.log(credential);
+      this.pcAuth.signUp(email, password).subscribe(user => {
+        console.log(user);
       });
     }
 
-
     if(this.isReset) {
-      from(this.afAuth.sendPasswordResetEmail(email)).pipe(
-        catchError(err => {
-          this.errorMessage = err;
-          throw 'Issue Resetting Password: ' + err;
-        })
-      ).subscribe(res => {
-        console.log(res);
-      });
+      this.pcAuth.resetPass(email).subscribe();
+      this.inputs.forEach(input => {
+        input.writeValue('');
+      })
+  
+      this.form.reset({
+        email: null,
+        password: null,
+        confirmPassword: null
+      })
     }
 
     this.isLoading = false;
