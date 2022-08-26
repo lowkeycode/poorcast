@@ -3,17 +3,26 @@ import { CommonModule } from '@angular/common';
 import { NavWrapComponent } from './components/nav-wrap.component';
 import { SideNavComponent } from './components/side-nav/side-nav.component';
 import { TopBarComponent } from './components/top-bar/top-bar.component';
+import { NavWrapRoutingModule } from './nav-wrap-routing.modules';
+import { SharedModule } from '../shared/shared.module';
 
-
+const components = [
+  NavWrapComponent,
+  SideNavComponent,
+  TopBarComponent
+]
 
 @NgModule({
   declarations: [
-    NavWrapComponent,
-    SideNavComponent,
-    TopBarComponent
+    ...components
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    NavWrapRoutingModule,
+    SharedModule
+  ],
+  exports: [
+    ...components
   ]
 })
 export class NavWrapModule { }
