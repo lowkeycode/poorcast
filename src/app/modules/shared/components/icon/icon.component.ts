@@ -14,6 +14,8 @@ export class IconComponent implements AfterViewInit {
   @Input() remSize: number;
   @Input() alt: string;
   @Input() iconName: string
+  @Input() navOpen = false;
+  @Input() label = ''
 
   sources: IconMap = {
     addCircle: '../../../../../assets/icons/add-circle-outline.svg',

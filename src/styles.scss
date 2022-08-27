@@ -20,9 +20,9 @@
 --fs-med: 1.99rem;
 --fs-sml: 1.414rem;
 --fs-xs: 1rem;
---fs-xs-1: 0.7rem;
---fs-xs-2: 0.25rem;
---fs-xs-3: 0.1rem;
+--fs-xs-1: 0.75rem;
+--fs-xs-2: 0.5rem;
+--fs-xs-3: 0.25rem;
 
 // Spacing
 --space-xxl: 5.653rem;
@@ -31,9 +31,9 @@
 --space-med: 1.99rem;
 --space-sml: 1.414rem;
 --space-xs: 1rem;
---space-xs-1: 0.5rem;
---space-xs-2: 0.25rem;
---space-xs-3: 0.1rem;
+--space-xs-1: 0.75rem;
+--space-xs-2: 0.5rem;
+--space-xs-3: 0.25rem;
 
 // Box Shadows
 --bs-primary: rgba(99, 99, 99, 0.7) 0px 2px 8px 0px;
@@ -142,7 +142,7 @@ input[type='date'] {
 
 .invalid-feedback {
   color: var(--red-dark);
-  font-size: 12px;
+  font-size: var(--fs-xs-1);
 }
 
 

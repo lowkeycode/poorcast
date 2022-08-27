@@ -1,2 +1,35 @@
 <app-logo [remSize]="4.5"></app-logo>
-<app-icon [remSize]="2" [iconName]="'addCircle'" [alt]="'Add Item Icon'"></app-icon>
+
+<div class="icons">
+  <app-icon class="icon"
+  [iconName]="'calendar'"
+  [remSize]="2"
+  [alt]="'To overview page'"
+  [label]="'Overview'"
+  [navOpen]="true"
+></app-icon>
+
+  <app-icon class="icon"
+  [iconName]="'cash'"
+  [remSize]="2"
+  [alt]="'Pay bill'"
+  [label]="'Pay bill'"
+  [navOpen]="true"
+></app-icon>
+
+  <app-icon class="icon"
+  [iconName]="'peopleCircle'"
+  [remSize]="2"
+  [alt]="'To accounts page'"
+  [label]="'Accounts'"
+  [navOpen]="true"
+></app-icon>
+
+  <app-icon class="icon"
+  [iconName]="'swap'"
+  [remSize]="2"
+  [alt]="'Transfer between accounts'"
+  [label]="'Transfer'"
+  [navOpen]="true"
+></app-icon>
+</div>

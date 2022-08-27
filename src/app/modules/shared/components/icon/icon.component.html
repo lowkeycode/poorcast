@@ -1,3 +1,4 @@
-<div #iconContainer>
+<div #iconContainer class="icon-container">
   <img src="{{sources[iconName]}}" alt="{{alt}}">
 </div>
+<p class="label" *ngIf="navOpen">{{label}}</p>

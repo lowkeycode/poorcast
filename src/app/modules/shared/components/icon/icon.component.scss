@@ -1,0 +1,12 @@
+.icon-container {
+  display: flex;
+}
+
+.label {
+  font-size: var(--fs-xs-1);
+  font-weight: 300;
+  color: var(--white-light);
+  text-transform: capitalize;
+  letter-spacing: 1px;
+  margin-left: var(--space-xs);
+}
