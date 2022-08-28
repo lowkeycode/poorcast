@@ -6,12 +6,12 @@ app-top-bar {
 }
 
 app-side-nav {
-  width: 15%;
+  width: 18%;
   background-color: var(--grey-dark);
   border-radius: 0 var(--br-lrg) var(--br-lrg) 0;
   box-shadow: var(--bs-primary);
   border-right: 1px solid var(--black);
-  padding:  var(--space-xs);
+  padding:  var(--space-xs) var(--space-sml);
 }
 
 app-top-bar {
