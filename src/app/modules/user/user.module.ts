@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 import { GoogleSigninDirective } from './directives/google-signin.directive';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NavWrapModule } from '../nav-wrap/nav-wrap.module';
+import { PagesModule } from '../pages/pages.module';
 
 const components = [
   SignInPageComponent,
@@ -28,7 +29,8 @@ const components = [
     RouterModule,
     UserRoutingModule,
     ReactiveFormsModule,
-    NavWrapModule
+    NavWrapModule,
+    PagesModule
   ],
   exports: [
     ...components,

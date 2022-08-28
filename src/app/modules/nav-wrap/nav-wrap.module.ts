@@ -3,14 +3,15 @@ import { CommonModule } from '@angular/common';
 import { NavWrapComponent } from './components/nav-wrap.component';
 import { SideNavComponent } from './components/side-nav/side-nav.component';
 import { TopBarComponent } from './components/top-bar/top-bar.component';
-import { NavWrapRoutingModule } from './nav-wrap-routing.modules';
 import { SharedModule } from '../shared/shared.module';
-import { PagesModule } from '../pages/pages.module';
+import { RouterModule } from '@angular/router';
+// import { NavWrapRoutingModule } from './nav-wrap-routing.module';
+// import { PagesModule } from '../pages/pages.module';
 
 const components = [
   NavWrapComponent,
   SideNavComponent,
-  TopBarComponent
+  TopBarComponent,
 ]
 
 
@@ -20,9 +21,10 @@ const components = [
   ],
   imports: [
     CommonModule,
-    NavWrapRoutingModule,
     SharedModule,
-    PagesModule
+    RouterModule
+    // NavWrapRoutingModule,
+    // PagesModule
   ],
   exports: [
     ...components
