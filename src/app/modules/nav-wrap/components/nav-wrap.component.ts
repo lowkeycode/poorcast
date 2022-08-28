@@ -6,10 +6,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./nav-wrap.component.scss']
 })
 export class NavWrapComponent implements OnInit {
+  pageName = 'overview';
 
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  onPageNameChange($event: string) {
+    this.pageName = $event;
   }
 
 }

@@ -5,12 +5,14 @@ import { SideNavComponent } from './components/side-nav/side-nav.component';
 import { TopBarComponent } from './components/top-bar/top-bar.component';
 import { NavWrapRoutingModule } from './nav-wrap-routing.modules';
 import { SharedModule } from '../shared/shared.module';
+import { PagesModule } from '../pages/pages.module';
 
 const components = [
   NavWrapComponent,
   SideNavComponent,
   TopBarComponent
 ]
+
 
 @NgModule({
   declarations: [
@@ -19,7 +21,8 @@ const components = [
   imports: [
     CommonModule,
     NavWrapRoutingModule,
-    SharedModule
+    SharedModule,
+    PagesModule
   ],
   exports: [
     ...components

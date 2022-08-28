@@ -1,4 +1,4 @@
-<app-side-nav></app-side-nav>
-<app-top-bar>
-  <!-- <router-outlet></router-outlet> -->
+<app-side-nav (pageNameChange)="onPageNameChange($event)"></app-side-nav>
+<app-top-bar [pageName]="pageName">
+  <router-outlet></router-outlet>
 </app-top-bar>

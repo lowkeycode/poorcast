@@ -1,0 +1,12 @@
+.container {
+  border: 1px solid red;
+  width: 100%;
+  padding: var(--space-xs) var(--space-med);
+
+  &__heading {
+    font-size: var(--fs-sml);
+    font-weight: 500;
+    text-transform: capitalize;
+  }
+}
+

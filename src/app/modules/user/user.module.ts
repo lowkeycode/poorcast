@@ -16,14 +16,6 @@ const components = [
   SignUpComponent
 ]
 
-const modules = [
-  CommonModule,
-  SharedModule,
-  RouterModule,
-  UserRoutingModule,
-  ReactiveFormsModule,
-  NavWrapModule
-]
 
 @NgModule({
   declarations: [
@@ -31,7 +23,12 @@ const modules = [
     GoogleSigninDirective
   ],
   imports: [
-    ...modules
+    CommonModule,
+    SharedModule,
+    RouterModule,
+    UserRoutingModule,
+    ReactiveFormsModule,
+    NavWrapModule
   ],
   exports: [
     ...components,

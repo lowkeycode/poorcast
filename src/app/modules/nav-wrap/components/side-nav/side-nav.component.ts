@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-side-nav',
@@ -6,10 +6,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./side-nav.component.scss']
 })
 export class SideNavComponent implements OnInit {
+  @Output() pageNameChange = new EventEmitter();
 
   constructor() { }
 
   ngOnInit(): void {
+    this.pageNameChange.emit('overview')
+  }
+
+  onPageNameChange($event: string) {
+    this.pageNameChange.emit($event)
   }
 
 }

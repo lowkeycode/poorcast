@@ -6,7 +6,7 @@ import { NavWrapModule } from '../nav-wrap/nav-wrap.module';
 
 
 const routes: Routes = [
-    { path: 'overview', component: NavWrapComponent,  }
+    { path: 'app', component: NavWrapComponent,  }
 ]
 
 const modules = [

@@ -7,6 +7,8 @@
   [alt]="'To overview page'"
   [label]="'Overview'"
   [navOpen]="true"
+  (click)="onPageNameChange('overview')"
+  [routerLink]="['/overview']"
 ></app-icon>
 
   <app-icon class="icon"
@@ -15,6 +17,8 @@
   [alt]="'Pay bill'"
   [label]="'Pay bill'"
   [navOpen]="true"
+  (click)="onPageNameChange('pay bill')"
+  [routerLink]="['/paybill']"
 ></app-icon>
 
   <app-icon class="icon"
@@ -23,6 +27,8 @@
   [alt]="'To accounts page'"
   [label]="'Accounts'"
   [navOpen]="true"
+  (click)="onPageNameChange('accounts')"
+  [routerLink]="['/accounts']"
 ></app-icon>
 
   <app-icon class="icon"
@@ -31,5 +37,7 @@
   [alt]="'Transfer between accounts'"
   [label]="'Transfer'"
   [navOpen]="true"
+  (click)="onPageNameChange('transfer')"
+  [routerLink]="['/transfer']"
 ></app-icon>
 </div>
