@@ -11,11 +11,11 @@ import { PagesModule } from '../pages/pages.module';
 
 
 const routes: Routes = [
-    { path: 'app', component: NavWrapComponent, children: [
-      {path: 'overview', component: OverviewComponent},
+    { path: 'app', component: NavWrapComponent, canActivate: [AuthGuard], children: [
+      {path: 'overview', component: OverviewComponent, pathMatch: 'full'},
       {path: 'paybill', component: PayBillComponent, pathMatch: 'full'},
-      {path: 'accounts', component: AccountsComponent},
-      {path: 'transfer', component: TransferComponent},
+      {path: 'accounts', component: AccountsComponent, pathMatch: 'full'},
+      {path: 'transfer', component: TransferComponent, pathMatch: 'full'},
     ]}
 ]
 
