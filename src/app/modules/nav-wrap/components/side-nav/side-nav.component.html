@@ -1,47 +1,49 @@
 <app-logo [remSize]="4.5"></app-logo>
 
 <div class="icons">
+  
+
+<a routerLink="overview" routerLinkActive="side-icon-active" (click)="onPageNameChange('overview')">
   <app-icon class="icon"
   [iconName]="'calendar'"
   [remSize]="2"
   [alt]="'To overview page'"
   [label]="'Overview'"
   [navOpen]="true"
-  (click)="onPageNameChange('overview')"
-  [routerLink]="['overview']"
-  routerLinkActive="side-icon-active"
-></app-icon>
+  
+  ></app-icon>
+</a>
 
+<a routerLink="paybill" routerLinkActive="side-icon-active" (click)="onPageNameChange('pay bill')">
   <app-icon class="icon"
   [iconName]="'cash'"
   [remSize]="2"
   [alt]="'Pay bill'"
   [label]="'Pay bill'"
   [navOpen]="true"
-  (click)="onPageNameChange('pay bill')"
-  [routerLink]="['paybill']"
-  routerLinkActive="side-icon-active"
-></app-icon>
+  
+  ></app-icon>
+</a>
 
+<a routerLink="accounts" routerLinkActive="side-icon-active" (click)="onPageNameChange('accounts')">
   <app-icon class="icon"
   [iconName]="'peopleCircle'"
   [remSize]="2"
   [alt]="'To accounts page'"
   [label]="'Accounts'"
   [navOpen]="true"
-  (click)="onPageNameChange('accounts')"
-  [routerLink]="['accounts']"
-  routerLinkActive="side-icon-active"
-></app-icon>
+  
+  ></app-icon>
+</a>
 
+<a routerLink="transfer" routerLinkActive="side-icon-active" (click)="onPageNameChange('transfer')">
   <app-icon class="icon"
   [iconName]="'swap'"
   [remSize]="2"
   [alt]="'Transfer between accounts'"
   [label]="'Transfer'"
   [navOpen]="true"
-  (click)="onPageNameChange('transfer')"
-  [routerLink]="['transfer']"
-  routerLinkActive="side-icon-active"
-></app-icon>
+  ></app-icon>
+</a>
+  
 </div>

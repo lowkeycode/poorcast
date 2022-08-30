@@ -9,23 +9,33 @@ app-logo {
   flex-direction: column;
   justify-content: space-around;
 
-  & app-icon {
-    width: 100%;
-    display: flex;
-    align-items: center;
+  & a {
+    text-decoration: none;
     cursor: pointer;
     padding: var(--space-xs-3) 0;
     transition: all .2s;
     border-radius: var(--br-med);
   }
 
-  & app-icon:hover {
+  & a:hover {
     background: rgba(255, 255, 255, 0.2);
   }
+
+  & app-icon {
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  
 }
 
 .side-icon-active {
   background: rgba(0, 0, 0, 0.4);
+}
+
+:host ::ng-deep .side-icon-active .label {
+  font-weight: 500;
 }
 
 
