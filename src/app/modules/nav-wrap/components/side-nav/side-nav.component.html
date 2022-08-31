@@ -1,8 +1,6 @@
 <app-logo [remSize]="4.5"></app-logo>
 
 <div class="icons">
-  
-
 <a routerLink="overview" routerLinkActive="side-icon-active" (click)="onPageNameChange('overview')">
   <app-icon class="icon"
   [iconName]="'calendar'"
@@ -45,5 +43,17 @@
   [navOpen]="true"
   ></app-icon>
 </a>
+
+<a routerLinkActive="side-icon-active">
+  <app-icon class="icon"
+  [iconName]="'settings'"
+  [remSize]="2"
+  [alt]="'Settings page'"
+  [label]="'Settings'"
+  [navOpen]="true"
+  ></app-icon>
+</a>
   
 </div>
+
+<app-user-profile></app-user-profile>
