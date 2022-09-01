@@ -1,4 +1,7 @@
 <div class="container">
   <h1 class="container__heading">{{ pageName }}</h1>
+  <a (click)="afAuth.signOut()" routerLink="/">
+    <app-icon [remSize]="1.9" [iconName]="'signout'"></app-icon>
+  </a>
 </div>
 <ng-content></ng-content>

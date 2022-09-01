@@ -26,6 +26,7 @@ export class IconComponent implements AfterViewInit {
     checkCircle: '../../../../../assets/icons/checkmark-circle-outline.svg',
     closeCircle: '../../../../../assets/icons/close-circle-outline.svg',
     ellipsisHorizontal: '../../../../../assets/icons/ellipsis-horizontal-circle-outline.svg',
+    signout: '../../../../../assets/icons/log-out-outline.svg',
     peopleCircle: '../../../../../assets/icons/people-circle-outline.svg',
     personAdd: '../../../../../assets/icons/person-add-outline.svg',
     personRemove: '../../../../../assets/icons/person-remove-outline.svg',

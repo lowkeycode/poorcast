@@ -1,7 +1,6 @@
 import { UserRoutingModule } from './user-routing.module';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from './../shared/shared.module';
-import { SignUpComponent } from './components/sign-in-page/sign-up/sign-up.component';
 import { SignInFormComponent } from './components/sign-in-page/sign-in-form/sign-in-form.component';
 import { SignInPageComponent } from './components/sign-in-page/sign-in-page.component';
 import { NgModule } from '@angular/core';
@@ -14,7 +13,6 @@ import { PagesModule } from '../pages/pages.module';
 const components = [
   SignInPageComponent,
   SignInFormComponent,
-  SignUpComponent
 ]
 
 
