@@ -1,4 +1,5 @@
-import { Component, forwardRef, Input } from '@angular/core';
+import { animate, style, transition, trigger } from '@angular/animations';
+import { Component, Input } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
@@ -8,7 +9,27 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     provide: NG_VALUE_ACCESSOR,
     useExisting: TextInputComponent,
     multi: true
-  }]
+  }],
+  animations: [
+    trigger('feedback', [
+      transition(':enter', [
+        style({
+          height: '0.1rem',
+          opacity: 0.5
+        }),
+        animate('.15s', style({
+          height: '1.5rem',
+          opacity: 1
+        }))
+      ]),
+      transition(':leave', [
+        animate('.15s', style({
+          height: '0',
+          opacity: 0
+        }))
+      ])
+    ])
+  ]
 })
 export class TextInputComponent implements ControlValueAccessor {
   @Input() controlName: any;
@@ -28,10 +49,6 @@ export class TextInputComponent implements ControlValueAccessor {
   constructor() {}
 
   writeValue(value: string): void {
-    // console.log(value);
-    // console.log(this);
-    
-    
    this.inputValue = value;   
   }
 

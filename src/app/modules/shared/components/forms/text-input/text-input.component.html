@@ -1,20 +1,17 @@
-<div class="input">
+<div class="input" >
   <label for="{{type}}">{{label}}</label>
   <input
     id="{{type}}"
     type="{{type}}"
     placeholder="{{label}}"
     autocomplete="off"
-    [ngClass]="{
-      valid: valid,
-      invalid: invalid
-    }"
     (input)="onInput($event)"
     value="{{inputValue}}"
   />
   <p
     class="invalid-feedback"
     *ngIf="showFeedback"
+    @feedback
   >
     {{ feedBackMsg }}
   </p>
