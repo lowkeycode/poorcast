@@ -1,19 +1,16 @@
-<div class="input" >
-  <label for="{{type}}">{{label}}</label>
+<div class="input">
+  <label for="{{ type }}">{{ label }}</label>
   <input
-    id="{{type}}"
-    type="{{type}}"
-    placeholder="{{label}}"
+    id="{{ type }}"
+    type="{{ type }}"
+    placeholder="{{ label }}"
     autocomplete="off"
     (input)="onInput($event)"
-    value="{{inputValue}}"
+    value="{{ inputValue }}"
   />
-  <p
-    class="invalid-feedback"
-    *ngIf="showFeedback"
-    @feedback
-  >
-    {{ feedBackMsg }}
-  </p>
+  <div @container *ngIf="showFeedback">
+    <p class="invalid-feedback" >
+      {{ feedBackMsg }}
+    </p>
+  </div>
 </div>
-

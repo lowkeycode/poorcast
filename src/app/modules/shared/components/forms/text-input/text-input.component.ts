@@ -11,24 +11,24 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     multi: true
   }],
   animations: [
-    trigger('feedback', [
+    trigger('container', [
       transition(':enter', [
         style({
-          height: '0.1rem',
-          opacity: 0.5
+          maxHeight: 0,
+          opacity: 0
         }),
         animate('.15s', style({
-          height: '1.5rem',
+          maxHeight: '3rem',
           opacity: 1
         }))
       ]),
       transition(':leave', [
         animate('.15s', style({
-          height: '0',
+          maxHeight: 0,
           opacity: 0
         }))
       ])
-    ])
+    ]),
   ]
 })
 export class TextInputComponent implements ControlValueAccessor {
