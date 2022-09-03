@@ -1,21 +1,16 @@
 import { Component, Input, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { IconAbstract } from 'src/app/models/classes/icon.abstract';
+import { IconMap } from 'src/app/models/types';
 
-type IconMap = {
-  [key: string]: string
-}
 
 @Component({
   selector: 'app-icon',
-  templateUrl: './icon.component.html',
-  styleUrls: ['./icon.component.scss']
+  templateUrl: './side-nav-icon.component.html',
+  styleUrls: ['./side-nav-icon.component.scss']
 })
-export class IconComponent implements AfterViewInit {
+export class SideNavIconComponent extends IconAbstract implements AfterViewInit {
   @ViewChild('iconContainer') iconContainer: ElementRef;
-  @Input() remSize: number;
-  @Input() alt: string;
-  @Input() iconName: string
-  @Input() navOpen = false;
-  @Input() label = '';
+  @Input() navOpen = true;
 
   sources: IconMap = {
     addCircle: '../../../../../assets/icons/add-circle-outline.svg',
@@ -30,15 +25,18 @@ export class IconComponent implements AfterViewInit {
     peopleCircle: '../../../../../assets/icons/people-circle-outline.svg',
     personAdd: '../../../../../assets/icons/person-add-outline.svg',
     personRemove: '../../../../../assets/icons/person-remove-outline.svg',
+    minimize: '../../../../../assets/icons/remove-outline.svg',
     settings: '../../../../../assets/icons/settings-outline.svg',
     swap: '../../../../../assets/icons/swap-horizontal-outline.svg',
   }
 
-  constructor() { }
+  constructor() {
+    super()
+   }
 
-  ngAfterViewInit(): void {
-      this.iconContainer.nativeElement.style.width = `${this.remSize}rem`;
-      this.iconContainer.nativeElement.style.height = `${this.remSize}rem`;
-  }
+   ngAfterViewInit(): void {
+    this.iconContainer.nativeElement.style.width = `${this.remSize}rem`;
+    this.iconContainer.nativeElement.style.height = `${this.remSize}rem`;
+}
 
 }

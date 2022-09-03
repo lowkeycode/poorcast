@@ -12,6 +12,7 @@ app-side-nav {
   box-shadow: var(--bs-primary);
   border-right: 1px solid var(--black);
   padding:  var(--space-xs) var(--space-sml);
+  position: relative;
 }
 
 app-top-bar {

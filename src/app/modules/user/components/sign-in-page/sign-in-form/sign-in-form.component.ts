@@ -2,13 +2,9 @@ import { AuthService } from './../../../services/auth.service';
 import { TextInputComponent } from './../../../../shared/components/forms/text-input/text-input.component';
 import { Component, OnInit, QueryList, ViewChildren, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { catchError, from } from 'rxjs';
+import { SignInType } from 'src/app/models/types';
+import { FeedBackMsgs } from 'src/app/models/interfaces';
 
-type SignInType = 'Sign In' | 'Sign Up' | 'Reset';
-interface FeedBackMsgs  {
-  [key: string]:  string;
-}
 
 @Component({
   selector: 'app-sign-in-form',
@@ -28,7 +24,7 @@ export class SignInFormComponent implements OnInit {
     confirmPassword: 'Password doesn\'t match.'
   }
 
-  constructor(private afAuth: AngularFireAuth, private fb: FormBuilder, private pcAuth: AuthService) {}
+  constructor(private fb: FormBuilder, private pcAuth: AuthService) {}
 
   ngOnInit(): void {
     this.form = this.fb.group({
