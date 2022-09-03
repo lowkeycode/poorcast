@@ -5,16 +5,17 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './nav-wrap.component.html',
   styleUrls: ['./nav-wrap.component.scss']
 })
-export class NavWrapComponent implements OnInit {
+export class NavWrapComponent {
   pageName = 'overview';
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
+  isNavOpen = true;
 
   onPageNameChange($event: string) {
     this.pageName = $event;
   }
 
+  updateNavStyles($event: boolean) {
+    this.isNavOpen = $event;
+    console.log($event);
+    
+  }
 }

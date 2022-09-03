@@ -13,8 +13,14 @@ app-side-nav {
   border-right: 1px solid var(--black);
   padding:  var(--space-xs) var(--space-sml);
   position: relative;
+  transition: all .2s;
+}
+
+.nav-closed {
+  width: 9%;
 }
 
 app-top-bar {
   flex: 1;
 }
+

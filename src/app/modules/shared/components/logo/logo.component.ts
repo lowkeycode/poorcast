@@ -6,13 +6,9 @@ import { Component, Input, ViewChild, ElementRef, AfterViewInit } from '@angular
   styleUrls: ['./logo.component.scss']
 })
 export class LogoComponent implements AfterViewInit {
-
   @ViewChild('logoContainer') container: ElementRef;
   @Input() raining = false;
   @Input() remSize: number;
-
-
-  constructor() { }
 
   ngAfterViewInit(): void {
       this.container.nativeElement.style.width = `${this.remSize}rem`;

@@ -1,3 +1,18 @@
+app-solo-icon {
+  align-self: end;
+  transition: all .2s;
+
+  &:hover {
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: var(--br-med);
+  }
+}
+
+.center {
+  align-self: center;
+}
+
 app-logo {
   margin-bottom: var(--space-med);
 }
@@ -16,7 +31,7 @@ app-logo {
     transition: all .2s;
     border-radius: var(--br-med);
 
-    & app-icon {
+    & app-side-nav-icon {
       width: 100%;
       display: flex;
       align-items: center;

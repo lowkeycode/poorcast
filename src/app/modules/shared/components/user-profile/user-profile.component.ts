@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { map, Subscription } from 'rxjs';
 import { AuthService } from 'src/app/modules/user/services/auth.service';
 
@@ -8,6 +8,7 @@ import { AuthService } from 'src/app/modules/user/services/auth.service';
   styleUrls: ['./user-profile.component.scss']
 })
 export class UserProfileComponent implements OnInit, OnDestroy {
+  @Input() showInfo = true;
   user: any;
   userName: any;
   email: any;
@@ -18,11 +19,10 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   constructor(private pcAuth: AuthService ) { }
 
   ngOnInit(): void {
-
     const sub = this.pcAuth.user.pipe(map(user => {
-      this.userName = user.user.displayName;
-      this.email = user.user.email;
-      this.profilePic = user.user.photoURL
+      this.userName = user?.user?.displayName;
+      this.email = user?.user?.email;
+      this.profilePic = user?.user?.photoURL
     })).subscribe();
 
     this.subs.add(sub);

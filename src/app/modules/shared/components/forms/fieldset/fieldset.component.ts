@@ -5,12 +5,7 @@ import { Component, OnInit, Input } from '@angular/core';
   templateUrl: './fieldset.component.html',
   styleUrls: ['./fieldset.component.scss']
 })
-export class FieldsetComponent implements OnInit {
+export class FieldsetComponent  {
   @Input() legend = '';
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }

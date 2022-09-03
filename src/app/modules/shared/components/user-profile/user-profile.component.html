@@ -4,7 +4,7 @@
     <img *ngIf="!profilePic" src="https://picsum.photos/200" alt="User profile picture" referrerpolicy="no-referrer">
   </div>
   <div class="profile__info">
-    <p *ngIf="userName"class="profile__info--name">{{ userName }}</p>
-    <p class="profile__info--email">{{ email }}</p>
+    <p *ngIf="showInfo" class="profile__info--name">{{ userName }}</p>
+    <p *ngIf="showInfo" class="profile__info--email">{{ email }}</p>
   </div>
 </div>
