@@ -14,7 +14,7 @@ export const sources: IconMap = {
   personAdd: '../../../../../assets/icons/person-add-outline.svg',
   personRemove: '../../../../../assets/icons/person-remove-outline.svg',
   minimize: '../../../../../assets/icons/remove-outline.svg',
-  menu: '../../../../../assets/icons/list-outline.svg',
+  menu: '../../../../../assets/icons/chevron-forward-outline.svg',
   settings: '../../../../../assets/icons/settings-outline.svg',
   swap: '../../../../../assets/icons/swap-horizontal-outline.svg',
 }
