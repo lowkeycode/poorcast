@@ -1,0 +1,16 @@
+<div class="input">
+  <label for="{{ type }}">{{ label }}</label>
+  <input
+    id="{{ type }}"
+    type="{{ type }}"
+    placeholder="{{ label }}"
+    autocomplete="off"
+    (input)="onInput($event)"
+    value="{{ inputValue }}"
+  />
+  <div @container *ngIf="showFeedback">
+    <p class="invalid-feedback" data-test="feedback-message">
+      {{ feedBackMsg }}
+    </p>
+  </div>
+</div>
