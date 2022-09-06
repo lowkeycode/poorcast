@@ -1,33 +1,28 @@
-import { UserModule } from './modules/user/user.module';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { environment } from 'src/environments/environment';
-import { AngularFireModule } from '@angular/fire/compat';
-import { AngularFirestoreModule } from '@angular/fire/compat/firestore'
-import { AngularFireAuthModule } from '@angular/fire/compat/auth'
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
-const modules = [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    UserModule,
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule,
-    AngularFireAuthModule
-]
+import { SignInPageComponent } from './components/sign-in-page/sign-in-page.component';
+import { LogoComponent } from './components/ui/logo/logo.component';
+import { SignInComponent } from './components/sign-in-page/sign-in/sign-in.component';
+import { SignUpComponent } from './components/sign-in-page/sign-up/sign-up.component';
+import { FieldsetComponent } from './components/ui/fieldset/fieldset.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    SignInPageComponent,
+    LogoComponent,
+    SignInComponent,
+    SignUpComponent,
+    FieldsetComponent
   ],
   imports: [
-    ...modules,
-
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,0 +1,8 @@
+<div class="sign-in-page">
+    <div>
+      <h1 class="sign-in__heading">Poorcast</h1>
+      <app-sign-in (onHasAccount)="changeToSignUp($event)" *ngIf="hasAccount"></app-sign-in>
+      <app-sign-up (onHasAccount)="changeToSignIn($event)" *ngIf="!hasAccount"></app-sign-up>
+    </div>
+    <app-logo [raining]="true"></app-logo>
+</div>

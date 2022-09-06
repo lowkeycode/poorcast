@@ -1,6 +1,0 @@
-<app-side-nav (pageNameChange)="onPageNameChange($event)" (isNavOpen)="updateNavStyles($event)" [ngClass]="{
-  'nav-closed': !isNavOpen
-}"></app-side-nav>
-<app-top-bar [pageName]="pageName">
-  <router-outlet></router-outlet>
-</app-top-bar>
