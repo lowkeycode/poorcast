@@ -5,7 +5,7 @@
 
 --white-light: #fefefe;
 --white-dark: #f4f9e9;
---black: rgb(7, 9, 7);
+--black: #070907;
 --grey-dark: #4d4f4d;
 
 --red-dark: #70263a;
@@ -20,9 +20,9 @@
 --fs-med: 1.99rem;
 --fs-sml: 1.414rem;
 --fs-xs: 1rem;
---fs-xs-1: 0.7rem;
---fs-xs-2: 0.25rem;
---fs-xs-3: 0.1rem;
+--fs-xs-1: 0.75rem;
+--fs-xs-2: 0.5rem;
+--fs-xs-3: 0.25rem;
 
 // Spacing
 --space-xxl: 5.653rem;
@@ -31,9 +31,9 @@
 --space-med: 1.99rem;
 --space-sml: 1.414rem;
 --space-xs: 1rem;
---space-xs-1: 0.5rem;
---space-xs-2: 0.25rem;
---space-xs-3: 0.1rem;
+--space-xs-1: 0.75rem;
+--space-xs-2: 0.5rem;
+--space-xs-3: 0.25rem;
 
 // Box Shadows
 --bs-primary: rgba(99, 99, 99, 0.7) 0px 2px 8px 0px;
@@ -72,3 +72,89 @@ app-root {
   height: 100vh;
   min-height: min-content;
 }
+
+// Forms
+
+fieldset {
+  min-height: 20rem;
+  max-height: min-content;
+  width: 14rem;
+  border: 1px solid var(--grey-dark);
+  border-radius: var(--br-med);
+  padding: var(--space-xs-1);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+legend {
+  margin: 0 auto;
+  font-weight: 300;
+}
+
+label {
+  display: block;
+  letter-spacing: 1px;
+}
+
+input,
+select {
+  font-family: var(--font-primary);
+  width: 100%;
+  height: 1.6rem;
+  border-radius: var(--br-sml);
+  outline: 1px solid transparent;
+  border: 1px solid var(--grey-dark);
+  padding-left: 8px;
+  color: var(--grey-dark);
+  transition: all .2s;
+}
+
+input::placeholder {
+  color: inherit;
+  transition: all .1s;
+}
+
+input:focus::placeholder {
+  color: transparent;
+}
+
+select:focus {
+  outline: 1px solid var(--primary-dark);
+  border: 1px solid var(--primary-dark);
+}
+
+input[type='date'] {
+  font-family: var(--font-primary);
+}
+
+// Form Validation
+
+.valid {
+  outline: 1px solid var(--primary-dark);
+  border: 1px solid var(--primary-dark);
+}
+
+.invalid {
+  outline: 1px solid var(--red-dark);
+  border: 1px solid var(--red-dark);
+}
+
+.invalid-feedback {
+  color: var(--red-dark);
+  font-size: var(--fs-xs-1);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

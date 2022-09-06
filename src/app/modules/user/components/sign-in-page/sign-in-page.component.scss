@@ -1,0 +1,32 @@
+.sign-in-page {
+  height: 100%;
+  border-radius: var(--br-lrg);
+  box-shadow: var(--bs-primary);
+  overflow: hidden;
+  display: flex;
+
+  & > * {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  & app-sign-in,
+    app-sign-up {
+    padding: var(--space-xs);
+  }
+  
+  & .sign-in__heading {
+    text-transform: uppercase;
+    color: var(--grey-dark);
+    font-weight: 600;
+    letter-spacing: 2px;
+  }
+
+  & app-logo {
+    background-color: var(--grey-dark);
+  }
+}
+

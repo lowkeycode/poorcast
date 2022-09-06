@@ -1,0 +1,38 @@
+.profile {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__img {
+    height: 3rem;
+    width: 3rem;
+    border: 2px solid var(--white-light);
+    border-radius: 50%;
+    box-shadow: var(--bs-primary);
+    margin-bottom: var(--space-xs-3);
+
+
+    & img {
+      height: 100%;
+      width: 100%;
+      display: block;
+      object-fit: cover;
+      border-radius: 50%;
+
+    }
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: var(--fs-xs-1);
+    color: var(--white-light);
+
+    &--name,
+    &--email {
+    margin: var(--space-xs-4) 0;
+    }
+  }
+}

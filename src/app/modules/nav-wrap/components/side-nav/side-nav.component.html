@@ -1,0 +1,60 @@
+<app-solo-icon [iconName]="isOpen ? 'minimize' : 'menu'" [remSize]="1.25" (click)="toggleSideNavOpen()" [ngClass]="{
+  'center': !isOpen
+}"></app-solo-icon>
+
+<app-logo [remSize]="4.75"></app-logo>
+
+<div class="icons">
+<a routerLink="overview" routerLinkActive="side-icon-active" (click)="onPageNameChange('overview')">
+  <app-side-nav-icon class="icon"
+  [iconName]="'calendar'"
+  [remSize]="1.75"
+  [alt]="'To overview page'"
+  [label]="'Overview'"
+  [navOpen]="isOpen"
+  ></app-side-nav-icon>
+</a>
+
+<a routerLink="paybill" routerLinkActive="side-icon-active" (click)="onPageNameChange('pay bill')">
+  <app-side-nav-icon class="icon"
+  [iconName]="'cash'"
+  [remSize]="1.75"
+  [alt]="'Pay bill'"
+  [label]="'Pay bill'"
+  [navOpen]="isOpen"
+  ></app-side-nav-icon>
+</a>
+
+<a routerLink="accounts" routerLinkActive="side-icon-active" (click)="onPageNameChange('accounts')">
+  <app-side-nav-icon class="icon"
+  [iconName]="'peopleCircle'"
+  [remSize]="1.75"
+  [alt]="'To accounts page'"
+  [label]="'Accounts'"
+  [navOpen]="isOpen"
+  ></app-side-nav-icon>
+</a>
+
+<a routerLink="transfer" routerLinkActive="side-icon-active" (click)="onPageNameChange('transfer')">
+  <app-side-nav-icon class="icon"
+  [iconName]="'swap'"
+  [remSize]="1.75"
+  [alt]="'Transfer between accounts'"
+  [label]="'Transfer'"
+  [navOpen]="isOpen"
+  ></app-side-nav-icon>
+</a>
+
+<a routerLinkActive="side-icon-active">
+  <app-side-nav-icon class="icon"
+  [iconName]="'settings'"
+  [remSize]="1.75"
+  [alt]="'Settings page'"
+  [label]="'Settings'"
+  [navOpen]="isOpen"
+  ></app-side-nav-icon>
+</a>
+  
+</div>
+
+<app-user-profile [showInfo]="isOpen"></app-user-profile>
