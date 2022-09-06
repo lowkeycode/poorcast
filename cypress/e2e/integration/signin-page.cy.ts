@@ -1,4 +1,4 @@
-describe('Signin Page', () => {
+describe('Sign in Page', () => {
   beforeEach(() => {
     cy.visit('http://localhost:4200')
   })
