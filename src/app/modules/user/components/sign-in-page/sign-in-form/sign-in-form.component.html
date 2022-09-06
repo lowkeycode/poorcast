@@ -11,6 +11,7 @@
       [invalid]="!email?.valid && email?.dirty"
       [feedBackMsg]="feedbacks['email']"
       [showFeedback]="email?.invalid && email?.dirty"
+      data-test="email"
     ></app-text-input>
 
     <!-- PASSWORD -->
@@ -24,6 +25,7 @@
       [invalid]="password?.dirty && password?.invalid"
       [feedBackMsg]="feedbacks['password']"
       [showFeedback]="password?.invalid && password?.dirty"
+      data-test="password"
     ></app-text-input>
 
 
@@ -38,6 +40,7 @@
     [invalid]="confirmPassword?.dirty && !passwordMatches"
     [feedBackMsg]="feedbacks['confirmPassword']"
     [showFeedback]="confirmPassword?.dirty && !passwordMatches"
+    data-test="password-confirm"
   ></app-text-input>
 
     <!-- BUTTONS -->
@@ -80,6 +83,7 @@
       class="btn-link"
       *ngIf="isSignIn"
       (click)="changeType('Sign Up')"
+      data-test="new-account"
     >
       Don't Have An Account Yet?
     </button>
@@ -89,6 +93,7 @@
       class="btn-link"
       *ngIf="isSignUp"
       (click)="changeType('Sign In')"
+      data-test="existing-account"
     >
       I Have An Account
     </button>
@@ -98,6 +103,7 @@
       class="btn-link"
       *ngIf="isSignUp"
       (click)="changeType('Reset')"
+      data-test="password-reset"
     >
       Forgot Your Password?
     </button>

@@ -9,7 +9,7 @@
     value="{{ inputValue }}"
   />
   <div @container *ngIf="showFeedback">
-    <p class="invalid-feedback" >
+    <p class="invalid-feedback" data-test="feedback-message">
       {{ feedBackMsg }}
     </p>
   </div>
