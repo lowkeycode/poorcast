@@ -31,3 +31,9 @@
   }
 }
 
+:host ::ng-deep > :nth-child(3) {
+  border: 1px solid red;
+  width: 100%;
+  height: 2000px;
+}
+
