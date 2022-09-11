@@ -1,10 +1,10 @@
 <div class="profile">
-  <div class="profile__img">
+  <div class="profile__img" >
     <img *ngIf="profilePic" src="{{ profilePic }}" alt="User profile picture" referrerpolicy="no-referrer">
-    <img *ngIf="!profilePic" src="https://picsum.photos/200" alt="User profile picture" referrerpolicy="no-referrer">
+    <img *ngIf="!profilePic" src="https://picsum.photos/200" alt="User profile picture" referrerpolicy="no-referrer" data-test="profile-img">
   </div>
   <div class="profile__info">
     <p *ngIf="showInfo" class="profile__info--name">{{ userName }}</p>
-    <p *ngIf="showInfo" class="profile__info--email">{{ email }}</p>
+    <p *ngIf="showInfo" class="profile__info--email" data-test="profile-email">{{ email }}</p>
   </div>
 </div>
