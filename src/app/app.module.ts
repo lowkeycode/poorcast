@@ -10,6 +10,7 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { SharedModule } from './modules/shared/shared.module';
 
 const modules = [
     BrowserModule,
@@ -18,7 +19,8 @@ const modules = [
     UserModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    SharedModule
 ]
 
 @NgModule({

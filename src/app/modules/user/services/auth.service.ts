@@ -2,6 +2,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import firebase from 'firebase/compat/app';
 import { Injectable } from '@angular/core';
 import { catchError, from, tap, Subject, BehaviorSubject } from 'rxjs';
+import { ErrorService } from '../../shared/services/error.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class AuthService {
   loggedInState$ = new Subject<boolean>();
   loggedIn = this.loggedInState$.asObservable();
 
-  constructor(private afAuth : AngularFireAuth) { }
+  constructor(private afAuth : AngularFireAuth, private errorService: ErrorService) { }
 
   signInEmailPass(email: string, password: string) {
     
@@ -23,6 +24,7 @@ export class AuthService {
         this.loggedInState$.next(!!user);
       }),
       catchError(err => {
+        this.errorService.onError(err);
         throw 'Issue Signing In: ' + err;
       })
     );
@@ -39,7 +41,9 @@ export class AuthService {
       
       this.loggedInState$.next(!!user);
     })).pipe(
-      catchError(err => {
+      catchError((err: Error) => {
+        err
+        this.errorService.onError(err);
         throw 'Issue Signing Into Google: ' + err;
       })
     )
@@ -51,7 +55,8 @@ export class AuthService {
         this.userState$.next(user);
         this.loggedInState$.next(!!user);
       }),
-      catchError(err => {
+      catchError((err: Error) => {
+        this.errorService.onError(err);
         throw 'Issue Creating User: ' + err;
       })
     );
@@ -63,7 +68,8 @@ export class AuthService {
         console.log('Password Reset Sent.');
         
       }),
-      catchError(err => {
+      catchError((err: Error) => {
+        this.errorService.onError(err);
         throw 'Issue Resetting Password: ' + err;
       })
     )

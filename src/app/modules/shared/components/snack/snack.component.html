@@ -1,0 +1,8 @@
+<div class="overlay" (click)="onClose()" data-test="overlay"></div>
+<div class="snack" data-test="snack">
+  <app-logo [remSize]="4" [raining]="true"></app-logo>
+  <div class="snack__message">
+    <p class="snack__message--text" data-test="snack-message">{{ message }}</p>
+  </div>
+  <app-solo-icon [remSize]="2" [iconName]="'closeCircle'" (click)="onClose()"></app-solo-icon>
+</div>
