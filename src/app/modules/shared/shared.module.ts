@@ -6,13 +6,15 @@ import { FieldsetComponent } from './components/forms/fieldset/fieldset.componen
 import { TextInputComponent } from './components/forms/text-input/text-input.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { SoloIconComponent } from './components/solo-icon/solo-icon.component';
+import { SnackComponent } from './components/snack/snack.component';
 
 const components = [
   LogoComponent,
   FieldsetComponent,
   TextInputComponent,
   UserProfileComponent,
-  SoloIconComponent
+  SoloIconComponent,
+  SnackComponent
 ]
 
 
@@ -20,6 +22,7 @@ const components = [
   declarations: [
     ...components,
     UserProfileComponent,
+    SnackComponent,
   ],
   imports: [
     CommonModule

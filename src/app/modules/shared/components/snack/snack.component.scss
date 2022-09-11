@@ -1,0 +1,42 @@
+.overlay {
+  z-index: 1;
+  position: fixed;
+  background: rgba(7, 9, 7, 0.2);
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+.snack {
+  z-index: 2;
+  position: fixed;
+  background: var(--yellow-dark);
+  top: 12vh;
+  transform: translateY(-50%);
+  left: 20vw;
+  width: 60vw;
+  border: 2px solid var(--black);
+  border-radius: var(--br-lrg);
+  box-shadow: var(--bs-primary-light);
+  display: flex;
+  align-items: center;
+  padding: var(--space-xs);
+
+  &__message {
+    padding: 0 var(--space-xs-2);
+
+    &--text {
+      font-size: var(--fs-xs);
+      color: var(--white-dark);
+      font-weight: 300;
+    }
+  }
+
+  & app-solo-icon {
+    position: absolute;
+    top: var(--space-xs-3);
+    right: var(--space-xs-3);
+    cursor: pointer;
+  }
+}
