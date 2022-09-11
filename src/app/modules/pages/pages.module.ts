@@ -4,17 +4,19 @@ import { OverviewComponent } from './overview/overview.component';
 import { PayBillComponent } from './pay-bill/pay-bill.component';
 import { AccountsComponent } from './accounts/accounts.component';
 import { TransferComponent } from './transfer/transfer.component';
+import { SettingsComponent } from './settings/settings.component';
 
 const components = [
   OverviewComponent,
   PayBillComponent,
   AccountsComponent,
-  TransferComponent
+  TransferComponent,
+  SettingsComponent
 ]
 
 @NgModule({
   declarations: [
-    ...components
+    ...components,
   ],
   imports: [
     CommonModule

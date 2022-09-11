@@ -1,6 +1,6 @@
 <app-solo-icon [iconName]="isOpen ? 'minimize' : 'menu'" [remSize]="1.25" (click)="toggleSideNavOpen()" [ngClass]="{
   'center': !isOpen
-}"></app-solo-icon>
+}" data-test="open-close"></app-solo-icon>
 
 <app-logo [remSize]="4.75"></app-logo>
 
@@ -45,7 +45,7 @@
   ></app-side-nav-icon>
 </a>
 
-<a routerLinkActive="side-icon-active">
+<a routerLink="settings" routerLinkActive="side-icon-active" (click)="onPageNameChange('settings')">
   <app-side-nav-icon class="icon"
   [iconName]="'settings'"
   [remSize]="1.75"
