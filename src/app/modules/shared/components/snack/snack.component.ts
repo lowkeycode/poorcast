@@ -1,17 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { ErrorService } from '../../services/error.service';
 
 @Component({
   selector: 'app-snack',
   templateUrl: './snack.component.html',
   styleUrls: ['./snack.component.scss']
 })
-export class SnackComponent implements OnInit {
-  message = '';
-  error = null;
+export class SnackComponent {
+  @Input() message: string;
 
-  constructor() { }
+  constructor(public errorService: ErrorService) { }
 
-  ngOnInit(): void {
+  onClose() {
+    this.errorService.onReset()
   }
-
 }

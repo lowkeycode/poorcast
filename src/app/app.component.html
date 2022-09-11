@@ -1,2 +1,2 @@
 <router-outlet></router-outlet>
-<app-snack></app-snack>
+<app-snack [message]="error.message.toString()" *ngIf="error"></app-snack>

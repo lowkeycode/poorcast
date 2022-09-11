@@ -11,7 +11,7 @@
 .snack {
   z-index: 2;
   position: fixed;
-  background: var(--yellow-dark);
+  background: var(--red-dark);
   top: 12vh;
   transform: translateY(-50%);
   left: 20vw;
@@ -25,11 +25,13 @@
 
   &__message {
     padding: 0 var(--space-xs-2);
+    flex: 1;
 
     &--text {
       font-size: var(--fs-xs);
       color: var(--white-dark);
       font-weight: 300;
+      text-align: center;
     }
   }
 
