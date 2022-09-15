@@ -7,6 +7,7 @@ import { TextInputComponent } from './components/forms/text-input/text-input.com
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { SoloIconComponent } from './components/solo-icon/solo-icon.component';
 import { SnackComponent } from './components/snack/snack.component';
+import { IconDirective } from './directives/icon.directive';
 
 const components = [
   LogoComponent,
@@ -14,21 +15,25 @@ const components = [
   TextInputComponent,
   UserProfileComponent,
   SoloIconComponent,
-  SnackComponent
+  SnackComponent,
+]
+
+const directives = [
+  IconDirective,
 ]
 
 
 @NgModule({
   declarations: [
     ...components,
-    UserProfileComponent,
-    SnackComponent,
+    ...directives
   ],
   imports: [
     CommonModule
   ],
   exports: [
-    ...components
+    ...components,
+    ...directives
   ]
 })
 export class SharedModule { }

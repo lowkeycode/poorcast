@@ -15,11 +15,15 @@ const components = [
   SignInFormComponent,
 ]
 
+const directives = [
+  GoogleSigninDirective
+]
+
 
 @NgModule({
   declarations: [
     ...components,
-    GoogleSigninDirective
+    ...directives
   ],
   imports: [
     CommonModule,
@@ -32,7 +36,7 @@ const components = [
   ],
   exports: [
     ...components,
-    GoogleSigninDirective
+    ...directives
   ]
 })
 export class UserModule { }
