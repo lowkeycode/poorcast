@@ -21,19 +21,7 @@ import { sources } from 'src/app/models/data';
     ])
   ] 
 })
-export class SideNavIconComponent extends IconAbstract implements AfterViewInit {
-  @ViewChild('iconContainer') iconContainer: ElementRef;
+export class SideNavIconComponent extends IconAbstract {
   @Input() navOpen: boolean;
-
   sources = sources;
-
-  constructor() {
-    super()
-   }
-
-   ngAfterViewInit(): void {
-    this.iconContainer.nativeElement.style.width = `${this.remSize}rem`;
-    this.iconContainer.nativeElement.style.height = `${this.remSize}rem`;
-  }
-
 }

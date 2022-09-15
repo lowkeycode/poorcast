@@ -12,7 +12,7 @@ import { PagesModule } from '../pages/pages.module';
 
 
 const routes: Routes = [
-    { path: 'app', component: NavWrapComponent, canActivate: [AuthGuard],  children: [
+    { path: 'app', component: NavWrapComponent, children: [
       {path: 'overview', component: OverviewComponent, pathMatch: 'full'},
       {path: 'paybill', component: PayBillComponent, pathMatch: 'full'},
       {path: 'accounts', component: AccountsComponent, pathMatch: 'full'},
