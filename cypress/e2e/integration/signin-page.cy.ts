@@ -5,7 +5,7 @@ describe('Sign in Page', () => {
 
   context('Page Loaded', () => {
     it('displays the app title', () => {
-      cy.get('.sign-in__heading').should('exist').contains('Poorcast');
+      cy.getByData('sign-in-heading').should('exist').contains('Poorcast');
     })
     
     it('displays the raining loading logo', () => {

@@ -1,24 +1,24 @@
+.logo-container,
 svg {
   height: inherit;
   width: inherit;
 }
 
 .rain-slow {
-  animation: rain .56s infinite linear;
+  animation: rain 0.56s infinite linear;
 }
 
 .rain-med-slow {
-  animation: rain .5s infinite linear;
+  animation: rain 0.5s infinite linear;
 }
 
 .rain-med {
-  animation: rain .46s infinite linear;
+  animation: rain 0.46s infinite linear;
 }
 
 .rain-fast {
-  animation: rain .41s infinite linear;
+  animation: rain 0.41s infinite linear;
 }
-
 
 @keyframes rain {
   0% {
