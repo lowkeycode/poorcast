@@ -1,4 +1,4 @@
-.sign-in-page {
+.sign-in {
   height: 100%;
   border-radius: var(--br-lrg);
   box-shadow: var(--bs-primary);
@@ -13,19 +13,16 @@
     justify-content: center;
   }
 
-  & app-sign-in,
-    app-sign-up {
-    padding: var(--space-xs);
-  }
-  
-  & .sign-in__heading {
-    text-transform: uppercase;
-    color: var(--grey-dark);
-    font-weight: 600;
-    letter-spacing: 2px;
+  &__form {
+    &--heading {
+      text-transform: uppercase;
+      color: var(--grey-dark);
+      font-weight: 600;
+      letter-spacing: 2px;
+    }
   }
 
-  & app-logo {
+  &__logo {
     background-color: var(--grey-dark);
   }
 }
