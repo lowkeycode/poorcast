@@ -1,3 +1,5 @@
+@import '../styles.scss';
+
 :host ::ng-deep app-sign-in-page {
   height: 85vh;
   width: 80%;
@@ -8,4 +10,10 @@
   height: 100%;
   width: 100%;
   position: relative;
+}
+
+@media only screen and (max-width: $bp-xl) {
+  :host ::ng-deep app-sign-in-page {
+    height: min-content;
+  }
 }

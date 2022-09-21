@@ -52,6 +52,10 @@
 --br-sml: 3px;
 }
 
+// Breakpoints
+$bp-xxl: 75em; /* 1200px */
+$bp-xl: 56.25em; /* 900px */
+
 *,
 *::before,
 *::after {
@@ -153,13 +157,6 @@ input[type='date'] {
   color: var(--red-dark);
   font-size: var(--fs-xs-1);
 }
-
-
-
-
-
-
-
 
 
 
