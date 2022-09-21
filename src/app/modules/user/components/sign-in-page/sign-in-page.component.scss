@@ -1,9 +1,13 @@
+@import '../../../../../styles.scss';
+
 .sign-in {
   height: 100%;
   border-radius: var(--br-lrg);
   box-shadow: var(--bs-primary);
   overflow: hidden;
   display: flex;
+
+
 
   & > * {
     width: 100%;
@@ -14,16 +18,56 @@
   }
 
   &__form {
-    &--heading {
+    &--heading-container {
       text-transform: uppercase;
       color: var(--grey-dark);
       font-weight: 600;
       letter-spacing: 2px;
+
+      & app-logo {
+        display: none;
+      }
     }
   }
 
   &__logo {
     background-color: var(--grey-dark);
+
   }
 }
 
+
+@media only screen and (max-width: $bp-xl) {
+  .sign-in {
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: var(--bs-primary);
+
+    & .sign-in__form--heading-container {
+      width: 100%;
+      height: 9rem;
+      background: var(--grey-dark);
+      color: var(--white-light);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      & .sign-in__form--heading-container-text {
+        letter-spacing: 2px;
+      }
+
+      & app-logo {
+        display: block;
+      }
+    }
+
+    & app-sign-in-form {
+      padding: var(--space-xs);
+    }
+
+    & .sign-in__logo {
+      display: none;
+    }
+  }
+}
