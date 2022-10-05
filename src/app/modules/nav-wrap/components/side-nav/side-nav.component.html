@@ -7,36 +7,18 @@
 <div class="icons">
 <a routerLink="overview" routerLinkActive="side-icon-active" (click)="onPageNameChange('overview')">
   <app-side-nav-icon class="icon"
-  [iconName]="'calendar'"
+  [iconName]="'chart'"
   [alt]="'To overview page'"
   [label]="'Overview'"
   [navOpen]="isOpen"
   ></app-side-nav-icon>
 </a>
 
-<a routerLink="paybill" routerLinkActive="side-icon-active" (click)="onPageNameChange('pay bill')">
+<a routerLink="bills" routerLinkActive="side-icon-active" (click)="onPageNameChange('bills')">
   <app-side-nav-icon class="icon"
-  [iconName]="'cash'"
-  [alt]="'Pay bill'"
-  [label]="'Pay bill'"
-  [navOpen]="isOpen"
-  ></app-side-nav-icon>
-</a>
-
-<a routerLink="accounts" routerLinkActive="side-icon-active" (click)="onPageNameChange('accounts')">
-  <app-side-nav-icon class="icon"
-  [iconName]="'peopleCircle'"
-  [alt]="'To accounts page'"
-  [label]="'Accounts'"
-  [navOpen]="isOpen"
-  ></app-side-nav-icon>
-</a>
-
-<a routerLink="transfer" routerLinkActive="side-icon-active" (click)="onPageNameChange('transfer')">
-  <app-side-nav-icon class="icon"
-  [iconName]="'swap'"
-  [alt]="'Transfer between accounts'"
-  [label]="'Transfer'"
+  [iconName]="'calendar'"
+  [alt]="'To bills page'"
+  [label]="'Bills'"
   [navOpen]="isOpen"
   ></app-side-nav-icon>
 </a>
