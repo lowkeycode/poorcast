@@ -1,7 +1,7 @@
 import { AuthService } from './../../../services/auth.service';
 import { TextInputComponent } from './../../../../shared/components/forms/text-input/text-input.component';
 import { Component, OnInit, QueryList, ViewChildren, AfterViewInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { SignInType } from 'src/app/models/types';
 import { FeedBackMsgs } from 'src/app/models/interfaces';
 
@@ -13,7 +13,7 @@ import { FeedBackMsgs } from 'src/app/models/interfaces';
 export class SignInFormComponent implements OnInit {
   @ViewChildren(TextInputComponent) inputs!: QueryList<TextInputComponent>;
 
-  form!: FormGroup;
+  form!: UntypedFormGroup;
   type: SignInType = 'Sign In';
   isLoading = false;
   errorMessage = '';
@@ -24,13 +24,13 @@ export class SignInFormComponent implements OnInit {
     confirmPassword: 'Password doesn\'t match.'
   }
 
-  constructor(private fb: FormBuilder, private pcAuth: AuthService) {}
+  constructor(private fb: UntypedFormBuilder, private pcAuth: AuthService) {}
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      email: new FormControl({ value: null, disabled: false }, [Validators.required, Validators.email]),
-      password: new FormControl({ value: null, disabled: false }, [Validators.required, Validators.minLength(8)]),
-      confirmPassword: new FormControl({ value: null, disabled: false })
+      email: new UntypedFormControl({ value: null, disabled: false }, [Validators.required, Validators.email]),
+      password: new UntypedFormControl({ value: null, disabled: false }, [Validators.required, Validators.minLength(8)]),
+      confirmPassword: new UntypedFormControl({ value: null, disabled: false })
     })
   }
 
