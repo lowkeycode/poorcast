@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { OverviewComponent } from './overview/overview.component';
 import { BillsComponent } from './bills/bills.component';
 import { SettingsComponent } from './settings/settings.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+
 
 const components = [
   OverviewComponent,
@@ -15,7 +17,8 @@ const components = [
     ...components,
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    NgxChartsModule
   ],
   exports: [
     ...components
