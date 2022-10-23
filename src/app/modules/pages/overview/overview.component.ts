@@ -1,22 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
+let testData = [
+  {
+    "name": "Income",
+    "value": '8940000'
+  },
+  {
+    "name": "Spending",
+    "value": '5000000'
+  },
 
-const testData = [
-  {
-    "name": "Germany",
-    "value": 8940000
-  },
-  {
-    "name": "USA",
-    "value": 5000000
-  },
-  {
-    "name": "France",
-    "value": 7200000
-  },
-    {
-    "name": "UK",
-    "value": 6200000
-  }
 ]
 
 @Component({
@@ -26,24 +18,54 @@ const testData = [
 })
 export class OverviewComponent implements OnInit {
 
-  data: any[] = testData;
+  data: any[] = [
+    {
+      "name": "Rent",
+      "value": '1650'
+    },
+    {
+      "name": "Entertainment",
+      "value": '452'
+    },
+    {
+      "name": "Travel",
+      "value": '214'
+    },
+    {
+      "name": "Groceries",
+      "value": '273'
+    },
+  
+  ];
   view = [700, 400] as any;
 
   // options
   gradient: boolean = true;
   showLegend: boolean = true;
   showLabels: boolean = true;
-  isDoughnut: boolean = false;
 
   colorScheme: any = {
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
   };
 
   constructor() {
-    Object.assign(this, { testData });
-   }
+  }
 
   ngOnInit(): void {
+  }
+
+
+  formatValue = (val) => {
+    let formatter = new Intl.NumberFormat('en-us', {
+      style: 'currency',
+      currency: 'CAD',
+      currencyDisplay: "narrowSymbol"
+    });
+    return formatter.format(val)
+  }
+
+  formatPercentage = (value) => {
+    return Math.round(value)    
   }
 
   onSelect(data): void {
