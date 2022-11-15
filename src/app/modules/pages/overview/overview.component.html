@@ -10,4 +10,33 @@
   (activate)="onActivate($event)"
   (deactivate)="onDeactivate($event)"
   >
+  <ng-template #tooltipTemplate let-model="model">
+    <!-- fields are series/name/value -->
+    <div class="tt">
+      {{ model.name }} {{ model.value | currency }}
+    </div>
+  </ng-template>
 </ngx-charts-advanced-pie-chart>
+
+<div class="overall">
+  <div class="net">
+    <p>Net Worth</p>
+    <span>$5000</span>
+  </div>
+  <div class="credit-cards">
+    <p>Credit Cards</p>
+    <span>$5000</span>
+  </div>
+  <div class="total-avail">
+    <p>Total Available</p>
+    <span>$5000</span>
+  </div>
+  <div class="loans">
+    <p>Loans</p>
+    <span>$5000</span>
+  </div>
+</div>
+
+<div class="accts">
+
+</div>

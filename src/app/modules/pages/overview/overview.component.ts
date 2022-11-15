@@ -37,7 +37,7 @@ export class OverviewComponent implements OnInit {
     },
   
   ];
-  view = [700, 400] as any;
+  view = [900, 200] as any;
 
   // options
   gradient: boolean = true;
@@ -45,7 +45,7 @@ export class OverviewComponent implements OnInit {
   showLabels: boolean = true;
 
   colorScheme: any = {
-    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
+    domain: ['#353535', '#9E9E9E', '#096C1F', '#EEEEEE', '#CACACA', '#313131']
   };
 
   constructor() {

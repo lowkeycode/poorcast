@@ -1,0 +1,26 @@
+.tt {
+  padding: var(--space-xs-2);
+}
+
+.overall {
+  margin: var(--space-med) 0 var(--space-sml) 0;
+  width: 65%;
+  display: flex;
+  flex-wrap: wrap;
+
+  & > * {
+    width: 50%;
+    display: flex;
+    padding: var(--space-xs-2) ;
+
+    & p {
+      font-weight: 300;
+      margin-right: var(--space-xs);
+      width: 50%;
+    }
+
+    & span {
+      font-weight: 500;
+    }
+  }
+}
