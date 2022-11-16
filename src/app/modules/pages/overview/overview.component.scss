@@ -11,10 +11,11 @@
   & > * {
     width: 50%;
     display: flex;
-    padding: var(--space-xs-2) ;
+    gap: var(--space-xs-1);
 
     & p {
       font-weight: 300;
+      font-size: var(--fs-xs);
       margin-right: var(--space-xs);
       width: 50%;
     }
@@ -23,4 +24,13 @@
       font-weight: 500;
     }
   }
+}
+
+.accts {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+  gap: var(--space-med);
+  padding: var(--space-med) 0;
 }

@@ -17,6 +17,7 @@ const components = [
   UserProfileComponent,
   SoloIconComponent,
   SnackComponent,
+  AcctCardComponent
 ]
 
 const directives = [
@@ -28,7 +29,6 @@ const directives = [
   declarations: [
     ...components,
     ...directives,
-    AcctCardComponent
   ],
   imports: [
     CommonModule
