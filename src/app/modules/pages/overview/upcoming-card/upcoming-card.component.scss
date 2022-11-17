@@ -1,0 +1,17 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: var(--space-xs-1);
+  border-radius: var(--br-lrg);
+  box-shadow: var(--bs-secondary);
+  background: var(--white-dark);
+
+  & > * {
+    font-size: var(--fs-xs-1);
+  }
+
+ 
+}

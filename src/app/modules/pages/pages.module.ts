@@ -5,17 +5,19 @@ import { OverviewComponent } from './overview/overview.component';
 import { BillsComponent } from './bills/bills.component';
 import { SettingsComponent } from './settings/settings.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { UpcomingCardComponent } from './overview/upcoming-card/upcoming-card.component';
 
 
 const components = [
   OverviewComponent,
   BillsComponent,
-  SettingsComponent
+  SettingsComponent,
 ]
 
 @NgModule({
   declarations: [
     ...components,
+    UpcomingCardComponent,
   ],
   imports: [
     CommonModule,

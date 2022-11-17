@@ -34,3 +34,13 @@
   gap: var(--space-med);
   padding: var(--space-med) 0;
 }
+
+.upcoming {
+  width: 80%;
+  padding: var(--space-med) 0 var(--space-xl) 0;
+
+  & app-upcoming-card {
+    width: 5rem;
+    height: 5rem;
+  }
+}
