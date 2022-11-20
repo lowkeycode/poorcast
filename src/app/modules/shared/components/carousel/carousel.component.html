@@ -1,10 +1,17 @@
 <div class="container">
-  <div *ngIf="title">
-    <h3 class="caro-title">{{ title }}</h3>
-  </div>
   <div class="caro-body">
-    <app-solo-icon>Left</app-solo-icon>
-    <ng-content></ng-content>
-    <app-solo-icon>Right</app-solo-icon>
+    <div *ngIf="title">
+      <h3 class="caro-title">{{ title }}</h3>
+    </div>
+    <div class="caro-body__items">
+      <div *ngIf="listLength >=6" class="fade-left"></div>
+      <ng-content></ng-content>
+      <div *ngIf="listLength >=5" class="fade-right"></div>
+    </div>
+    <div class="caro-body__controls">
+      <p>Controls</p>
+      <app-solo-icon>Left</app-solo-icon>
+      <app-solo-icon>Right</app-solo-icon>
+    </div>
   </div>
 </div>

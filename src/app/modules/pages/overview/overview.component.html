@@ -9,12 +9,10 @@
   (select)="onSelect($event)"
   (activate)="onActivate($event)"
   (deactivate)="onDeactivate($event)"
-  >
+>
   <ng-template #tooltipTemplate let-model="model">
     <!-- fields are series/name/value -->
-    <div class="tt">
-      {{ model.name }} {{ model.value | currency }}
-    </div>
+    <div class="tt">{{ model.name }} {{ model.value | currency }}</div>
   </ng-template>
 </ngx-charts-advanced-pie-chart>
 
@@ -44,11 +42,11 @@
 </div>
 
 <div class="upcoming">
-  <app-carousel title="Upcoming Payments">
-    <app-upcoming-card></app-upcoming-card>
-    <app-upcoming-card></app-upcoming-card>
-    <app-upcoming-card></app-upcoming-card>
-    <app-upcoming-card></app-upcoming-card>
-    <app-upcoming-card></app-upcoming-card>
+  <app-carousel title="Upcoming Payments" [listLength]="list.length">
+    <app-upcoming-card
+      *ngFor="let card of list; let i = index"
+      [index]="i"
+      [listLength]="list.length"
+    ></app-upcoming-card>
   </app-carousel>
 </div>

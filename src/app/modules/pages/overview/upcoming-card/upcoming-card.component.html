@@ -1,4 +1,8 @@
-<div class="card">
+<div class="card" [ngClass]="{
+  'test': true,
+  'fade-left': listLength >= 5 && index === 0,
+  'fade-right': listLength >= 5 && index === listLength - 1
+}">
   <div class="card__title">Rent</div>
   <div class="card__amount">{{ 155 | currency }}</div>
   <div class="card__date">09/12/22</div>

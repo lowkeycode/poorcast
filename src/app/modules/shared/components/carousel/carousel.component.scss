@@ -19,5 +19,29 @@
 .caro-body {
   flex: 1;
   display: flex;
-  justify-content: space-evenly;
+  flex-direction: column;
+  align-items: center;
+
+  &__items {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+  }
+}
+
+.fade-left {
+  position: absolute;
+  width: 5rem;
+  height: 100%;
+  left: 0;
+  background: linear-gradient(to right, rgba(251,251,251,1), 50px, rgba(136,139,136,0));
+}
+
+.fade-right {
+  position: absolute;
+  width: 5rem;
+  height: 100%;
+  right: 0;
+  background: linear-gradient(to left, rgba(251,251,251,1), 70px, rgba(136,139,136,0));
 }

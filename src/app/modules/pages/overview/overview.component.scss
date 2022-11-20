@@ -36,7 +36,7 @@
 }
 
 .upcoming {
-  width: 80%;
+  width: 70%;
   padding: var(--space-med) 0 var(--space-xl) 0;
 
   & app-upcoming-card {
@@ -44,3 +44,4 @@
     height: 5rem;
   }
 }
+

@@ -6,12 +6,9 @@
   height: 100%;
   padding: var(--space-xs-1);
   border-radius: var(--br-lrg);
-  box-shadow: var(--bs-secondary);
-  background: var(--white-dark);
+  background: var(--grey-light);
 
   & > * {
     font-size: var(--fs-xs-1);
   }
-
- 
 }

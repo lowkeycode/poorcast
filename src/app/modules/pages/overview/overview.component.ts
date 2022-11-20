@@ -48,6 +48,8 @@ export class OverviewComponent implements OnInit {
     domain: ['#353535', '#9E9E9E', '#096C1F', '#EEEEEE', '#CACACA', '#313131']
   };
 
+  list = [1,2,3,4,5];
+
   constructor() {
   }
 
