@@ -42,7 +42,7 @@
 </div>
 
 <div class="upcoming">
-  <app-carousel title="Upcoming Payments" [listLength]="list.length">
+  <app-carousel [title]="'Upcoming Payments'" [listLength]="list.length">
     <app-upcoming-card
       *ngFor="let card of list; let i = index"
       [index]="i"

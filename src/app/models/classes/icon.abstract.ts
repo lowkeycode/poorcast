@@ -1,7 +1,7 @@
 import { Directive, Input } from "@angular/core";
 
 @Directive({
-  selector: 'pc-icon-abstract'
+  selector: 'app-icon-abstract'
 })
 export abstract class IconAbstract {
   @Input() iconName: string;
