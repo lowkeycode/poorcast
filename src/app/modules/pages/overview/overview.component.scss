@@ -36,12 +36,31 @@
 }
 
 .upcoming {
-  width: 70%;
   padding: var(--space-med) 0 var(--space-xl) 0;
+  border: 1px solid red;
+  display: flex;
+  overflow: hidden;
 
-  & app-upcoming-card {
+  & .caro-item {
     width: 5rem;
     height: 5rem;
+    background: var(--grey-light);
+    border: 1px solid var(--grey-dark);
+    border-radius: var(--br-lrg);
+  }
+
+  & app-carousel {
+    border: 1px solid blue;
+    width: 41rem;
+    overflow: hidden;
+    display: flex;
+    gap: 2rem;
+    position: relative;
+
+    & app-upcoming-card {
+      position: absolute;
+      top: 50%;
+    }
   }
 }
 

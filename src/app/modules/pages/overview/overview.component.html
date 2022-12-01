@@ -42,11 +42,12 @@
 </div>
 
 <div class="upcoming">
-  <app-carousel [title]="'Upcoming Payments'" [listLength]="list.length">
+  <app-carousel [title]="'Upcoming Payments'" [list]="list">
     <app-upcoming-card
-      *ngFor="let card of list; let i = index"
-      [index]="i"
-      [listLength]="list.length"
+      #caroItem
+      class="caro-item"
+      *ngFor="let card of list"
+      [card]="card"
     ></app-upcoming-card>
   </app-carousel>
 </div>

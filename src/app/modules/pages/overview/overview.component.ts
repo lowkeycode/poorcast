@@ -48,7 +48,53 @@ export class OverviewComponent implements OnInit {
     domain: ['#353535', '#9E9E9E', '#096C1F', '#EEEEEE', '#CACACA', '#313131']
   };
 
-  list = [1,2,3,4,5];
+  list = [
+    {
+      billName: 'Rent',
+      billAmount: 1700,
+      billDate: Date.now()
+    },
+    {
+      billName: 'Groceries',
+      billAmount: 300,
+      billDate: Date.now()
+    },
+    {
+      billName: 'Dining Out',
+      billAmount: 100,
+      billDate: Date.now()
+    },
+    {
+      billName: 'Internet',
+      billAmount: 130,
+      billDate: Date.now()
+    },
+    {
+      billName: 'Electric',
+      billAmount: 200,
+      billDate: Date.now()
+    },
+    {
+      billName: 'Phone',
+      billAmount: 80,
+      billDate: Date.now()
+    },
+    {
+      billName: 'Heat',
+      billAmount: 95,
+      billDate: Date.now()
+    },
+    {
+      billName: 'Water',
+      billAmount: 60,
+      billDate: Date.now()
+    },
+    {
+      billName: 'Transit',
+      billAmount: 40,
+      billDate: Date.now()
+    },
+  ]
 
   constructor() {
   }

@@ -5,11 +5,17 @@
   justify-content: center;
   height: 100%;
   padding: var(--space-xs-1);
-  border-radius: var(--br-lrg);
-  background: var(--grey-light);
-  border: 1px solid var(--grey-dark);
+  text-align: center;
 
-  & > * {
+  & > *:not(:last-child) {
     font-size: var(--fs-xs-1);
+  }
+
+  &__amount {
+    font-weight: 500;
+  }
+
+  &__date {
+    font-size: var(--fs-xs-2);
   }
 }
