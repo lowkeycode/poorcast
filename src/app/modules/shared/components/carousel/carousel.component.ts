@@ -23,24 +23,16 @@ export class CarouselComponent implements OnInit, AfterContentInit {
 
 
   ngAfterContentInit() {
-    this.caroItems.forEach((item, i) => {
-      this.renderer.setStyle(item.nativeElement, 'transform', `translateX(${i * 100}%)`);
-    })
-    // this.clipListEnds();
+    this.clipListEnds();
   }
 
   clipListEnds() {
-    // this.caroItems.forEach((item, i) => {
-    //   if (i < this.listStartIndex || i > this.listEndIndex) {
-    //     this.renderer.setStyle(item.nativeElement, 'display', 'none');
-    //   } else {
-    //     this.renderer.setStyle(item.nativeElement, 'display', 'block');
-    //   }
-    // })
-
-
     this.caroItems.forEach((item, i) => {
-      this.renderer.setStyle(item.nativeElement, 'transform', `translateX(${i * 100}%)`);
+      if (i < this.listStartIndex || i > this.listEndIndex) {
+        this.renderer.setStyle(item.nativeElement, 'display', 'none');
+      } else {
+        this.renderer.setStyle(item.nativeElement, 'display', 'block');
+      }
     })
   }
 

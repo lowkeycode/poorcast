@@ -37,7 +37,8 @@
 
 .upcoming {
   padding: var(--space-med) 0;
-  // overflow: hidden;
+  width: 65%;
+
 
   & app-carousel {
     width: 41rem;
