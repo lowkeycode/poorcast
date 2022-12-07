@@ -21,7 +21,6 @@ export class CarouselComponent implements OnInit, AfterContentInit {
     console.log(this.listEndIndex);
   }
 
-  // ! Think about increasing the width of each card component to add a padding that will act as space, then increase the side fader widths to incorporate & maybe then translateX will work without much adjustment. Then incorporate into animations
 
   ngAfterContentInit() {
     this.caroItems.forEach((item, i) => {
@@ -31,12 +30,17 @@ export class CarouselComponent implements OnInit, AfterContentInit {
   }
 
   clipListEnds() {
+    // this.caroItems.forEach((item, i) => {
+    //   if (i < this.listStartIndex || i > this.listEndIndex) {
+    //     this.renderer.setStyle(item.nativeElement, 'display', 'none');
+    //   } else {
+    //     this.renderer.setStyle(item.nativeElement, 'display', 'block');
+    //   }
+    // })
+
+
     this.caroItems.forEach((item, i) => {
-      if (i < this.listStartIndex || i > this.listEndIndex) {
-        this.renderer.setStyle(item.nativeElement, 'display', 'none');
-      } else {
-        this.renderer.setStyle(item.nativeElement, 'display', 'block');
-      }
+      this.renderer.setStyle(item.nativeElement, 'transform', `translateX(${i * 100}%)`);
     })
   }
 
@@ -44,7 +48,7 @@ export class CarouselComponent implements OnInit, AfterContentInit {
     if (this.listStartIndex === 0) return;
     this.listStartIndex--;
     this.listEndIndex--;
-    // this.clipListEnds();
+    this.clipListEnds();
     console.log(this.listStartIndex);
     console.log(this.listEndIndex);
     
@@ -54,7 +58,7 @@ export class CarouselComponent implements OnInit, AfterContentInit {
     if (this.listEndIndex === this.list.length - 1) return;
     this.listStartIndex++;
     this.listEndIndex++;
-    // this.clipListEnds();
+    this.clipListEnds();
     console.log(this.listStartIndex);
     console.log(this.listEndIndex);
   }
