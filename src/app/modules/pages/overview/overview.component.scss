@@ -7,9 +7,10 @@
   width: 65%;
   display: flex;
   flex-wrap: wrap;
+  gap: .25rem;
 
   & > * {
-    width: 50%;
+    width: calc(45%);
     display: flex;
     gap: var(--space-xs-1);
 
