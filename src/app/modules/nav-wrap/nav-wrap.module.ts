@@ -24,7 +24,6 @@ const components = [
     CommonModule,
     SharedModule,
     RouterModule
-
   ],
   exports: [
     ...components

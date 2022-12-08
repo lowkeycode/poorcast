@@ -10,7 +10,6 @@ export class SideNavComponent implements OnInit {
   @Output() isNavOpen = new EventEmitter<boolean>();
   isOpen = true;
 
-
   constructor() { }
 
   ngOnInit(): void {
@@ -19,6 +18,7 @@ export class SideNavComponent implements OnInit {
 
   onPageNameChange($event: string) {
     this.pageNameChange.emit($event)
+    
   }
 
   toggleSideNavOpen() {

@@ -19,8 +19,8 @@ describe('Side Nav', () => {
   it('navigates to each page', () => {
     cy.get('app-side-nav-icon').eq(1).click()
     cy.get('app-side-nav-icon').eq(1).parent('a').should('have.class', 'side-icon-active')
-    cy.location('pathname').should('eq', '/app/bills')
-    cy.getByData('page-name').contains('bills')
+    cy.location('pathname').should('eq', '/app/budget')
+    cy.getByData('page-name').contains('budget')
 
     cy.get('app-side-nav-icon').eq(2).click()
     cy.get('app-side-nav-icon').eq(2).parent('a').should('have.class', 'side-icon-active')

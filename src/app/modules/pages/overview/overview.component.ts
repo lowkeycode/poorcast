@@ -1,15 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
-let testData = [
-  {
-    "name": "Income",
-    "value": '8940000'
-  },
-  {
-    "name": "Spending",
-    "value": '5000000'
-  },
-
-]
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-overview',
