@@ -7,9 +7,114 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OverviewComponent implements OnInit {
 
-  constructor() { }
+  data: any[] = [
+    {
+      "name": "Rent",
+      "value": '1650'
+    },
+    {
+      "name": "Entertainment",
+      "value": '452'
+    },
+    {
+      "name": "Travel",
+      "value": '214'
+    },
+    {
+      "name": "Groceries",
+      "value": '273'
+    },
+  
+  ];
+  view = [900, 200] as any;
+
+  // options
+  gradient: boolean = true;
+  showLegend: boolean = true;
+  showLabels: boolean = true;
+
+  colorScheme: any = {
+    domain: ['#353535', '#9E9E9E', '#096C1F', '#EEEEEE', '#CACACA', '#313131']
+  };
+
+  list = [
+    {
+      billName: 'Rent',
+      billAmount: 1700,
+      billDate: Date.now()
+    },
+    {
+      billName: 'Groceries',
+      billAmount: 300,
+      billDate: Date.now()
+    },
+    {
+      billName: 'Dining Out',
+      billAmount: 100,
+      billDate: Date.now()
+    },
+    {
+      billName: 'Internet',
+      billAmount: 130,
+      billDate: Date.now()
+    },
+    {
+      billName: 'Electric',
+      billAmount: 200,
+      billDate: Date.now()
+    },
+    {
+      billName: 'Phone',
+      billAmount: 80,
+      billDate: Date.now()
+    },
+    {
+      billName: 'Heat',
+      billAmount: 95,
+      billDate: Date.now()
+    },
+    {
+      billName: 'Water',
+      billAmount: 60,
+      billDate: Date.now()
+    },
+    {
+      billName: 'Transit',
+      billAmount: 40,
+      billDate: Date.now()
+    },
+  ]
+
+  constructor() {
+  }
 
   ngOnInit(): void {
+  }
+
+
+  formatValue = (val) => {
+    let formatter = new Intl.NumberFormat('en-us', {
+      style: 'currency',
+      currency: 'CAD',
+      currencyDisplay: "narrowSymbol"
+    });
+    return formatter.format(val)
+  }
+
+  formatPercentage = (value) => {
+    return Math.round(value)    
+  }
+
+  onSelect(data): void {
+    console.log('Item clicked', JSON.parse(JSON.stringify(data)));
+  }
+
+  onActivate(data): void {
+    console.log('Activate', JSON.parse(JSON.stringify(data)));
+  }
+
+  onDeactivate(data): void {
+    console.log('Deactivate', JSON.parse(JSON.stringify(data)));
   }
 
 }

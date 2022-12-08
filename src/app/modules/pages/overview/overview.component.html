@@ -1,1 +1,57 @@
-<p>overview works!</p>
+<ngx-charts-advanced-pie-chart
+  [view]="view"
+  [results]="data"
+  [scheme]="colorScheme"
+  [gradient]="gradient"
+  [animations]="false"
+  [valueFormatting]="formatValue"
+  [percentageFormatting]="formatPercentage"
+  (select)="onSelect($event)"
+  (activate)="onActivate($event)"
+  (deactivate)="onDeactivate($event)"
+>
+  <ng-template #tooltipTemplate let-model="model">
+    <!-- fields are series/name/value -->
+    <div class="tt">{{ model.name }} {{ model.value | currency }}</div>
+  </ng-template>
+</ngx-charts-advanced-pie-chart>
+
+<div class="overall">
+  <div class="overall__item net">
+    <p>Net Worth</p>
+    <span>$5000</span>
+  </div>
+  <div class="overall__item credit-cards">
+    <p>Credit Cards</p>
+    <span>$5000</span>
+  </div>
+  <div class="overall__item total-avail">
+    <p>Total Available</p>
+    <span>$5000</span>
+  </div>
+  <div class="overall__item loans">
+    <p>Loans</p>
+    <span>$5000</span>
+  </div>
+  <div class="overall__item projected">
+    <p>Projected</p>
+    <span>$10000</span>
+  </div>
+</div>
+
+<div class="accts">
+  <app-acct-card></app-acct-card>
+  <app-acct-card></app-acct-card>
+  <app-acct-card></app-acct-card>
+</div>
+
+<div class="upcoming">
+  <app-carousel [title]="'Upcoming Payments'" [list]="list">
+    <app-upcoming-card
+      #caroItem
+      class="caro-item"
+      *ngFor="let card of list"
+      [card]="card"
+    ></app-upcoming-card>
+  </app-carousel>
+</div>

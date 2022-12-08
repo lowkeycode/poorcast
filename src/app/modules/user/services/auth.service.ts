@@ -1,7 +1,7 @@
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import firebase from 'firebase/compat/app';
 import { Injectable } from '@angular/core';
-import { catchError, from, tap, Subject, BehaviorSubject } from 'rxjs';
+import { catchError, from, tap, ReplaySubject, BehaviorSubject } from 'rxjs';
 import { ErrorService } from '../../shared/services/error.service';
 
 @Injectable({
@@ -11,7 +11,7 @@ export class AuthService {
 
   userState$ = new BehaviorSubject<any>({});
   user = this.userState$.asObservable();
-  loggedInState$ = new Subject<boolean>();
+  loggedInState$ = new ReplaySubject<boolean>();
   loggedIn = this.loggedInState$.asObservable();
 
   constructor(private afAuth : AngularFireAuth, private errorService: ErrorService) { }
@@ -34,8 +34,6 @@ export class AuthService {
     return from(this.afAuth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).then(user => {
       
       if(user) {
-        console.log(user.user);
-
         this.userState$.next(user);
       }
       

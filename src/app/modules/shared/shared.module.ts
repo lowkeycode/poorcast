@@ -8,6 +8,8 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
 import { SoloIconComponent } from './components/solo-icon/solo-icon.component';
 import { SnackComponent } from './components/snack/snack.component';
 import { IconDirective } from './directives/icon.directive';
+import { AcctCardComponent } from './components/acct-card/acct-card.component';
+import { CarouselComponent } from './components/carousel/carousel.component';
 
 const components = [
   LogoComponent,
@@ -16,6 +18,8 @@ const components = [
   UserProfileComponent,
   SoloIconComponent,
   SnackComponent,
+  AcctCardComponent,
+  CarouselComponent
 ]
 
 const directives = [
@@ -26,7 +30,7 @@ const directives = [
 @NgModule({
   declarations: [
     ...components,
-    ...directives
+    ...directives,
   ],
   imports: [
     CommonModule

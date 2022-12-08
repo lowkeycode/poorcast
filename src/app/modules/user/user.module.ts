@@ -32,7 +32,7 @@ const directives = [
     UserRoutingModule,
     ReactiveFormsModule,
     NavWrapModule,
-    PagesModule
+    PagesModule,
   ],
   exports: [
     ...components,

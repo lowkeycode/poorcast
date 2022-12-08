@@ -15,7 +15,5 @@ export class NavWrapComponent {
 
   updateNavStyles($event: boolean) {
     this.isNavOpen = $event;
-    console.log($event);
-    
   }
 }

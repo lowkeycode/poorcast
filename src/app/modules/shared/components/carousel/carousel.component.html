@@ -1,0 +1,14 @@
+  <div class="caro-body">
+    <div *ngIf="title">
+      <h3 class="caro-body__title">{{ title }}</h3>
+    </div>
+    <div class="caro-body__items">
+      <div *ngIf="list.length >=6" class="fade-left"></div>
+      <ng-content></ng-content>
+      <div *ngIf="list.length >=5" class="fade-right"></div>
+    </div>
+    <div class="caro-body__controls">
+      <app-solo-icon [iconName]="'backward'" [appIconSize]="1.5" (click)="onPrev()"></app-solo-icon>
+      <app-solo-icon [iconName]="'forward'" [appIconSize]="1.5" (click)="onNext()"></app-solo-icon>
+    </div>
+  </div>

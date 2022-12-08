@@ -1,0 +1,57 @@
+.tt {
+  padding: var(--space-xs-2);
+}
+
+.overall {
+  margin: var(--space-med) 0 var(--space-sml) 0;
+  width: 65%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .25rem;
+
+  & > * {
+    width: calc(45%);
+    display: flex;
+    gap: var(--space-xs-1);
+
+    & p {
+      font-weight: 300;
+      font-size: var(--fs-xs);
+      margin-right: var(--space-xs);
+      width: 50%;
+    }
+
+    & span {
+      font-weight: 500;
+    }
+  }
+}
+
+.accts {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+  gap: var(--space-med);
+  padding: var(--space-med) 0;
+}
+
+.upcoming {
+  padding: var(--space-med) 0;
+  width: 65%;
+
+
+  & app-carousel {
+    width: 41rem;
+  }
+
+  & .caro-item {
+    width: 5rem;
+    height: 5rem;
+    background: var(--grey-light);
+    border: 1px solid var(--grey-dark);
+    border-radius: var(--br-lrg);
+    box-shadow: var(--bs-secondary);
+  }
+}
+

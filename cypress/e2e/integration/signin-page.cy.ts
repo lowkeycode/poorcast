@@ -24,7 +24,7 @@ describe('Sign in Page', () => {
     })
     it('provides feedback on invalid email', () => {
       cy.getByData('email').type('test')
-      cy.getByData('feedback-message').should('exist')
+      cy.getByData('feedback-message').should('exist').contains('Please enter a valid email.')
     })
 
     it('accepts valid password', () => {
@@ -33,7 +33,7 @@ describe('Sign in Page', () => {
     })
     it('provides feedback on invalid password', () => {
       cy.getByData('password').type('seven')
-      cy.getByData('feedback-message').should('exist')
+      cy.getByData('feedback-message').should('exist').contains('Password must be longer than 8 characters.')
     })
   })
 
@@ -53,7 +53,7 @@ describe('Sign in Page', () => {
     })
     it('provides feedback on invalid email', () => {
       cy.getByData('email').type('test')
-      cy.getByData('feedback-message').should('exist')
+      cy.getByData('feedback-message').should('exist').contains('Please enter a valid email.')
     })
 
     it('accepts valid password', () => {
@@ -62,7 +62,7 @@ describe('Sign in Page', () => {
     })
     it('provides feedback on invalid password', () => {
       cy.getByData('password').type('seven')
-      cy.getByData('feedback-message').should('exist')
+      cy.getByData('feedback-message').should('exist').contains('Password must be longer than 8 characters.')
     })
 
     it('accepts valid confirm password', () => {
@@ -73,7 +73,7 @@ describe('Sign in Page', () => {
     it('provides feedback on invalid confirm password', () => {
       cy.getByData('password').type('12345678')
       cy.getByData('password-confirm').type('seven')
-      cy.getByData('feedback-message').should('exist')
+      cy.getByData('feedback-message').should('exist').contains('Password doesn\'t match.')
     })
   })
 
@@ -89,7 +89,7 @@ describe('Sign in Page', () => {
     })
     it('provides feedback on invalid email', () => {
       cy.getByData('email').type('test')
-      cy.getByData('feedback-message').should('exist')
+      cy.getByData('feedback-message').should('exist').contains('Please enter a valid email.')
     })
   })
 })
