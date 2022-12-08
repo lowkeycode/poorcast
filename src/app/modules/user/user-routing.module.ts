@@ -9,10 +9,6 @@ import { SettingsComponent } from '../pages/settings/settings.component';
 import { PagesModule } from '../pages/pages.module';
 
 const routes: Routes = [
-
-  // ! Need default redirects. Ex.) going to /app is possible still and nothing would show.
-  // ! Can route using back button to go to sign in (Shouldn't be able to hit sign in again)
-  //  ! This need to fixed for all routers
   {
     path: 'app',
     component: NavWrapComponent,

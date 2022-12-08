@@ -9,9 +9,9 @@ describe('Side Nav', () => {
   })
 
   it('displays side nav elements', () => {
-    cy.get('app-logo').should('exist')
+    cy.get('app-logo').should('exist').and('be.visible')
     cy.get('app-side-nav-icon').should('have.length', 3)
-    cy.getByData('profile-img').should('exist')
+    cy.getByData('profile-img').should('exist').and('be.visible')
     cy.getByData('profile-email').contains('test@test.com')
   })
 
@@ -39,6 +39,6 @@ describe('Side Nav', () => {
     cy.getByData('profile-email').should('not.exist')
 
     cy.getByData('open-close').click()
-    cy.getByData('profile-email').should('exist').contains('test@test.com')
+    cy.getByData('profile-email').should('exist').and('be.visible').contains('test@test.com')
   })
 }) 
