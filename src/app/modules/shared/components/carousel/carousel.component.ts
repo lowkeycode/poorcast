@@ -41,9 +41,6 @@ export class CarouselComponent implements OnInit, AfterContentInit {
     this.listStartIndex--;
     this.listEndIndex--;
     this.clipListEnds();
-    console.log(this.listStartIndex);
-    console.log(this.listEndIndex);
-    
   }
 
   onNext() {
@@ -51,8 +48,6 @@ export class CarouselComponent implements OnInit, AfterContentInit {
     this.listStartIndex++;
     this.listEndIndex++;
     this.clipListEnds();
-    console.log(this.listStartIndex);
-    console.log(this.listEndIndex);
   }
 
   

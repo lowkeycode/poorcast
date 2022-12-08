@@ -34,8 +34,6 @@ export class AuthService {
     return from(this.afAuth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).then(user => {
       
       if(user) {
-        console.log(user.user);
-
         this.userState$.next(user);
       }
       
