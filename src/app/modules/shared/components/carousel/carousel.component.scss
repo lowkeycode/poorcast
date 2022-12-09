@@ -47,10 +47,13 @@
 app-solo-icon {
   border-radius: var(--br-med);
   background: transparent;
+  box-shadow: transparent;
   transition: all .2s;
   cursor: pointer;
 }
 
 app-solo-icon:hover {
   background: var(--grey-light);
+  transform: translateY(-1px);
+  box-shadow: var(--bs-secondary);
 }

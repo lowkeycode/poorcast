@@ -49,6 +49,7 @@ app-logo {
 
 :host ::ng-deep .side-icon-active .label {
   font-weight: 500;
+  color: var(--primary-light);
 }
 
 app-user-profile {
