@@ -1,4 +1,8 @@
 <div class="card">
+  <div *ngIf="isBudgetCard" class="card__budget-btns">
+    <app-solo-icon [appIconSize]="1" [iconName]="'closeCircle'"></app-solo-icon>
+    <app-solo-icon [appIconSize]="1" [iconName]="'ellipsisHorizontal'"></app-solo-icon>
+  </div>
   <div class="card__heading">
     <p class="card__heading--available">Available Balance</p>
     <h3 class="card__heading--acct-name">Visa</h3>
