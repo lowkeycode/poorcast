@@ -7,6 +7,7 @@ import { SettingsComponent } from './settings/settings.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { UpcomingCardComponent } from './overview/upcoming-card/upcoming-card.component';
 import { BudgetAcctsComponent } from './budget/budget-accts/budget-accts.component';
+import { BillsComponent } from './budget/bills/bills.component';
 
 const components = [
   OverviewComponent,
@@ -17,7 +18,7 @@ const components = [
 ];
 
 @NgModule({
-  declarations: [...components],
+  declarations: [...components, BillsComponent],
   imports: [CommonModule, NgxChartsModule, SharedModule],
   exports: [...components],
 })
