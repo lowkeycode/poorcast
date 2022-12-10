@@ -6,12 +6,14 @@ import { BudgetComponent } from './budget/budget.component';
 import { SettingsComponent } from './settings/settings.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { UpcomingCardComponent } from './overview/upcoming-card/upcoming-card.component';
+import { BudgetAcctsComponent } from './budget/budget-accts/budget-accts.component';
 
 const components = [
   OverviewComponent,
   BudgetComponent,
   SettingsComponent,
   UpcomingCardComponent,
+  BudgetAcctsComponent
 ];
 
 @NgModule({
