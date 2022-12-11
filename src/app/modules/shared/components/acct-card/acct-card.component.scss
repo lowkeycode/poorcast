@@ -22,14 +22,18 @@
       margin-right: 2px;
     }
 
-    & > *:hover {
+    & > * {
       transform: translateY(0px);
-      transition: all .3s;
+      transition: all .1s;
     }
 
     & > *:hover {
       cursor: pointer;
       transform: translateY(-1px);
+    }
+
+    & > *:active {
+      transform: translateY(0px);
     }
 
   }

@@ -2,4 +2,8 @@
 <p class="row-copy row-amount">{{ bill.amount | currency }}</p>
 <p class="row-copy row-remaining">{{ bill.remaining | currency }}</p>
 <p class="row-copy row-due">{{ bill.due }}</p>
-<p class="row-copy row-notes">{{ bill.notes }}</p>
+<p class="row-copy row-notes">{{ bill.notes }} <span class="tag">{{ bill.tag }}</span></p>
+<div class="btns">
+  <app-solo-icon [appIconSize]=".9" [iconName]="'closeCircle'"></app-solo-icon>
+  <app-solo-icon [appIconSize]=".9" [iconName]="'ellipsisHorizontal'"></app-solo-icon>
+</div>

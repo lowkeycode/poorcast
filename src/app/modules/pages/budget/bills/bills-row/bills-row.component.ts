@@ -11,7 +11,8 @@ export class BillsRowComponent implements OnInit {
     amount: 850,
     remaining: 450,
     due: new Date(Date.now()).toISOString(),
-    notes: 'Pay the rest on payday'
+    notes: 'Pay the rest on payday',
+    tag: 'Rent'
   }
 
   constructor() { }

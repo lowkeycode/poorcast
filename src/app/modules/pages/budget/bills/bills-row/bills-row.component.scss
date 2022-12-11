@@ -6,3 +6,46 @@
 .row-notes {
   font-size: var(--fs-xs-1);
 }
+
+.row-notes {
+  display: flex;
+
+  & .tag {
+    font-size: var(--fs-xs-1);
+    margin-left: var(--space-lrg);
+    padding: 2px 5px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--white-light);
+    background: linear-gradient(122deg, var(--grey-dark) 62%, var(--primary-light) 62%);
+    border-radius: var(--br-sml);
+    box-shadow: var(--bs-secondary);
+  }
+}
+
+.btns {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  top: 50%;
+  right: var(--space-xs);
+  transform: translateY(-50%);
+
+  & > *:first-of-type {
+    margin-right: 2px;
+  }
+
+  & > * {
+    transform: translateY(0px);
+    transition: all .3s;
+  }
+
+  & > *:hover {
+    cursor: pointer;
+    transform: translateY(-1px);
+  }
+
+  & > *:active {
+    transform: translateY(0px);
+  }
+}
