@@ -4,10 +4,15 @@
   align-items: center;
 
   &__btn {
+    display: flex;
     align-self: flex-end;
+
+    & button:nth-of-type(1) {
+      margin-right: var(--space-xs-2);
+    }
   }
 
-  &__btn:hover {
+  & button:hover {
     filter: brightness(105%);
   }
 
