@@ -1,5 +1,5 @@
 .overlay {
-  z-index: 1;
+  z-index: 3;
   position: fixed;
   background: rgba(7, 9, 7, 0.162);
   top: 0;
@@ -9,7 +9,7 @@
 }
 
 .snack {
-  z-index: 2;
+  z-index: 4;
   position: fixed;
   background: var(--red-light);
   top: 12vh;
