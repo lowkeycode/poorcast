@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ModalService } from 'src/app/modules/shared/services/modal.service';
 
 @Component({
   selector: 'app-budget-accts',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BudgetAcctsComponent implements OnInit {
 
-  constructor() { }
+  constructor(private modalService: ModalService) { }
 
   ngOnInit(): void {
+  }
+
+  onAddAccount() {
+    this.modalService.openModal({
+      title: 'Add Account'
+    })
   }
 
 }

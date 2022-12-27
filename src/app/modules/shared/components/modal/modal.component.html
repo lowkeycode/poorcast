@@ -1,7 +1,7 @@
 <div class="overlay"></div>
-<div class="modal">
+<div class="modal" *ngIf="modal$ | async as modal">
   <div class="modal__main">
-    <h2 class="modal__main--title"></h2>
+    <h2 class="modal__main--title">{{ modal.title }}</h2>
   </div>
   <div class="modal__btns"></div>
 </div>

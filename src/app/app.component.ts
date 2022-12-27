@@ -20,12 +20,12 @@ export class AppComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    const sub = combineLatest([this.errorService.errorState$, this.modalService.modalState$]).subscribe(([error, modal]) => {
-      this.error = error;
-      this.modal = modal;
-    });
 
-    this.subs.add(sub);
+    const errorSub = this.errorService.errorState$.subscribe((error) => this.error = error);
+    const modalSub = this.modalService.modalState$.subscribe((modal) => this.modal = modal);
+
+    this.subs.add(errorSub);
+    this.subs.add(modalSub);
   }
 
   ngOnDestroy() {

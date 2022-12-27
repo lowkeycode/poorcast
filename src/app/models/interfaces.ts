@@ -9,9 +9,9 @@ export interface ButtonConfig {
 
 export interface ModalConfig {
   title: string;
-  iconName: string;
-  iconSize: number;
-  fieldSetNames: string[];
-  buttons: ButtonConfig[];
+  iconName?: string;
+  iconSize?: number;
+  fieldSetNames?: string[];
+  buttons?: ButtonConfig[];
 
 }

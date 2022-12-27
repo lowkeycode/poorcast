@@ -1,7 +1,7 @@
 <div class="accts">
   <div class="accts__btn">
     <button class="btn-primary" type="button">Transfer</button>
-    <button class="btn-primary" type="button">Add Account</button>
+    <button class="btn-primary" type="button" (click)="onAddAccount()">Add Account</button>
   </div>
   <div class="accts__cards">
     <app-acct-card [isBudgetCard]="true"></app-acct-card>
