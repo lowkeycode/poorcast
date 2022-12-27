@@ -10,11 +10,11 @@
 --grey-light: #888b88;
 
 --red-dark: #8f180c;
---red-light: #ce2311;
+--red-light: #f69c93;
 --orange-dark: #74401c;
---orange-light: #c66d30;
+--orange-light: #edcbb3;
 --yellow-dark: #746f1c;
---yellow-light: #c6be30;
+--yellow-light: #edeab3;
 
 // Fonts
 --font-primary: "Poppins", sans-serif;
@@ -41,9 +41,9 @@
 
 // Box Shadows
 --bs-primary: rgba(99, 99, 99, 0.7) 0px 2px 8px 0px;
---bs-secondary: rgba(117, 117, 117, 0.4) 0px 2px 2px 0px;
-
 --bs-primary-light: rgba(250, 250, 250, 0.4) 0px 2px 8px 0px;
+
+--bs-secondary: rgba(117, 117, 117, 0.4) 0px 2px 2px 0px;
 --bs-secondary-light: rgba(250, 250, 250, 0.2) 0px 2px 2px 0px;
 
 // Border Radius
