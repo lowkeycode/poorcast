@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-modal',
@@ -7,6 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ModalComponent implements OnInit {
   constructor() {}
+
+  modal = new Subject<ModalConfig>();
+  modalState$ = this.modal.asObservable();
 
   ngOnInit(): void {}
 }
