@@ -1,5 +1,5 @@
+import { ModalService } from './../../services/modal.service';
 import { Component, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-modal',
@@ -7,10 +7,9 @@ import { Subject } from 'rxjs';
   styleUrls: ['./modal.component.scss'],
 })
 export class ModalComponent implements OnInit {
-  constructor() {}
-
-  modal = new Subject<ModalConfig>();
-  modalState$ = this.modal.asObservable();
+  constructor(private modalService: ModalService) {}
 
   ngOnInit(): void {}
+
+
 }
