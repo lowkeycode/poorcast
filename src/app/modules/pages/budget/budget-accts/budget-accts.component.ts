@@ -14,9 +14,7 @@ export class BudgetAcctsComponent implements OnInit {
   }
 
   onAddAccount() {
-    this.modalService.openModal({
-      title: 'Add Account'
-    })
+    
   }
 
 }

@@ -32,11 +32,8 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   ]
 })
 export class TextInputComponent implements ControlValueAccessor {
-  @Input() controlName: any;
   @Input() label = '';
   @Input() type = '';
-  @Input() valid?: boolean = true;
-  @Input() invalid?: boolean = false;
   @Input() showFeedback?: boolean = false;
   @Input() feedBackMsg = ''
 

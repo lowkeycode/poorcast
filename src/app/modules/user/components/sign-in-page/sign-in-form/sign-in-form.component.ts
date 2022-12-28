@@ -77,7 +77,7 @@ export class SignInFormComponent implements OnInit {
     if(this.type === 'Sign Up') {
       return this.password?.value === this.confirmPassword?.value;
     } else {
-      return true
+      return true;
     }
 
   }

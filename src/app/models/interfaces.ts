@@ -7,11 +7,23 @@ export interface ButtonConfig {
   clickFn: () => any
 }
 
+export interface ModalInput {
+  formControlName: string;
+  controlName: string;
+  label: string;
+  type: string;
+  hidden: boolean;
+  valid?: boolean;
+  invalid?: boolean;
+  feedBackMsg?: string;
+  showFeedback?: boolean;
+}
+
 export interface ModalConfig {
   title: string;
   iconName?: string;
   iconSize?: number;
-  fieldSetNames?: string[];
-  buttons?: ButtonConfig[];
-
+  fieldsetNames: string[];
+  modalButtons: ButtonConfig[];
+  modalInputs: ModalInput[];
 }
