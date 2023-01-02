@@ -1,0 +1,13 @@
+<div class="input">
+  <label for="select-{{ label }}">{{ label }}</label>
+
+  <select >
+    <option *ngFor="let option of options" [value]="option">{{option}}</option>
+  </select>
+  
+  <div @container *ngIf="showFeedback">
+    <p class="invalid-feedback" data-test="feedback-message">
+      {{ feedBackMsg }}
+    </p>
+  </div>
+</div>

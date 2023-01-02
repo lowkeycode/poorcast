@@ -10,6 +10,7 @@ import { IconDirective } from './directives/icon.directive';
 import { AcctCardComponent } from './components/acct-card/acct-card.component';
 import { CarouselComponent } from './components/carousel/carousel.component';
 import { ModalComponent } from './components/modal/modal.component';
+import { SelectInputComponent } from './components/forms/select-input/select-input.component';
 
 const components = [
   LogoComponent,
@@ -26,7 +27,7 @@ const components = [
 const directives = [IconDirective];
 
 @NgModule({
-  declarations: [...components, ...directives],
+  declarations: [...components, ...directives, SelectInputComponent],
   imports: [CommonModule],
   exports: [...components, ...directives],
 })

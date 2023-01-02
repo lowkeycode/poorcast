@@ -2,14 +2,21 @@ export interface FeedBackMsgs  {
   [key: string]:  string;
 }
 
-export interface ButtonConfig {
-  buttonName: string;
-  clickFn: () => any
+export interface ModalConfig {
+  title: string;
+  iconName?: string;
+  iconSize?: number;
+  fieldsets: Fieldset[];
+  modalButtons: ButtonConfig[];
 }
 
-export interface ModalInput {
+export interface Fieldset {
+  name: string;
+  inputs: FieldsetInput[]
+}
+
+export interface FieldsetInput {
   formControlName: string;
-  controlName: string;
   label: string;
   type: string;
   hidden: boolean;
@@ -19,11 +26,7 @@ export interface ModalInput {
   showFeedback?: boolean;
 }
 
-export interface ModalConfig {
-  title: string;
-  iconName?: string;
-  iconSize?: number;
-  fieldsetNames: string[];
-  modalButtons: ButtonConfig[];
-  modalInputs: ModalInput[];
+export interface ButtonConfig {
+  buttonName: string;
+  clickFn: () => any
 }
