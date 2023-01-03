@@ -30,14 +30,14 @@ export class ModalComponent implements OnInit {
           {
             formControlName: 'acctType',
             label: 'Account Type',
-            type: 'text',
+            type: 'select',
             hidden: false,
           },
           {
             formControlName: 'acctName',
-            label: 'Account Name',
+            label: 'Account Balance',
             type: 'text',
-            hidden: true,
+            hidden: false,
           },
         ],
       }],
