@@ -19,7 +19,7 @@ export class ModalComponent implements OnInit {
     const init = {
       title: 'Add Account',
       fieldsets: [{
-        name: 'Accounts',
+        name: 'Account Info',
         inputs: [
           {
             formControlName: 'acctName',

@@ -3,9 +3,9 @@
   <div class="modal__main">
     <h2 class="modal__main--title">{{ modal.title }}</h2>
     <div class="modal__main--fieldsets">
-      <app-fieldset *ngFor="let fieldset of modal.fieldsets">
+      <app-fieldset *ngFor="let fieldset of modal.fieldsets" [legend]="fieldset.name">
         <ng-container *ngFor="let input of fieldset.inputs" [ngSwitch]="input.type">
-          
+
           <ng-template ngSwitchCase="text">
             <app-text-input formControlName="input.formControlName" [label]="input.label" [hidden]="input.hidden"></app-text-input>
           </ng-template>
