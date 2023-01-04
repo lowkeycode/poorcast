@@ -90,10 +90,12 @@ app-root {
 
 // Forms
 
+form {
+  height: 100%;
+}
+
 fieldset {
-  min-height: 20rem;
-  max-height: min-content;
-  width: 14rem;
+  height: 100%;
   border: 1px solid var(--grey-dark);
   border-radius: var(--br-med);
   padding: var(--space-xs-1);
@@ -110,6 +112,7 @@ legend {
 label {
   display: block;
   letter-spacing: 1px;
+  margin: var(--space-xs-3) 0 1px 0;
 }
 
 input,

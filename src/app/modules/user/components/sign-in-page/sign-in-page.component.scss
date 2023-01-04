@@ -2,12 +2,11 @@
 
 .sign-in {
   height: 100%;
+  padding: var(--space-xs);
   border-radius: var(--br-lrg);
   box-shadow: var(--bs-primary);
   overflow: hidden;
   display: flex;
-
-
 
   & > * {
     width: 100%;
@@ -18,16 +17,23 @@
   }
 
   &__form {
+
+
     &--heading-container {
       text-transform: uppercase;
       color: var(--grey-dark);
       font-weight: 600;
       letter-spacing: 2px;
-      margin-bottom: var(--space-xs);
 
       & app-logo {
         display: none;
       }
+    }
+
+    & app-sign-in-form {
+    padding: var(--space-xs) 0 0 0;
+    min-height: 20rem;
+    width: 14rem;
     }
   }
 
