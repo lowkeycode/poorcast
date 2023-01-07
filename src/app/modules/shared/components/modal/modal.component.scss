@@ -24,7 +24,7 @@
 
 
   &__main {
-    height: 80%;
+    flex: 1;
     padding: var(--space-xs);
     display: flex;
     flex-direction: column;
@@ -57,11 +57,14 @@
 
 
   &__btns {
-    // This height is a hack. Post how long it took for you to "fix" it (I'm #1).
-    // 1: 5min
-    height: 22%;
-    padding: var(--space-xs);
+    padding: var(--space-sml) var(--space-med);
     background: var(--grey-dark);
     overflow: hidden;
+    display: flex;
+    justify-content: flex-end;
+
+    & > button:not(:last-of-type) {
+      margin-right: var(--space-xs-2);
+    }
   }
 }

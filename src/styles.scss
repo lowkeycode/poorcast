@@ -187,6 +187,18 @@ input[type='date'] {
 
 :host ::ng-deep .btn-primary:hover {
   box-shadow: var(--bs-secondary);
+  filter: brightness(105%);
+}
+
+:host ::ng-deep .btn-neutral {
+  color: var(--white-light);
+  box-shadow: 0px 0px 14px -7px var(primary-light);
+  background: var(--grey-dark);
+}
+
+:host ::ng-deep .btn-neutral:hover {
+  box-shadow: var(--bs-secondary);
+  background: var(--grey-light);
 }
 
 :host ::ng-deep .btn-sign-in {
