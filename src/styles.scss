@@ -92,6 +92,7 @@ app-root {
 
 form {
   height: 100%;
+  overflow: hidden;
 }
 
 fieldset {
@@ -165,20 +166,23 @@ input[type='date'] {
 
 // Buttons
 
-:host ::ng-deep .btn-primary {
+:host ::ng-deep .btn {
   padding: 10px 30px;
   text-align: center;
   text-transform: uppercase;
-  transition: 0.2s;
-  color: white;
   letter-spacing: 1px;
-  border-radius: var(--br-lrg);
+  transition: 0.2s;
   display: block;
   border: none;
+  border-radius: var(--br-lrg);
   font-weight: 500;
+  cursor: pointer;
+}
+
+:host ::ng-deep .btn-primary {
+  color: white;
   box-shadow: 0px 0px 14px -7px var(--primary-light);
   background: var(--primary-light);
-  cursor: pointer;
 }
 
 :host ::ng-deep .btn-primary:hover {

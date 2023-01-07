@@ -4,10 +4,14 @@ export interface FeedBackMsgs  {
 
 export interface ModalConfig {
   title: string;
-  iconName?: string;
-  iconSize?: number;
+  icon?: ModalIcon;
   fieldsets: Fieldset[];
   modalButtons: ButtonConfig[];
+}
+
+export interface ModalIcon {
+  iconName: string;
+  iconSize: number;
 }
 
 export interface Fieldset {
@@ -27,6 +31,8 @@ export interface FieldsetInput {
 }
 
 export interface ButtonConfig {
-  buttonName: string;
+  buttonText: string;
+  type: string;
+  dataTest: string;
   clickFn: () => any
 }

@@ -39,7 +39,7 @@
       <!-- SIGN IN -->
       <button
         *ngIf="!isReset"
-        class="btn-primary btn-sign-in"
+        class="btn btn-primary btn-sign-in"
         type="submit"
         [routerLink]="['/app/overview']"
         data-test="submit"
@@ -50,7 +50,7 @@
       <!-- RESET -->
       <button
         *ngIf="isReset"
-        class="btn-primary btn-sign-in"
+        class="btn btn-primary btn-sign-in"
         type="submit"
         [disabled]="isLoading"
         data-test="submit"
@@ -61,7 +61,7 @@
       <!-- GOOGLE -->
       <button
         *ngIf="isSignIn"
-        class="btn-primary btn-sign-in btn-google"
+        class="btn btn-primary btn-sign-in btn-google"
         type="button"
         appGoogleSignin
         [routerLink]="['/app/overview']"

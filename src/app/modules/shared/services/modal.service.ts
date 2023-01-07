@@ -13,7 +13,9 @@ export class ModalService {
 
   openModal(modalConfig: ModalConfig) {
     this.modal.next(modalConfig);
-    console.log('modalConfig', modalConfig);
-    
+  }
+
+  closeModal() {
+    this.modal.next(null);
   }
 }
