@@ -54,6 +54,72 @@ export class BudgetAcctsComponent implements OnInit {
     ],
   };
 
+  transferModalConfig: ModalConfig = {
+    title: 'Transfer',
+    icon: {
+      iconName: 'arrowForward',
+      iconSize: 2
+    },
+    fieldsets: [
+      {
+        name: 'From',
+        inputs: [
+          {
+            formControlName: 'fromUser',
+            label: 'User',
+            type: 'select',
+            hidden: false,
+          },
+          {
+            formControlName: 'fromAcct',
+            label: 'Account',
+            type: 'select',
+            hidden: false,
+          },
+          {
+            formControlName: 'fromAmount',
+            label: 'Amount',
+            type: 'text',
+            hidden: false,
+          },
+        ],
+      },
+      {
+        name: 'To',
+        inputs: [
+          {
+            formControlName: 'toUser',
+            label: 'User',
+            type: 'select',
+            hidden: false,
+          },
+          {
+            formControlName: 'toAcct',
+            label: 'Account',
+            type: 'select',
+            hidden: false,
+          },
+        ],
+      }
+    ],
+    modalButtons: [
+      {
+        buttonText: 'Cancel',
+        type: 'button',
+        dataTest: 'modal-cancel-btn',
+        clickFn: () => {
+          this.modalService.closeModal();
+        },
+      },
+      {
+        buttonText: 'Transfer',
+        type: 'submit',
+        dataTest: 'modal-save-btn',
+        clickFn: () => console.log('Transferring'),
+      },
+    ],
+  };
+
   constructor(private modalService: ModalService) { }
 
   ngOnInit(): void {
@@ -61,6 +127,10 @@ export class BudgetAcctsComponent implements OnInit {
 
   onAddAccount() {
     this.modalService.openModal(this.acctModalConfig);
+  }
+
+  onTransfer() {
+    this.modalService.openModal(this.transferModalConfig);
   }
 
 }
