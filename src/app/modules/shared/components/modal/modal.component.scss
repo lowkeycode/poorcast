@@ -29,21 +29,23 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-around;
+    justify-content: center;
     position: relative;
 
     &--title {
       font-weight: 400;
       text-transform: uppercase;
       letter-spacing: 1px;
+      margin: var(--space-xs) 0 var(--space-xs) 0;
     }
 
     &--fieldsets {
+      flex: 1;
       width: 100%;
-      display:flex;
+      display: flex;
       flex-wrap: wrap;
       justify-content: space-evenly;
-      padding: var(--space-xs);
+      padding-bottom: var(--space-xs);
     }
 
     &--icon {
@@ -67,4 +69,8 @@
       margin-right: var(--space-xs-2);
     }
   }
+}
+
+app-fieldset {
+  width: 30%;
 }

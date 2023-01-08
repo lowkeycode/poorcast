@@ -11,10 +11,6 @@ export class BudgetAcctsComponent implements OnInit {
 
   acctModalConfig: ModalConfig = {
     title: 'Add Account',
-    icon: {
-      iconName: 'arrowForward',
-      iconSize: 2,
-    },
     fieldsets: [
       {
         name: 'Account Info',
@@ -38,30 +34,7 @@ export class BudgetAcctsComponent implements OnInit {
             hidden: false,
           },
         ],
-      },
-      {
-        name: 'Account Info',
-        inputs: [
-          {
-            formControlName: 'acctName',
-            label: 'Account Name',
-            type: 'text',
-            hidden: false,
-          },
-          {
-            formControlName: 'acctType',
-            label: 'Account Type',
-            type: 'select',
-            hidden: false,
-          },
-          {
-            formControlName: 'acctName',
-            label: 'Account Balance',
-            type: 'text',
-            hidden: false,
-          },
-        ],
-      },
+      }
     ],
     modalButtons: [
       {
