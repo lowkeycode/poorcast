@@ -5,5 +5,5 @@
 <p class="row-copy row-notes">{{ bill.notes }} <span class="tag">{{ bill.tag }}</span></p>
 <div class="btns">
   <app-solo-icon [appIconSize]=".9" [iconName]="'closeCircle'"></app-solo-icon>
-  <app-solo-icon [appIconSize]=".9" [iconName]="'ellipsisHorizontal'"></app-solo-icon>
+  <app-solo-icon [appIconSize]=".9" [iconName]="'ellipsisHorizontal'" (click)="onEditBill(index)"></app-solo-icon>
 </div>

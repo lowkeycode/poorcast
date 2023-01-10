@@ -4,8 +4,7 @@
     <button class="btn btn-primary" type="button" (click)="onAddAccount()">Add Account</button>
   </div>
   <div class="accts__cards">
-    <app-acct-card [isBudgetCard]="true"></app-acct-card>
-    <app-acct-card [isBudgetCard]="true"></app-acct-card>
-    <app-acct-card [isBudgetCard]="true"></app-acct-card>
+    <app-acct-card *ngFor="let account of accts; let i = index;" [isBudgetCard]="true" [index]="i"></app-acct-card>
+
   </div>
 </div>

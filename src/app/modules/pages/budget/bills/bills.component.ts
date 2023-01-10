@@ -101,6 +101,7 @@ export class BillsComponent implements OnInit {
           },
         ],
       }
+      
     ],
     modalButtons: [
       {
@@ -119,6 +120,8 @@ export class BillsComponent implements OnInit {
       },
     ],
   };
+
+  bills = [0, 1, 2, 3, 4];
 
   constructor(private modalService: ModalService) { }
 

@@ -11,10 +11,7 @@
       <p>Due</p>
       <p>Notes</p>
     </div>
-   <app-bills-row></app-bills-row>
-   <app-bills-row></app-bills-row>
-   <app-bills-row></app-bills-row>
-   <app-bills-row></app-bills-row>
-   <app-bills-row></app-bills-row>
+   <app-bills-row *ngFor="let bill of bills; let i = index;" [index]="i"></app-bills-row>
+   
   </div>
 </div>

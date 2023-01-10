@@ -9,7 +9,9 @@ import { ModalService } from 'src/app/modules/shared/services/modal.service';
 })
 export class BudgetAcctsComponent implements OnInit {
 
-  acctModalConfig: ModalConfig = {
+  accts = [0, 1, 2];
+
+  addAcctModalConfig: ModalConfig = {
     title: 'Add Account',
     fieldsets: [
       {
@@ -126,7 +128,7 @@ export class BudgetAcctsComponent implements OnInit {
   }
 
   onAddAccount() {
-    this.modalService.openModal(this.acctModalConfig);
+    this.modalService.openModal(this.addAcctModalConfig);
   }
 
   onTransfer() {

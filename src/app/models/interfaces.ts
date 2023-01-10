@@ -17,6 +17,7 @@ export interface ModalIcon {
 export interface Fieldset {
   name: string;
   inputs: FieldsetInput[]
+  index?: number;
 }
 
 export interface FieldsetInput {
