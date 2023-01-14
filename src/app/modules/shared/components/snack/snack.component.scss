@@ -1,7 +1,7 @@
 .overlay {
-  z-index: 1;
+  z-index: 3;
   position: fixed;
-  background: rgba(7, 9, 7, 0.2);
+  background: rgba(7, 9, 7, 0.162);
   top: 0;
   left: 0;
   width: 100vw;
@@ -9,36 +9,53 @@
 }
 
 .snack {
-  z-index: 2;
+  z-index: 4;
   position: fixed;
   background: var(--red-light);
   top: 12vh;
   transform: translateY(-50%);
   left: 20vw;
   width: 60vw;
-  border: 2px solid var(--black);
   border-radius: var(--br-lrg);
-  box-shadow: var(--bs-primary-light);
+  border: 1px solid var(--black);
+  box-shadow: var(--bs-secondary-light);
   display: flex;
   align-items: center;
   padding: var(--space-xs);
 
+  &::before {
+    content: "";
+    background: var(--red-dark);
+    position: absolute;
+    width: 5px;
+    height: 80%;
+    top: 50%;
+    left: var(--space-xs-2);;
+    transform: translateY(-50%);
+  }
+
+  & app-logo {
+    margin-left: var(--space-xs-1);
+  }
+  
+
   &__message {
     padding: 0 var(--space-xs-2);
     flex: 1;
+    position: relative;
 
     &--text {
       font-size: var(--fs-xs);
-      color: var(--white-dark);
-      font-weight: 300;
+      color: var(--black);
+      font-weight: 400;
       text-align: center;
     }
   }
 
   & app-solo-icon {
     position: absolute;
-    top: var(--space-xs-3);
-    right: var(--space-xs-3);
+    top: var(--space-xs-2);
+    right: var(--space-xs-2);
     cursor: pointer;
   }
 }

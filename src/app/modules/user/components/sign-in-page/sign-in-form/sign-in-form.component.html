@@ -4,11 +4,8 @@
     <!-- EMAIL -->
     <app-text-input
       formControlName="email"
-      [controlName]="email"
       [label]="'Email'"
       [type]="'email'"
-      [valid]="email?.valid && email?.dirty"
-      [invalid]="!email?.valid && email?.dirty"
       [feedBackMsg]="feedbacks['email']"
       [showFeedback]="email?.invalid && email?.dirty"
       data-test="email"
@@ -18,11 +15,8 @@
     <app-text-input
       *ngIf="!isReset"
       formControlName="password"
-      [controlName]="password"
       [label]="'Password'"
       [type]="'password'"
-      [valid]="password?.valid && password?.dirty"
-      [invalid]="password?.dirty && password?.invalid"
       [feedBackMsg]="feedbacks['password']"
       [showFeedback]="password?.invalid && password?.dirty"
       data-test="password"
@@ -33,22 +27,19 @@
     <app-text-input
     *ngIf="isSignUp"
     formControlName="confirmPassword"
-    [controlName]="confirmPassword"
     [label]="'Confirm Password'"
     [type]="'password'"
-    [valid]="confirmPassword?.dirty && passwordMatches"
-    [invalid]="confirmPassword?.dirty && !passwordMatches"
     [feedBackMsg]="feedbacks['confirmPassword']"
     [showFeedback]="confirmPassword?.dirty && !passwordMatches"
     data-test="password-confirm"
-  ></app-text-input>
+    ></app-text-input>
 
     <!-- BUTTONS -->
     <div class="btn-container">
       <!-- SIGN IN -->
       <button
         *ngIf="!isReset"
-        class="btn btn-primary"
+        class="btn btn-primary btn-sign-in"
         type="submit"
         [routerLink]="['/app/overview']"
         data-test="submit"
@@ -59,7 +50,7 @@
       <!-- RESET -->
       <button
         *ngIf="isReset"
-        class="btn btn-primary"
+        class="btn btn-primary btn-sign-in"
         type="submit"
         [disabled]="isLoading"
         data-test="submit"
@@ -70,7 +61,7 @@
       <!-- GOOGLE -->
       <button
         *ngIf="isSignIn"
-        class="btn btn-google"
+        class="btn btn-primary btn-sign-in btn-google"
         type="button"
         appGoogleSignin
         [routerLink]="['/app/overview']"

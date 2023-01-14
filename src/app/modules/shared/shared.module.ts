@@ -1,4 +1,3 @@
-
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LogoComponent } from './components/logo/logo.component';
@@ -10,6 +9,8 @@ import { SnackComponent } from './components/snack/snack.component';
 import { IconDirective } from './directives/icon.directive';
 import { AcctCardComponent } from './components/acct-card/acct-card.component';
 import { CarouselComponent } from './components/carousel/carousel.component';
+import { ModalComponent } from './components/modal/modal.component';
+import { SelectInputComponent } from './components/forms/select-input/select-input.component';
 
 const components = [
   LogoComponent,
@@ -19,25 +20,15 @@ const components = [
   SoloIconComponent,
   SnackComponent,
   AcctCardComponent,
-  CarouselComponent
-]
+  CarouselComponent,
+  ModalComponent,
+];
 
-const directives = [
-  IconDirective,
-]
-
+const directives = [IconDirective];
 
 @NgModule({
-  declarations: [
-    ...components,
-    ...directives,
-  ],
-  imports: [
-    CommonModule
-  ],
-  exports: [
-    ...components,
-    ...directives
-  ]
+  declarations: [...components, ...directives, SelectInputComponent],
+  imports: [CommonModule],
+  exports: [...components, ...directives],
 })
-export class SharedModule { }
+export class SharedModule {}

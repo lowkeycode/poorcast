@@ -28,8 +28,7 @@ const modules = [
     AppComponent,
   ],
   imports: [
-    ...modules,
-
+    ...modules
   ],
   providers: [],
   bootstrap: [AppComponent]
