@@ -32,6 +32,23 @@
     justify-content: center;
     position: relative;
 
+    &--close {
+      position: absolute;
+      top: var(--space-xs-1);
+      right: var(--space-xs-1);
+      cursor: pointer;
+      transition: all .2s;
+      transform: translateY(0);
+    }
+
+    &--close:hover {
+      transform: translateY(-1px);
+    }
+
+    &--close:active {
+      transform: translateY(0);
+    }
+
     &--title {
       font-weight: 400;
       text-transform: uppercase;

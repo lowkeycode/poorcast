@@ -1,6 +1,12 @@
 <div class="overlay" (click)="closeModal()"></div>
 <form class="modal" *ngIf="modal$ | async as modal">
   <div class="modal__main">
+    <app-solo-icon
+        [iconName]="'closeCircle'"
+        [appIconSize]="1.28"
+        class="modal__main--close"
+        (click)="closeModal()"
+      ></app-solo-icon>
     <h2 class="modal__main--title">{{ modal.title }}</h2>
     <div class="modal__main--fieldsets">
       <app-fieldset
