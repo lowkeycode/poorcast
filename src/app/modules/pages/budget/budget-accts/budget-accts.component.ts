@@ -5,10 +5,9 @@ import { ModalService } from 'src/app/modules/shared/services/modal.service';
 @Component({
   selector: 'app-budget-accts',
   templateUrl: './budget-accts.component.html',
-  styleUrls: ['./budget-accts.component.scss']
+  styleUrls: ['./budget-accts.component.scss'],
 })
 export class BudgetAcctsComponent implements OnInit {
-
   accts = [0, 1, 2];
 
   addAcctModalConfig: ModalConfig = {
@@ -36,7 +35,7 @@ export class BudgetAcctsComponent implements OnInit {
             hidden: false,
           },
         ],
-      }
+      },
     ],
     modalButtons: [
       {
@@ -60,7 +59,7 @@ export class BudgetAcctsComponent implements OnInit {
     title: 'Transfer',
     icon: {
       iconName: 'arrowForward',
-      iconSize: 2
+      iconSize: 2,
     },
     fieldsets: [
       {
@@ -102,7 +101,7 @@ export class BudgetAcctsComponent implements OnInit {
             hidden: false,
           },
         ],
-      }
+      },
     ],
     modalButtons: [
       {
@@ -122,10 +121,9 @@ export class BudgetAcctsComponent implements OnInit {
     ],
   };
 
-  constructor(private modalService: ModalService) { }
+  constructor(private modalService: ModalService) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   onAddAccount() {
     this.modalService.openModal(this.addAcctModalConfig);
@@ -134,5 +132,4 @@ export class BudgetAcctsComponent implements OnInit {
   onTransfer() {
     this.modalService.openModal(this.transferModalConfig);
   }
-
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ReplaySubject } from 'rxjs';
 import { ModalConfig } from 'src/app/models/interfaces';
 
+
 @Injectable({
   providedIn: 'root',
 })
