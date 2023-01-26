@@ -1,3 +1,14 @@
+.calendar {
+  opacity: 0;
+  height: 0;
+  transition: all .2s ease-in;
+}
+
+.c-open {
+  opacity: 1;
+  height: 100%;
+}
+
 .tt {
   padding: var(--space-xs-2);
 }

@@ -10,6 +10,7 @@ export const sources: IconMap = {
   checkCircle: '../../assets/icons/checkmark-circle-outline.svg',
   closeCircle: '../../assets/icons/close-circle-outline.svg',
   ellipsisHorizontal: '../../assets/icons/ellipsis-horizontal-circle-outline.svg',
+  filter: '../../assets/icons/filter.svg',
   forward: '../../assets/icons/caret-forward-outline.svg',
   backward: '../../assets/icons/caret-back-outline.svg',
   menu: '../../assets/icons/chevron-forward-outline.svg',

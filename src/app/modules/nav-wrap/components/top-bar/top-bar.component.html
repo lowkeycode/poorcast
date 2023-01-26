@@ -1,7 +1,8 @@
 <div class="container">
   <h1 class="container__heading" data-test="page-name">{{ pageName }}</h1>
-  <a (click)="afAuth.signOut()" routerLink="/">
-    <app-solo-icon [appIconSize]="1.9" [iconName]="'signout'"></app-solo-icon>
-  </a>
+  <div class="container__icons">
+    <app-solo-icon [appIconSize]="1.8" [iconName]="'filter'"></app-solo-icon>
+    <app-solo-icon [appIconSize]="1.8" [iconName]="'signout'" (click)="afAuth.signOut()" routerLink="/"></app-solo-icon>
+  </div>
 </div>
 <ng-content></ng-content>
