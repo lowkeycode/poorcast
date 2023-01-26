@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DateRangeService } from '../date-range.service';
 
 @Component({
   selector: 'app-overview',
@@ -6,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./overview.component.scss']
 })
 export class OverviewComponent implements OnInit {
+
+  isDateFilterOpen$ = this.dateRangeService.isOpen$;
+
 
   data: any[] = [
     {
@@ -85,7 +89,7 @@ export class OverviewComponent implements OnInit {
     },
   ]
 
-  constructor() {
+  constructor(private dateRangeService: DateRangeService) {
   }
 
   ngOnInit(): void {

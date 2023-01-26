@@ -1,4 +1,6 @@
-<div class="calendar">
+<div class="calendar" [ngClass]="{
+  'calendar-open': isDateFilterOpen$ | async
+}">
   <tui-calendar-range></tui-calendar-range>
 </div>
 
