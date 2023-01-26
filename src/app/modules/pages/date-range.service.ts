@@ -1,24 +1,18 @@
-import { Injectable, OnDestroy } from '@angular/core';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class DateRangeService implements OnDestroy {
+export class DateRangeService {
   private openState$ = new BehaviorSubject<boolean>(false);
   isOpen$ = this.openState$.asObservable();
-
-  private _subs = new Subscription();
+  private isOpen = false;
 
   toggleDateRange() {
-    const isOpenSub = this.isOpen$.subscribe((isOpen) => {
-      this.openState$.next(!isOpen);
-    })
-
-    this._subs.add(isOpenSub);
+    console.log('this.isOpen', this.isOpen);
+    this.openState$.next(!this.isOpen);
+    this.isOpen = !this.isOpen;
   }
 
-  ngOnDestroy() {
-    this._subs.unsubscribe();
-  }
 }
