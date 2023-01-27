@@ -8,6 +8,13 @@ describe('Overview', () => {
     cy.location('pathname').should('eq', '/app/overview')
   })
 
+  it.only('opens/closes the calendar', () => {
+    cy.get('[data-test="date-filter"]').click()
+    cy.get('tui-calendar-range').should('exist').and('be.visible')
+    cy.get('[data-test="date-filter"]').click()
+    cy.get('tui-calendar-range').should('exist').and('not.be.visible')
+  })
+
   it('renders the ngx chart', () => {
     cy.get('ngx-charts-advanced-pie-chart').should('exist').and('be.visible')
   })
