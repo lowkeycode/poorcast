@@ -1,11 +1,11 @@
-import { ModalConfig } from './../../../../../models/interfaces';
 import { ModalService } from 'src/app/modules/shared/services/modal.service';
 import { Component, OnInit, Input } from '@angular/core';
+import { ModalConfig } from 'src/app/models/interfaces';
 
 @Component({
   selector: 'app-bills-row',
   templateUrl: './bills-row.component.html',
-  styleUrls: ['./bills-row.component.scss']
+  styleUrls: ['./bills-row.component.scss'],
 })
 export class BillsRowComponent implements OnInit {
   @Input() index: number;
@@ -41,8 +41,7 @@ export class BillsRowComponent implements OnInit {
             hidden: false,
           },
         ],
-      }
-      
+      },
     ],
     modalButtons: [
       {
@@ -68,18 +67,15 @@ export class BillsRowComponent implements OnInit {
     remaining: 450,
     due: new Date(Date.now()).toISOString(),
     notes: 'Pay the rest on payday',
-    tag: 'Rent'
-  }
+    tag: 'Rent',
+  };
 
-  constructor(private modalService: ModalService) { }
+  constructor(private modalService: ModalService) {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 
   onEditBill(index) {
     //  todo need to figure out how to get the index to pass in. (Do we make name and inputs optional? Or is there a better way)
     this.modalService.openModal(this.editBillModalConfig);
   }
-
 }

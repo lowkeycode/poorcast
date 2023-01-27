@@ -5,7 +5,7 @@ import { ModalService } from '../../services/modal.service';
 @Component({
   selector: 'app-acct-card',
   templateUrl: './acct-card.component.html',
-  styleUrls: ['./acct-card.component.scss']
+  styleUrls: ['./acct-card.component.scss'],
 })
 export class AcctCardComponent implements OnInit {
   @Input() isBudgetCard = false;
@@ -36,7 +36,7 @@ export class AcctCardComponent implements OnInit {
             hidden: false,
           },
         ],
-      }
+      },
     ],
     modalButtons: [
       {
@@ -56,13 +56,11 @@ export class AcctCardComponent implements OnInit {
     ],
   };
 
-  constructor(private modalService: ModalService) { }
+  constructor(private modalService: ModalService) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   onEditAcct(index) {
     this.modalService.openModal(this.editAcctModalConfig);
   }
-
 }

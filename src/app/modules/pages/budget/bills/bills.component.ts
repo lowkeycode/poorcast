@@ -5,15 +5,14 @@ import { ModalService } from 'src/app/modules/shared/services/modal.service';
 @Component({
   selector: 'app-bills',
   templateUrl: './bills.component.html',
-  styleUrls: ['./bills.component.scss']
+  styleUrls: ['./bills.component.scss'],
 })
 export class BillsComponent implements OnInit {
-
   payBillModalConfig: ModalConfig = {
     title: 'Pay Bill',
     icon: {
       iconName: 'arrowForward',
-      iconSize: 2
+      iconSize: 2,
     },
     fieldsets: [
       {
@@ -49,7 +48,7 @@ export class BillsComponent implements OnInit {
             hidden: false,
           },
         ],
-      }
+      },
     ],
     modalButtons: [
       {
@@ -100,8 +99,7 @@ export class BillsComponent implements OnInit {
             hidden: false,
           },
         ],
-      }
-      
+      },
     ],
     modalButtons: [
       {
@@ -123,10 +121,9 @@ export class BillsComponent implements OnInit {
 
   bills = [0, 1, 2, 3, 4];
 
-  constructor(private modalService: ModalService) { }
+  constructor(private modalService: ModalService) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   onPayBill() {
     this.modalService.openModal(this.payBillModalConfig);
@@ -135,5 +132,4 @@ export class BillsComponent implements OnInit {
   onAddBill() {
     this.modalService.openModal(this.addBillModalConfig);
   }
-
 }

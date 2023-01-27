@@ -1,6 +1,7 @@
-export interface FeedBackMsgs  {
-  [key: string]:  string;
+export interface FeedBackMsgs {
+  [key: string]: string;
 }
+
 
 export interface ModalConfig {
   title: string;
@@ -16,7 +17,7 @@ export interface ModalIcon {
 
 export interface Fieldset {
   name: string;
-  inputs: FieldsetInput[]
+  inputs: FieldsetInput[];
   index?: number;
 }
 
@@ -35,5 +36,5 @@ export interface ButtonConfig {
   buttonText: string;
   type: string;
   dataTest: string;
-  clickFn: () => any
+  clickFn: () => any;
 }

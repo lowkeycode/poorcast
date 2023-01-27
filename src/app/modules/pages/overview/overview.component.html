@@ -1,3 +1,9 @@
+<div class="calendar" [ngClass]="{
+  'calendar-open': isDateFilterOpen$ | async
+}">
+  <tui-calendar-range></tui-calendar-range>
+</div>
+
 <ngx-charts-advanced-pie-chart
   [view]="view"
   [results]="data"

@@ -9,6 +9,7 @@ import { UpcomingCardComponent } from './overview/upcoming-card/upcoming-card.co
 import { BudgetAcctsComponent } from './budget/budget-accts/budget-accts.component';
 import { BillsComponent } from './budget/bills/bills.component';
 import { BillsRowComponent } from './budget/bills/bills-row/bills-row.component';
+import { TuiCalendarRangeModule } from '@taiga-ui/kit';
 
 const components = [
   OverviewComponent,
@@ -20,7 +21,7 @@ const components = [
 
 @NgModule({
   declarations: [...components, BillsComponent, BillsRowComponent],
-  imports: [CommonModule, NgxChartsModule, SharedModule],
+  imports: [CommonModule, NgxChartsModule, SharedModule, TuiCalendarRangeModule],
   exports: [...components],
 })
 export class PagesModule {}

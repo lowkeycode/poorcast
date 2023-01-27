@@ -19,7 +19,7 @@
         >
           <ng-template ngSwitchCase="text">
             <app-text-input
-              formControlName="input.formControlName"
+              [attr.formControlName]="input.formControlName"
               [label]="input.label"
               [hidden]="input.hidden"
             ></app-text-input>
@@ -27,7 +27,7 @@
 
           <ng-template ngSwitchCase="select">
             <app-select-input
-              formControlName="input.formControlName"
+              [attr.formControlName]="input.formControlName"
               [label]="input.label"
               [hidden]="input.hidden"
             ></app-select-input>
@@ -35,12 +35,14 @@
         </ng-container>
       </app-fieldset>
     </div>
+
     <div class="modal__main--icon" *ngIf="modal.icon">
       <app-solo-icon
         [iconName]="modal.icon.iconName"
         [appIconSize]="modal.icon.iconSize"
       ></app-solo-icon>
     </div>
+    
   </div>
   <div class="modal__btns">
     <button
