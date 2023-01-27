@@ -9,6 +9,16 @@
   height: 100%;
 }
 
+tui-calendar-range {
+  --tui-primary: var(--primary-light);
+  --tui-primary-hover: var(--grey-dark);
+  --tui-primary-active: var(--primary-dark);
+  --tui-secondary-hover: var(--grey-light);
+  --tui-link: var(--grey-light);
+  --tui-font-heading: var(--font-primary);
+  --tui-font-text: var(--font-primary);
+}
+
 .tt {
   padding: var(--space-xs-2);
 }
