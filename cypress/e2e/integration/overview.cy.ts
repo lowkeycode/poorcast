@@ -8,7 +8,7 @@ describe('Overview', () => {
     cy.location('pathname').should('eq', '/app/overview')
   })
 
-  it.only('opens/closes the calendar', () => {
+  it('opens/closes the calendar', () => {
     cy.get('[data-test="date-filter"]').click()
     cy.get('tui-calendar-range').should('exist').and('be.visible')
     cy.get('[data-test="date-filter"]').click()
