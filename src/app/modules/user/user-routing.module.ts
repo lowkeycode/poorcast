@@ -16,7 +16,7 @@ const routes: Routes = [
       {
         path: 'overview',
         component: OverviewComponent,
-        canActivate: [AuthGuard],
+        // canActivate: [AuthGuard],
         pathMatch: 'full',
       },
       { path: 'budget', component: BudgetComponent, pathMatch: 'full' },

@@ -19,6 +19,10 @@ tui-calendar-range {
   --tui-font-text: var(--font-primary);
 }
 
+ngx-charts-advanced-pie-chart {
+  z-index: 1;
+}
+
 .tt {
   padding: var(--space-xs-2);
 }
