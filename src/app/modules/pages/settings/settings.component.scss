@@ -1,0 +1,32 @@
+.settings {
+  width: 100%;
+
+  & > * {
+    padding: var(--space-xs-3) var(--space-sml);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    & h2 {
+      margin-bottom: var(--space-xs-3);
+    }
+
+    & button {
+      width: min-content;
+      margin-top: var(--space-xs);
+    }
+  }
+
+  &__delete-acct {
+    height: min-content;
+
+    h2 {
+      font-size: var(--fs-xs);
+    }
+
+    p {
+      font-size: var(--fs-xs-1);
+      color: var(--grey-light);
+    }
+  }
+}
