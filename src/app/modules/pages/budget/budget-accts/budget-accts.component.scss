@@ -3,9 +3,10 @@
   flex-direction: column;
   align-items: center;
 
-  &__btn {
+  &__btns {
     display: flex;
     align-self: flex-end;
+    margin-bottom: var(--space-xs);
 
     & button:nth-of-type(1) {
       margin-right: var(--space-xs-2);
@@ -22,6 +23,5 @@
     flex-wrap: wrap;
     width: 100%;
     gap: var(--space-med);
-    padding:var(--space-xs) 0 var(--space-med) 0;
   }
 }

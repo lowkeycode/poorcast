@@ -1,10 +1,9 @@
 <div class="accts">
-  <div class="accts__btn">
+  <div class="accts__btns">
     <button class="btn btn-primary" data-test="transfer-btn" type="button" (click)="onTransfer()">Transfer</button>
     <button class="btn btn-primary" data-test="add-acct-btn" type="button" (click)="onAddAccount()">Add Account</button>
   </div>
   <div class="accts__cards">
     <app-acct-card *ngFor="let account of accts; let i = index;" [isBudgetCard]="true" [index]="i"></app-acct-card>
-
   </div>
 </div>
