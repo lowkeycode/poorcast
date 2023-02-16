@@ -1,7 +1,7 @@
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import firebase from 'firebase/compat/app';
 import { Injectable } from '@angular/core';
-import { catchError, from, tap, ReplaySubject, BehaviorSubject } from 'rxjs';
+import { catchError, from, tap, ReplaySubject, BehaviorSubject, timer } from 'rxjs';
 import { ErrorService } from '../../shared/services/error.service';
 
 @Injectable({
@@ -71,5 +71,16 @@ export class AuthService {
         throw 'Issue Resetting Password: ' + err;
       })
     )
+  }
+
+  signOut() {
+    this.afAuth.signOut();
+  }
+
+  deleteAccount() {
+    timer(3000).subscribe(() => {
+      this.signOut();
+      this.afAuth.settings
+    })
   }
 }

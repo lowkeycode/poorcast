@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from '../../user/services/auth.service';
 
 type DeleteStates = 'delete' | 'confirm' | 'success';
 
@@ -10,12 +11,15 @@ type DeleteStates = 'delete' | 'confirm' | 'success';
 export class SettingsComponent {
   deleteState: DeleteStates = 'delete';
 
+  constructor(private pcAuth: AuthService) {}
+
   onDelete() {
     this.deleteState = 'confirm';
   }
 
   onConfirm() {
     this.deleteState = 'success';
+    
   }
 
   onCancel() {
