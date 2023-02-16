@@ -1,7 +1,7 @@
 <div class="container">
   <h1 class="container__heading" data-test="page-name">{{ pageName }}</h1>
   <div class="container__icons">
-    <app-solo-icon [appIconSize]="1.8" [iconName]="'filter'" (click)="onToggleDateFilter()" data-test="date-filter"></app-solo-icon>
+    <app-solo-icon *ngIf="pageName === 'overview'" [appIconSize]="1.8" [iconName]="'filter'" (click)="onToggleDateFilter()" data-test="date-filter"></app-solo-icon>
     <app-solo-icon [appIconSize]="1.8" [iconName]="'signout'" (click)="afAuth.signOut()" routerLink="/"></app-solo-icon>
   </div>
 </div>
