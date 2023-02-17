@@ -10,6 +10,7 @@ import {
   timer,
 } from 'rxjs';
 import { ErrorService } from '../../shared/services/error.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +23,8 @@ export class AuthService {
 
   constructor(
     private afAuth: AngularFireAuth,
-    private errorService: ErrorService
+    private errorService: ErrorService,
+    private router: Router,
   ) {}
 
   signInEmailPass(email: string, password: string) {
@@ -87,13 +89,14 @@ export class AuthService {
 
   signOut() {
     this.afAuth.signOut();
+    this.router.navigate(['/']);
   }
 
   deleteAccount() {
     timer(2500).subscribe(() => {
       this.afAuth.currentUser.then((user) => {
-        this.signOut();
         user?.delete();
+        this.signOut();
       });
     });
   }

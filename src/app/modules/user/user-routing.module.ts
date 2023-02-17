@@ -12,17 +12,19 @@ const routes: Routes = [
   {
     path: 'app',
     component: NavWrapComponent,
+    canActivate: [AuthGuard],
     children: [
       {
         path: 'overview',
         component: OverviewComponent,
-        // canActivate: [AuthGuard],
+        canActivate: [AuthGuard],
         pathMatch: 'full',
       },
       { path: 'budget', component: BudgetComponent, pathMatch: 'full' },
       { path: 'settings', component: SettingsComponent, pathMatch: 'full' },
     ],
   },
+  { path: '**', redirectTo: '/' }
 ];
 
 @NgModule({
