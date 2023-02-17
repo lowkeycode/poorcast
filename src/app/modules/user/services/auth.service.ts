@@ -1,29 +1,37 @@
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import firebase from 'firebase/compat/app';
 import { Injectable } from '@angular/core';
-import { catchError, from, tap, ReplaySubject, BehaviorSubject, timer } from 'rxjs';
+import {
+  catchError,
+  from,
+  tap,
+  ReplaySubject,
+  BehaviorSubject,
+  timer,
+} from 'rxjs';
 import { ErrorService } from '../../shared/services/error.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-
   userState$ = new BehaviorSubject<any>({});
   user = this.userState$.asObservable();
   loggedInState$ = new ReplaySubject<boolean>();
   loggedIn = this.loggedInState$.asObservable();
 
-  constructor(private afAuth : AngularFireAuth, private errorService: ErrorService) { }
+  constructor(
+    private afAuth: AngularFireAuth,
+    private errorService: ErrorService
+  ) {}
 
   signInEmailPass(email: string, password: string) {
-    
     return from(this.afAuth.signInWithEmailAndPassword(email, password)).pipe(
-      tap(user => {
+      tap((user) => {
         this.userState$.next(user);
         this.loggedInState$.next(!!user);
       }),
-      catchError(err => {
+      catchError((err) => {
         this.errorService.onError(err);
         throw 'Issue Signing In: ' + err;
       })
@@ -31,25 +39,30 @@ export class AuthService {
   }
 
   signInGoogle() {
-    return from(this.afAuth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).then(user => {
-      
-      if(user) {
-        this.userState$.next(user);
-      }
-      
-      this.loggedInState$.next(!!user);
-    })).pipe(
+    return from(
+      this.afAuth
+        .signInWithPopup(new firebase.auth.GoogleAuthProvider())
+        .then((user) => {
+          if (user) {
+            this.userState$.next(user);
+          }
+
+          this.loggedInState$.next(!!user);
+        })
+    ).pipe(
       catchError((err: Error) => {
-        err
+        err;
         this.errorService.onError(err);
         throw 'Issue Signing Into Google: ' + err;
       })
-    )
+    );
   }
 
   signUp(email: string, password: string) {
-    return from(this.afAuth.createUserWithEmailAndPassword(email, password)).pipe(
-      tap(user => {
+    return from(
+      this.afAuth.createUserWithEmailAndPassword(email, password)
+    ).pipe(
+      tap((user) => {
         this.userState$.next(user);
         this.loggedInState$.next(!!user);
       }),
@@ -62,15 +75,14 @@ export class AuthService {
 
   resetPass(email: string) {
     return from(firebase.auth().sendPasswordResetEmail(email).then()).pipe(
-      tap(_ => {
+      tap((_) => {
         console.log('Password Reset Sent.');
-        
       }),
       catchError((err: Error) => {
         this.errorService.onError(err);
         throw 'Issue Resetting Password: ' + err;
       })
-    )
+    );
   }
 
   signOut() {
@@ -78,9 +90,11 @@ export class AuthService {
   }
 
   deleteAccount() {
-    timer(3000).subscribe(() => {
-      this.signOut();
-      this.afAuth.settings
-    })
+    timer(2500).subscribe(() => {
+      this.afAuth.currentUser.then((user) => {
+        this.signOut();
+        user?.delete();
+      });
+    });
   }
 }

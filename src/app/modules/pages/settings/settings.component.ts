@@ -19,7 +19,7 @@ export class SettingsComponent {
 
   onConfirm() {
     this.deleteState = 'success';
-    
+    this.pcAuth.deleteAccount();
   }
 
   onCancel() {
