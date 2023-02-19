@@ -41,7 +41,6 @@
         *ngIf="!isReset"
         class="btn btn-primary btn-sign-in"
         type="submit"
-        [routerLink]="['/app/overview']"
         data-test="submit"
       >
         {{ type }}
@@ -64,7 +63,6 @@
         class="btn btn-primary btn-sign-in btn-google"
         type="button"
         appGoogleSignin
-        [routerLink]="['/app/overview']"
         data-test="submit-google"
       >
         GOOGLE SIGN IN

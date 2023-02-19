@@ -1,9 +1,10 @@
 import { AuthService } from './../../../services/auth.service';
 import { TextInputComponent } from './../../../../shared/components/forms/text-input/text-input.component';
-import { Component, OnInit, QueryList, ViewChildren, AfterViewInit } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { SignInType } from 'src/app/models/types';
 import { FeedBackMsgs } from 'src/app/models/interfaces';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -24,7 +25,7 @@ export class SignInFormComponent implements OnInit {
     confirmPassword: 'Password doesn\'t match.'
   }
 
-  constructor(private fb: UntypedFormBuilder, private pcAuth: AuthService) {}
+  constructor(private fb: UntypedFormBuilder, private pcAuth: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -79,7 +80,6 @@ export class SignInFormComponent implements OnInit {
     } else {
       return true;
     }
-
   }
 
 
@@ -94,12 +94,14 @@ export class SignInFormComponent implements OnInit {
     if(this.isSignIn) {
       this.pcAuth.signInEmailPass(email, password).subscribe(user => {
         console.log('user', user);
+        this.router.navigate(['app/overview']);
       });
     }
 
     if(this.isSignUp) {
       this.pcAuth.signUp(email, password).subscribe(user => {
         console.log(user);
+        this.router.navigate(['app/overview']);
       });
     }
 

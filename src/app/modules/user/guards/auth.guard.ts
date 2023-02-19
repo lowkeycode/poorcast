@@ -15,8 +15,6 @@ import { AuthService } from '../services/auth.service';
 export class AuthGuard implements CanActivate {
   constructor(private pcAuth: AuthService, private router: Router) {}
   canActivate(): Observable<boolean | UrlTree> {
-    console.log('canActivate');
-
     return this.pcAuth.user.pipe(
       take(1),
       map(user => {
