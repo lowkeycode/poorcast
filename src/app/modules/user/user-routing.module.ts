@@ -17,14 +17,21 @@ const routes: Routes = [
       {
         path: 'overview',
         component: OverviewComponent,
-        canActivate: [AuthGuard],
         pathMatch: 'full',
       },
-      { path: 'budget', component: BudgetComponent, pathMatch: 'full' },
-      { path: 'settings', component: SettingsComponent, pathMatch: 'full' },
+      {
+        path: 'budget',
+        component: BudgetComponent,
+        pathMatch: 'full',
+      },
+      {
+        path: 'settings',
+        component: SettingsComponent,
+        pathMatch: 'full',
+      },
     ],
   },
-  { path: '**', redirectTo: '/' }
+
 ];
 
 @NgModule({

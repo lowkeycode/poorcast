@@ -16,22 +16,20 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class AuthService {
-  userState$ = new BehaviorSubject<any>({});
+  private userState$ = new BehaviorSubject<firebase.auth.UserCredential | null>(null);
   user = this.userState$.asObservable();
-  loggedInState$ = new ReplaySubject<boolean>();
-  loggedIn = this.loggedInState$.asObservable();
 
   constructor(
     private afAuth: AngularFireAuth,
     private errorService: ErrorService,
-    private router: Router,
+    private router: Router
   ) {}
 
   signInEmailPass(email: string, password: string) {
     return from(this.afAuth.signInWithEmailAndPassword(email, password)).pipe(
       tap((user) => {
+        console.log('user', user);
         this.userState$.next(user);
-        this.loggedInState$.next(!!user);
       }),
       catchError((err) => {
         this.errorService.onError(err);
@@ -45,11 +43,7 @@ export class AuthService {
       this.afAuth
         .signInWithPopup(new firebase.auth.GoogleAuthProvider())
         .then((user) => {
-          if (user) {
-            this.userState$.next(user);
-          }
-
-          this.loggedInState$.next(!!user);
+          this.userState$.next(user);
         })
     ).pipe(
       catchError((err: Error) => {
@@ -66,7 +60,6 @@ export class AuthService {
     ).pipe(
       tap((user) => {
         this.userState$.next(user);
-        this.loggedInState$.next(!!user);
       }),
       catchError((err: Error) => {
         this.errorService.onError(err);

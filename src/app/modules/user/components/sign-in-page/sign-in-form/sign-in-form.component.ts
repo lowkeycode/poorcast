@@ -84,6 +84,8 @@ export class SignInFormComponent implements OnInit {
 
 
   onSubmit() {
+    if (this.form.invalid) return;
+
     this.isLoading = true;
 
     const email = this.email?.value;
@@ -91,7 +93,7 @@ export class SignInFormComponent implements OnInit {
 
     if(this.isSignIn) {
       this.pcAuth.signInEmailPass(email, password).subscribe(user => {
-        console.log(user);
+        console.log('user', user);
       });
     }
 
