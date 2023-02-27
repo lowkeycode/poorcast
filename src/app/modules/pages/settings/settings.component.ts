@@ -1,15 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { AuthService } from '../../user/services/auth.service';
+
+type DeleteStates = 'delete' | 'confirm' | 'success';
 
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.scss']
 })
-export class SettingsComponent implements OnInit {
+export class SettingsComponent {
+  deleteState: DeleteStates = 'delete';
 
-  constructor() { }
+  constructor(private pcAuth: AuthService) {}
 
-  ngOnInit(): void {
+  onDelete() {
+    this.deleteState = 'confirm';
   }
 
+  onConfirm() {
+    this.deleteState = 'success';
+    this.pcAuth.deleteAccount();
+  }
+
+  onCancel() {
+    this.deleteState = 'delete';
+  }
 }

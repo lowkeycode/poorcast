@@ -1,1 +1,32 @@
-<p>settings works!</p>
+<ul class="settings">
+  <ng-container [ngSwitch]="deleteState">
+    <ng-template ngSwitchCase="delete">
+      <li class="settings__delete-acct">
+        <h2>Delete Account</h2>
+        <p>Erase your data and permanently delete your account</p>
+        <button class="btn btn-danger" (click)="onDelete()" data-test="delete-acct-btn">Delete</button>
+      </li>
+    </ng-template>
+
+    <ng-template ngSwitchCase="confirm">
+      <li class="settings__delete-acct">
+        <h2>Are you sure?</h2>
+        <div class="btn-container">
+          <button class="btn btn-danger" (click)="onConfirm()" data-test="delete-acct-confirm-btn">
+            Confirm
+          </button>
+          <button class="btn btn-black" (click)="onCancel()" data-test="delete-acct-cancel-btn">
+            Cancel
+          </button>
+        </div>
+      </li>
+    </ng-template>
+
+    <ng-template ngSwitchCase="success">
+      <li class="settings__delete-acct">
+        <h2>Account Deleted</h2>
+        <p data-test="delete-confirm-message">Your account has been successfully deleted.</p>
+      </li>
+    </ng-template>
+  </ng-container>
+</ul>

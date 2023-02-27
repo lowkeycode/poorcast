@@ -203,6 +203,26 @@ input[type='date'] {
   background: var(--grey-light);
 }
 
+:host ::ng-deep .btn-danger {
+  color: var(--white-light);
+  background: var(--red-dark);
+}
+
+:host ::ng-deep .btn-danger:hover {
+  box-shadow: var(--bs-secondary);
+  filter: brightness(1.1);
+}
+
+:host ::ng-deep .btn-black {
+  color: var(--white-light);
+  background: var(--black);
+}
+
+:host ::ng-deep .btn-black:hover {
+  box-shadow: var(--bs-secondary);
+  filter: opacity(90%);
+}
+
 :host ::ng-deep .btn-sign-in {
   margin: 6px;
   background-size: 115% auto;

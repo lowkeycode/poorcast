@@ -2,7 +2,6 @@
 
 .sign-in {
   height: 100%;
-  padding: var(--space-xs);
   border-radius: var(--br-lrg);
   box-shadow: var(--bs-primary);
   overflow: hidden;
@@ -17,7 +16,6 @@
   }
 
   &__form {
-
 
     &--heading-container {
       text-transform: uppercase;
