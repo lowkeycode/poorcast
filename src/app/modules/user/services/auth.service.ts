@@ -5,7 +5,6 @@ import {
   catchError,
   from,
   tap,
-  ReplaySubject,
   BehaviorSubject,
   timer,
 } from 'rxjs';
@@ -26,6 +25,8 @@ export class AuthService {
   ) {}
 
   signInEmailPass(email: string, password: string) {
+    console.log(email);
+    
     return from(this.afAuth.signInWithEmailAndPassword(email, password)).pipe(
       tap((user) => {
         console.log('user', user);
@@ -81,9 +82,10 @@ export class AuthService {
   }
 
   signOut() {
-    this.afAuth.signOut();
-    this.userState$.next(null);
-    this.router.navigate(['/']);
+    this.afAuth.signOut().then(() => {
+      this.userState$.next(null);
+      this.router.navigate(['/'])
+    });
   }
 
   deleteAccount() {

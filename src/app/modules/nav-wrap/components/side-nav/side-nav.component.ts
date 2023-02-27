@@ -18,7 +18,6 @@ export class SideNavComponent implements OnInit {
 
   onPageNameChange($event: string) {
     this.pageNameChange.emit($event)
-    
   }
 
   toggleSideNavOpen() {

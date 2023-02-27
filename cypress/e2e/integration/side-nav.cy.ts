@@ -15,7 +15,7 @@ describe('Side Nav', () => {
     cy.getByData('profile-email').contains('test@test.com')
   })
 
-  // Lowercase 'page-name' assertions as capitalized by css
+  // Lowercase 'page-name' assertions are capitalized by css
   it('navigates to each page', () => {
     cy.get('app-side-nav-icon').eq(1).click()
     cy.get('app-side-nav-icon').eq(1).parent('a').should('have.class', 'side-icon-active')

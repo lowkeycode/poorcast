@@ -15,9 +15,9 @@ import { TuiRootModule } from '@taiga-ui/core';
 
 const modules = [
     BrowserModule,
+    UserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    UserModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,
