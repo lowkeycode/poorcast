@@ -22,4 +22,4 @@ jobs:
             # re-enable PR comment bot
             # COMMIT_INFO_SHA: ${{github.event.pull_request.head.sha}}
           start: npm start
-          wait-on: 'http://localhost:4200'
+          wait-on: 'npx wait-on --timeout 60000 http://localhost:4200'
