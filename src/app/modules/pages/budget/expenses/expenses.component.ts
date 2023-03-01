@@ -3,13 +3,13 @@ import { ModalConfig } from 'src/app/models/interfaces';
 import { ModalService } from 'src/app/modules/shared/services/modal.service';
 
 @Component({
-  selector: 'app-bills',
-  templateUrl: './bills.component.html',
-  styleUrls: ['./bills.component.scss'],
+  selector: 'app-expenses',
+  templateUrl: './expenses.component.html',
+  styleUrls: ['./expenses.component.scss'],
 })
-export class BillsComponent implements OnInit {
-  payBillModalConfig: ModalConfig = {
-    title: 'Pay Bill',
+export class ExpensesComponent implements OnInit {
+  payExpenseModalConfig: ModalConfig = {
+    title: 'Pay Expense',
     icon: {
       iconName: 'arrowForward',
       iconSize: 2,
@@ -39,11 +39,11 @@ export class BillsComponent implements OnInit {
         ],
       },
       {
-        name: 'Bill',
+        name: 'Expense',
         inputs: [
           {
-            formControlName: 'billName',
-            label: 'Bill',
+            formControlName: 'expenseName',
+            label: 'Expense',
             type: 'select',
             hidden: false,
           },
@@ -60,7 +60,7 @@ export class BillsComponent implements OnInit {
         },
       },
       {
-        buttonText: 'Pay Bill',
+        buttonText: 'Pay Expense',
         type: 'submit',
         dataTest: 'modal-save-btn',
         clickFn: () => console.log('Transferring'),
@@ -68,15 +68,15 @@ export class BillsComponent implements OnInit {
     ],
   };
 
-  addBillModalConfig: ModalConfig = {
-    title: 'Add Bill',
+  addExpenseModalConfig: ModalConfig = {
+    title: 'Add Expense',
     fieldsets: [
       {
-        name: 'Bill Info',
+        name: 'Expense Info',
         inputs: [
           {
-            formControlName: 'billName',
-            label: 'Bill',
+            formControlName: 'expenseName',
+            label: 'Expense',
             type: 'text',
             hidden: false,
           },
@@ -87,13 +87,13 @@ export class BillsComponent implements OnInit {
             hidden: false,
           },
           {
-            formControlName: 'billAmount',
+            formControlName: 'expenseAmount',
             label: 'Amount',
             type: 'text',
             hidden: false,
           },
           {
-            formControlName: 'billNotes',
+            formControlName: 'expenseNotes',
             label: 'Notes',
             type: 'text',
             hidden: false,
@@ -119,17 +119,17 @@ export class BillsComponent implements OnInit {
     ],
   };
 
-  bills = [0, 1, 2, 3, 4];
+  expenses = [0, 1, 2, 3, 4];
 
   constructor(private modalService: ModalService) {}
 
   ngOnInit(): void {}
 
-  onPayBill() {
-    this.modalService.openModal(this.payBillModalConfig);
+  onPayExpense() {
+    this.modalService.openModal(this.payExpenseModalConfig);
   }
 
-  onAddBill() {
-    this.modalService.openModal(this.addBillModalConfig);
+  onAddExpense() {
+    this.modalService.openModal(this.addExpenseModalConfig);
   }
 }

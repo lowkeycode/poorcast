@@ -13,18 +13,17 @@
 
 .row-notes {
   display: flex;
+}
 
-  & .tag {
-    font-size: var(--fs-xs-1);
-    margin-left: var(--space-lrg);
-    padding: 2px 5px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: var(--white-light);
-    background: linear-gradient(122deg, var(--grey-dark) 62%, var(--primary-light) 62%);
-    border-radius: var(--br-sml);
-    box-shadow: var(--bs-secondary);
-  }
+.row-category {
+  font-size: var(--fs-xs-1);
+  padding: 2px 5px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--white-light);
+  background: linear-gradient(122deg, var(--grey-dark) 62%, var(--primary-light) 62%);
+  border-radius: var(--br-sml);
+  box-shadow: var(--bs-secondary);
 }
 
 .btns {

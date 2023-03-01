@@ -3,22 +3,22 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ModalConfig } from 'src/app/models/interfaces';
 
 @Component({
-  selector: 'app-bills-row',
-  templateUrl: './bills-row.component.html',
-  styleUrls: ['./bills-row.component.scss'],
+  selector: 'app-expenses-row',
+  templateUrl: './expenses-row.component.html',
+  styleUrls: ['./expenses-row.component.scss'],
 })
-export class BillsRowComponent implements OnInit {
+export class ExpensesRowComponent implements OnInit {
   @Input() index: number;
 
-  editBillModalConfig: ModalConfig = {
-    title: 'Edit Bill',
+  editExpenseModalConfig: ModalConfig = {
+    title: 'Edit Expense',
     fieldsets: [
       {
-        name: 'Bill Info',
+        name: 'Expense Info',
         inputs: [
           {
-            formControlName: 'billName',
-            label: 'Bill',
+            formControlName: 'ExpenseName',
+            label: 'Expense',
             type: 'text',
             hidden: false,
           },
@@ -29,13 +29,13 @@ export class BillsRowComponent implements OnInit {
             hidden: false,
           },
           {
-            formControlName: 'billAmount',
+            formControlName: 'expenseAmount',
             label: 'Amount',
             type: 'text',
             hidden: false,
           },
           {
-            formControlName: 'billNotes',
+            formControlName: 'expenseNotes',
             label: 'Notes',
             type: 'text',
             hidden: false,
@@ -61,21 +61,21 @@ export class BillsRowComponent implements OnInit {
     ],
   };
 
-  bill = {
+  expense = {
     name: 'Rent',
     amount: 850,
     remaining: 450,
     due: new Date(Date.now()).toISOString(),
     notes: 'Pay the rest on payday',
-    tag: 'Rent',
+    category: 'Rent',
   };
 
   constructor(private modalService: ModalService) {}
 
   ngOnInit(): void {}
 
-  onEditBill(index) {
+  onEditExpense(index) {
     //  todo need to figure out how to get the index to pass in. (Do we make name and inputs optional? Or is there a better way)
-    this.modalService.openModal(this.editBillModalConfig);
+    this.modalService.openModal(this.editExpenseModalConfig);
   }
 }

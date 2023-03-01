@@ -1,0 +1,21 @@
+{
+  "accounts":  [
+    {
+      "acctName": "string",
+      "acctType": "credit | chequings | savings | loan",
+      "acctBalance": "number",
+      "acctLimit": "number"
+    }
+  ],
+
+  "expenses": [
+    {
+      "expenseName": "string",
+      "expenseAmount": "number",
+      "expenseRemaining": "number",
+      "expenseDueDate": "UTC String",
+      "expenseNotes": "string",
+      "expenseCategory": "string"
+    }
+  ]
+}
