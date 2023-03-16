@@ -4,23 +4,16 @@
   <tui-calendar-range></tui-calendar-range>
 </div>
 
-<ngx-charts-advanced-pie-chart
+<div class="pie-grid">
+  <ngx-charts-pie-grid
   [view]="view"
-  [results]="data"
   [scheme]="colorScheme"
-  [gradient]="gradient"
-  [animations]="false"
-  [valueFormatting]="formatValue"
-  [percentageFormatting]="formatPercentage"
-  (select)="onSelect($event)"
-  (activate)="onActivate($event)"
-  (deactivate)="onDeactivate($event)"
->
-  <ng-template #tooltipTemplate let-model="model">
-    <!-- fields are series/name/value -->
-    <div class="tt">{{ model.name }} {{ model.value | currency }}</div>
-  </ng-template>
-</ngx-charts-advanced-pie-chart>
+  [results]="single"
+  [designatedTotal]="1000"
+  [label]="'Budget'"
+  *ngFor="let category of testCategories">
+</ngx-charts-pie-grid>
+</div>
 
 <div class="overall">
   <div class="overall__item net">

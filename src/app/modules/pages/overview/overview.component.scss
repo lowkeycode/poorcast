@@ -19,13 +19,18 @@ tui-calendar-range {
   --tui-font-text: var(--font-primary);
 }
 
-ngx-charts-advanced-pie-chart {
+.pie-grid {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+ngx-charts-pie-grid {
   z-index: 1;
 }
 
-.tt {
-  padding: var(--space-xs-2);
-}
+::ng-deep .ngx-charts .percent-label { 
+  fill: var(--primary-light); 
+} 
 
 .overall {
   margin: var(--space-med) 0 var(--space-sml) 0;

@@ -7,38 +7,23 @@ import { DateRangeService } from '../date-range.service';
   styleUrls: ['./overview.component.scss']
 })
 export class OverviewComponent implements OnInit {
+  testCategories = ['Rent', 'Groceries', 'Utilities', 'Dining Out', 'Savings'];
 
   isDateFilterOpen$ = this.dateRangeService.isOpen$;
 
+  single: any[] = [{
+    "name": "Rent",
+    "value": 894
+  }];
 
-  data: any[] = [
-    {
-      "name": "Rent",
-      "value": '1650'
-    },
-    {
-      "name": "Entertainment",
-      "value": '452'
-    },
-    {
-      "name": "Travel",
-      "value": '214'
-    },
-    {
-      "name": "Groceries",
-      "value": '273'
-    },
-  
-  ];
-  view = [900, 200] as any;
+  view: [number, number] = [200, 200];
 
   // options
-  gradient: boolean = true;
   showLegend: boolean = true;
   showLabels: boolean = true;
 
   colorScheme: any = {
-    domain: ['#353535', '#9E9E9E', '#096C1F', '#EEEEEE', '#CACACA', '#313131']
+    domain: ['#070907']
   };
 
   list = [
@@ -95,19 +80,6 @@ export class OverviewComponent implements OnInit {
   ngOnInit(): void {
   }
 
-
-  formatValue = (val) => {
-    let formatter = new Intl.NumberFormat('en-us', {
-      style: 'currency',
-      currency: 'CAD',
-      currencyDisplay: "narrowSymbol"
-    });
-    return formatter.format(val)
-  }
-
-  formatPercentage = (value) => {
-    return Math.round(value)    
-  }
 
   onSelect(data): void {
     console.log('Item clicked', JSON.parse(JSON.stringify(data)));
