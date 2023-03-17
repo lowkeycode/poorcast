@@ -15,8 +15,8 @@ describe('Overview', () => {
     cy.get('tui-calendar-range').should('exist').and('not.be.visible')
   })
 
-  it('renders the ngx chart', () => {
-    cy.get('ngx-charts-advanced-pie-chart').should('exist').and('be.visible')
+  it('renders the pie grid chart', () => {
+    cy.get('ngx-charts-pie-grid').should('exist').and('be.visible')
   })
 
   it('renders all 5 overall items', () => {

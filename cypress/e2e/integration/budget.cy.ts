@@ -35,22 +35,22 @@ describe('Budget', () => {
     cy.get('.modal__main--title').should('be.visible').contains('Transfer')
   })
 
-  it('renders bills section', () => {
-    cy.get('.bills__table--header').should('be.visible')
+  it('renders expenses section', () => {
+    cy.get('.expenses__table--header').should('be.visible')
   })
 
-  it('shows pay bill modal on pay bill click', () => {
-    cy.get('[data-test="pay-bill-btn"]').click()
-    cy.get('.modal__main--title').should('be.visible').contains('Pay Bill')
+  it('shows pay expense modal on pay expense click', () => {
+    cy.get('[data-test="pay-expense-btn"]').click()
+    cy.get('.modal__main--title').should('be.visible').contains('Pay Expense')
   })
 
-  it('shows add bill modal on add bill click', () => {
-    cy.get('[data-test="add-bill-btn"]').click()
-    cy.get('.modal__main--title').should('be.visible').contains('Add Bill')
+  it('shows add expense modal on add expense click', () => {
+    cy.get('[data-test="add-expense-btn"]').click()
+    cy.get('.modal__main--title').should('be.visible').contains('Add Expense')
   })
 
-  it('shows edit bill modal on edit bill click', () => {
-    cy.get('[data-test="edit-bill-btn-0"]').click()
-    cy.get('.modal__main--title').should('be.visible').contains('Edit Bill')
+  it('shows edit expense modal on edit expense click', () => {
+    cy.get('[data-test="edit-expense-btn-0"]').click()
+    cy.get('.modal__main--title').should('be.visible').contains('Edit Expense')
   })
 }) 
