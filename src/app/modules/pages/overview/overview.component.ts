@@ -9,7 +9,6 @@ import { DateRangeService } from '../date-range.service';
 export class OverviewComponent implements OnInit {
   testCategories = ['Rent', 'Groceries', 'Utilities', 'Dining Out', 'Savings'];
 
-  isDateFilterOpen$ = this.dateRangeService.isOpen$;
 
   single: any[] = [{
     "name": "Rent",

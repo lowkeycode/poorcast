@@ -7,14 +7,12 @@ import { SharedModule } from '../shared/shared.module';
 import { RouterModule } from '@angular/router';
 import { SideNavIconComponent } from './components/side-nav-icon/side-nav-icon.component';
 
-
 const components = [
   NavWrapComponent,
   SideNavComponent,
   TopBarComponent,
   SideNavIconComponent
 ]
-
 
 @NgModule({
   declarations: [
