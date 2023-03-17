@@ -16,6 +16,7 @@ const components = [
   LogoComponent,
   FieldsetComponent,
   TextInputComponent,
+  SelectInputComponent,
   UserProfileComponent,
   SoloIconComponent,
   SnackComponent,
@@ -27,7 +28,7 @@ const components = [
 const directives = [IconDirective];
 
 @NgModule({
-  declarations: [...components, ...directives, SelectInputComponent],
+  declarations: [...components, ...directives],
   imports: [CommonModule],
   exports: [...components, ...directives],
 })

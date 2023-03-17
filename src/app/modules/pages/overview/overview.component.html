@@ -1,7 +1,7 @@
-<div class="calendar" [ngClass]="{
-  'calendar-open': isDateFilterOpen$ | async
-}">
-  <tui-calendar-range></tui-calendar-range>
+
+
+<div class="budget-period-select">
+  <app-select-input [label]="'Budget Period'" [options]="['Mar 1, 2023 - Mar 15, 2023', 'Mar 16, 2023 - Mar 31, 2023']"></app-select-input>
 </div>
 
 <div class="pie-grid">
