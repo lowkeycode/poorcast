@@ -5,6 +5,6 @@
 <p class="row-copy row-notes">{{ expense.notes }}</p>
 <p class="row-copy"><span class="row-category">{{ expense.category }}</span></p>
 <div class="btns">
-  <app-solo-icon [appIconSize]=".9" [iconName]="'closeCircle'"></app-solo-icon>
-  <app-solo-icon [appIconSize]=".9" [iconName]="'ellipsisHorizontal'" [attr.data-test]="'edit-expense-btn-' + index" (click)="onEditExpense(index)"></app-solo-icon>
+  <app-solo-icon [appIconSize]="1.2" [iconName]="'ellipsisHorizontal'" [attr.data-test]="'edit-expense-btn-' + index" (click)="onEditExpense(index)"></app-solo-icon>
+  <app-solo-icon [appIconSize]="1.2" [iconName]="'closeCircle'"></app-solo-icon>
 </div>

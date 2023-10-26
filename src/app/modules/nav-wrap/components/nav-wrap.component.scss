@@ -9,9 +9,8 @@ app-side-nav {
   width: 18%;
   height: 100vh;
   background-color: var(--grey-dark);
-  border-radius: 0 var(--br-lrg) var(--br-lrg) 0;
+  border-radius: 0 var(--br-sml) var(--br-sml) 0;
   box-shadow: var(--bs-primary);
-  border-right: 1px solid var(--black);
   padding:  var(--space-xs) var(--space-sml);
   position: sticky;
   top: 0;

@@ -9,12 +9,12 @@
 --grey-dark: #4d4f4d;
 --grey-light: #888b88;
 
---red-dark: #8f180c;
---red-light: #f69c93;
---orange-dark: #74401c;
---orange-light: #edcbb3;
---yellow-dark: #746f1c;
---yellow-light: #edeab3;
+--red-dark: #be1f10;
+--red-light: #fac7c2;
+--orange-dark: #9d5726;
+--orange-light: #f7e7dc;
+--yellow-dark: #9d9626;
+--yellow-light: #f7f5dc;
 
 // Fonts
 --font-primary: "Poppins", sans-serif;
@@ -194,7 +194,7 @@ input[type='date'] {
 
 :host ::ng-deep .btn-neutral {
   color: var(--white-light);
-  box-shadow: 0px 0px 14px -7px var(primary-light);
+  box-shadow: 0px 0px 14px -7px var(--primary-light);
   background: var(--grey-dark);
 }
 
