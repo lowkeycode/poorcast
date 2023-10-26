@@ -1,0 +1,22 @@
+<p class="row-copy row-name">{{ item.name }}</p>
+<p class="row-copy row-amount">{{ item.amount | currency }}</p>
+<p class="row-copy row-remaining">{{ item.remaining | currency }}</p>
+<p class="row-copy row-due">{{ item.due }}</p>
+<p class="row-copy row-notes">{{ item.notes }}</p>
+<p class="row-copy">
+  <span class="row-category">{{ item.category }}</span>
+</p>
+<div class="btns">
+  <ng-container *ngIf="isEditable">
+    <app-solo-icon
+      [appIconSize]="0.9"
+      [iconName]="'closeCircle'"
+    ></app-solo-icon>
+    <app-solo-icon
+      [appIconSize]="0.9"
+      [iconName]="'ellipsisHorizontal'"
+      [attr.data-test]="'edit-expense-btn-' + index"
+      (click)="onEditExpense(index)"
+    ></app-solo-icon>
+  </ng-container>
+</div>

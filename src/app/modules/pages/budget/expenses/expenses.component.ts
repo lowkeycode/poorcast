@@ -119,8 +119,6 @@ export class ExpensesComponent implements OnInit {
     ],
   };
 
-  expenses = [0, 1, 2, 3, 4];
-
   constructor(private modalService: ModalService) {}
 
   ngOnInit(): void {}

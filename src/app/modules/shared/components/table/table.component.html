@@ -1,0 +1,12 @@
+<div class="table">
+  <div class="table__header">
+    <p>Expense</p>
+    <p>Amount</p>
+    <p>Remaining</p>
+    <p>Due</p>
+    <p>Notes</p>
+    <p>Category</p>
+  </div>
+ <app-table-row *ngFor="let item of listItems; let i = index;" [index]="i" [isEditable]="isEditable"></app-table-row>
+ 
+</div>

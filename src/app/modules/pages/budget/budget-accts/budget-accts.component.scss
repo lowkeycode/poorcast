@@ -6,7 +6,7 @@
   &__btns {
     display: flex;
     align-self: flex-end;
-    margin-bottom: var(--space-xs);
+    padding-bottom: var(--space-xs);
 
     & button:nth-of-type(1) {
       margin-right: var(--space-xs-2);

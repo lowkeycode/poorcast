@@ -8,7 +8,6 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { UpcomingCardComponent } from './overview/upcoming-card/upcoming-card.component';
 import { BudgetAcctsComponent } from './budget/budget-accts/budget-accts.component';
 import { ExpensesComponent } from './budget/expenses/expenses.component';
-import { ExpensesRowComponent } from './budget/expenses/expenses-row/expenses-row.component';
 import { TuiCalendarRangeModule } from '@taiga-ui/kit';
 
 const components = [
@@ -17,10 +16,11 @@ const components = [
   SettingsComponent,
   UpcomingCardComponent,
   BudgetAcctsComponent,
+  ExpensesComponent
 ];
 
 @NgModule({
-  declarations: [...components, ExpensesComponent, ExpensesRowComponent],
+  declarations: [...components],
   imports: [
     CommonModule,
     NgxChartsModule,
