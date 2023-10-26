@@ -12,7 +12,7 @@ const routes: Routes = [
   {
     path: 'app',
     component: NavWrapComponent,
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     children: [
       {
         path: 'overview',
