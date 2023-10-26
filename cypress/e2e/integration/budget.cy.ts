@@ -36,7 +36,7 @@ describe('Budget', () => {
   })
 
   it('renders expenses section', () => {
-    cy.get('.expenses__table--header').should('be.visible')
+    cy.get('.expenses').should('be.visible')
   })
 
   it('shows pay expense modal on pay expense click', () => {
