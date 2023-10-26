@@ -1,7 +1,7 @@
 <div class="container">
   <h1 class="container__heading" data-test="page-name">{{ pageName }}</h1>
   <div class="container__icons">
-    <app-solo-icon class="sign-out" [appIconSize]="1.8" [iconName]="'signout'" (click)="pcAuth.signOut()" routerLink="/" data-test="signout-btn"></app-solo-icon>
+    <app-solo-icon class="sign-out" [appIconSize]="1.8" [label]="'Sign Out'" [iconName]="'signout'" (click)="pcAuth.signOut()" routerLink="/" data-test="signout-btn"></app-solo-icon>
   </div>
 </div>
 <ng-content></ng-content>
