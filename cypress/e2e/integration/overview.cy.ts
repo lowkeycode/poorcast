@@ -8,13 +8,6 @@ describe('Overview', () => {
     cy.location('pathname').should('eq', '/app/overview')
   })
 
-  // it('opens/closes the calendar', () => {
-  //   cy.get('[data-test="date-filter"]').click()
-  //   cy.get('tui-calendar-range').should('exist').and('be.visible')
-  //   cy.get('[data-test="date-filter"]').click()
-  //   cy.get('tui-calendar-range').should('exist').and('not.be.visible')
-  // })
-
   it('renders the budget period select', () => {
     cy.get('app-select-input').should('exist').and('be.visible')
   })
@@ -31,8 +24,8 @@ describe('Overview', () => {
     cy.get('.accts').should('be.visible')
   })
 
-  it('renders the carousel', () => {
-    cy.get('.caro-body').should('be.visible')
+  it('renders upcoming payments', () => {
+    cy.get('.upcoming').should('be.visible')
   })
 
 })
