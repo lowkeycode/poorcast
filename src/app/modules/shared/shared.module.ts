@@ -8,9 +8,10 @@ import { SoloIconComponent } from './components/solo-icon/solo-icon.component';
 import { SnackComponent } from './components/snack/snack.component';
 import { IconDirective } from './directives/icon.directive';
 import { AcctCardComponent } from './components/acct-card/acct-card.component';
-import { CarouselComponent } from './components/carousel/carousel.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { SelectInputComponent } from './components/forms/select-input/select-input.component';
+import { TableComponent } from './components/table/table.component';
+import { TableRowComponent } from './components/table-row/table-row.component';
 
 const components = [
   LogoComponent,
@@ -21,8 +22,9 @@ const components = [
   SoloIconComponent,
   SnackComponent,
   AcctCardComponent,
-  CarouselComponent,
   ModalComponent,
+  TableComponent,
+  TableRowComponent
 ];
 
 const directives = [IconDirective];

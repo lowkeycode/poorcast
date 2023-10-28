@@ -63,20 +63,11 @@ ngx-charts-pie-grid {
 
 .upcoming {
   padding: var(--space-med) 0;
-  width: 65%;
 
-
-  & app-carousel {
-    width: 41rem;
-  }
-
-  & .caro-item {
-    width: 5rem;
-    height: 5rem;
-    background: var(--grey-light);
-    border: 1px solid var(--grey-dark);
-    border-radius: var(--br-lrg);
-    box-shadow: var(--bs-secondary);
+  &__title {
+    font-weight: 500;
+    font-size: var(--fs-xs);
+    padding-bottom: var(--space-xs-1);
   }
 }
 

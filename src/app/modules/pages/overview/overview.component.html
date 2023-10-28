@@ -45,12 +45,8 @@
 </div>
 
 <div class="upcoming">
-  <app-carousel [title]="'Upcoming Payments'" [list]="list">
-    <app-upcoming-card
-      #caroItem
-      class="caro-item"
-      *ngFor="let card of list"
-      [card]="card"
-    ></app-upcoming-card>
-  </app-carousel>
+  <div>
+    <h3 class="upcoming__title">Upcoming</h3>
+  </div>
+  <app-table [listItems]="[0, 1, 2, 3, 4]" [isEditable]="false"></app-table>
 </div>

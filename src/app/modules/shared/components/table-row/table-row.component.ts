@@ -1,14 +1,16 @@
-import { ModalService } from 'src/app/modules/shared/services/modal.service';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ModalConfig } from 'src/app/models/interfaces';
+import { ModalService } from '../../services/modal.service';
 
 @Component({
-  selector: 'app-expenses-row',
-  templateUrl: './expenses-row.component.html',
-  styleUrls: ['./expenses-row.component.scss'],
+  selector: 'app-table-row',
+  templateUrl: './table-row.component.html',
+  styleUrls: ['./table-row.component.scss']
 })
-export class ExpensesRowComponent implements OnInit {
+export class TableRowComponent {
+  @Input() item: any;
   @Input() index: number;
+  @Input() isEditable: boolean;
 
   editExpenseModalConfig: ModalConfig = {
     title: 'Edit Expense',
@@ -61,21 +63,21 @@ export class ExpensesRowComponent implements OnInit {
     ],
   };
 
-  expense = {
-    name: 'Rent',
-    amount: 850,
-    remaining: 450,
-    due: new Date(Date.now()).toISOString(),
-    notes: 'Pay the rest on payday',
-    category: 'Rent',
-  };
-
-  constructor(private modalService: ModalService) {}
-
-  ngOnInit(): void {}
+  constructor(private modalService: ModalService) {
+    // ! Fix this obviously. Dont hardcode
+    this.item = {
+      name: 'Rent',
+      amount: 850,
+      remaining: 450,
+      due: new Date(Date.now()).toISOString(),
+      notes: 'Pay the rest on payday',
+      category: 'Rent',
+    };
+  }
 
   onEditExpense(index) {
     //  todo need to figure out how to get the index to pass in. (Do we make name and inputs optional? Or is there a better way)
     this.modalService.openModal(this.editExpenseModalConfig);
   }
+
 }

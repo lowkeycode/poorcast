@@ -3,16 +3,5 @@
     <button class="btn btn-primary" data-test="pay-expense-btn" (click)="onPayExpense()">Pay Expense</button>
     <button class="btn btn-primary" data-test="add-expense-btn" (click)="onAddExpense()">Add Expense</button>
   </div>
-  <div class="expenses__table">
-    <div class="expenses__table--header">
-      <p>Expense</p>
-      <p>Amount</p>
-      <p>Remaining</p>
-      <p>Due</p>
-      <p>Notes</p>
-      <p>Category</p>
-    </div>
-   <app-expenses-row *ngFor="let expense of expenses; let i = index;" [index]="i"></app-expenses-row>
-   
-  </div>
+  <app-table [listItems]="[0, 1, 2, 3, 4]" [isEditable]="true"></app-table>
 </div>

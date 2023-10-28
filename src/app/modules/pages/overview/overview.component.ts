@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { DateRangeService } from '../date-range.service';
 
 @Component({
   selector: 'app-overview',
@@ -73,7 +72,7 @@ export class OverviewComponent implements OnInit {
     },
   ]
 
-  constructor(private dateRangeService: DateRangeService) {
+  constructor() {
   }
 
   ngOnInit(): void {
