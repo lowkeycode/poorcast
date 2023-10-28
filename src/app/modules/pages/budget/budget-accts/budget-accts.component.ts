@@ -174,6 +174,5 @@ export class BudgetAcctsComponent implements OnInit {
 
   onTransactions(){
     this.modalService.openModal(this.transactionsModalConfig);
-    console.log(this.accts);
   }
 }
