@@ -7,7 +7,10 @@
     display: flex;
     align-self: flex-end;
     padding-bottom: var(--space-xs);
-    gap: var(--space-xs-2);
+
+    & button:nth-of-type(1) {
+      margin-right: var(--space-xs-2);
+    }
   }
 
   & button:hover {

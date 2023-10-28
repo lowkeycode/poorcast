@@ -20,16 +20,6 @@ describe('Budget', () => {
     cy.get('.modal').should('not.exist')
   })
 
-  it('shows transactions modal on transactions click', () => {
-    cy.get('[data-test="transactions-btn"]').click()
-    cy.get('.modal__main--title').should('be.visible').contains('Transactions')
-  })
-
-  it('shows transfer modal on transfer click', () => {
-    cy.get('[data-test="transfer-btn"]').click()
-    cy.get('.modal__main--title').should('be.visible').contains('Transfer')
-  })
-
   it('shows add account modal on add account click', () => {
     cy.get('[data-test="add-acct-btn"]').click()
     cy.get('.modal__main--title').should('be.visible').contains('Add Account')
@@ -38,6 +28,11 @@ describe('Budget', () => {
   it('shows edit modal on edit account click', () => {
     cy.get('[data-test="edit-acct-btn-0"]').click()
     cy.get('.modal__main--title').should('be.visible').contains('Edit Account')
+  })
+
+  it('shows transfer modal on transfer click', () => {
+    cy.get('[data-test="transfer-btn"]').click()
+    cy.get('.modal__main--title').should('be.visible').contains('Transfer')
   })
 
   it('renders expenses section', () => {

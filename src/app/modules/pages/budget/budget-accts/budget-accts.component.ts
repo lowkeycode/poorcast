@@ -10,45 +10,6 @@ import { ModalService } from 'src/app/modules/shared/services/modal.service';
 export class BudgetAcctsComponent implements OnInit {
   accts = [0, 1, 2];
 
-  transactionsModalConfig: ModalConfig = {
-    title: 'Transactions',
-    fieldsets: [
-      {
-        name: 'Transactions',
-        inputs: [
-          {
-            formControlName: 'type',
-            label: 'Transaction Type',
-            type: 'select',
-            hidden: false,
-          },
-          {
-            formControlName: 'amount',
-            label: 'Amount',
-            type: 'text',
-            hidden: false,
-          }
-        ],
-      },
-    ],
-    modalButtons: [
-      {
-        buttonText: 'Cancel',
-        type: 'button',
-        dataTest: 'modal-cancel-btn',
-        clickFn: () => {
-          this.modalService.closeModal();
-        },
-      },
-      {
-        buttonText: 'Save',
-        type: 'submit',
-        dataTest: 'modal-save-btn',
-        clickFn: () => console.log('Saving'),
-      },
-    ],
-  };
-
   addAcctModalConfig: ModalConfig = {
     title: 'Add Account',
     fieldsets: [
@@ -170,9 +131,5 @@ export class BudgetAcctsComponent implements OnInit {
 
   onTransfer() {
     this.modalService.openModal(this.transferModalConfig);
-  }
-
-  onTransactions(){
-    this.modalService.openModal(this.transactionsModalConfig);
   }
 }
