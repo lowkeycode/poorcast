@@ -79,7 +79,6 @@ describe('Sign in Page', () => {
 
   context('Password Reset', () => {
     beforeEach(() => {
-      cy.getByData('new-account').click();
       cy.getByData('password-reset').click();
     })
 
