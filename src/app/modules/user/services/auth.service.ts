@@ -1,5 +1,6 @@
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import firebase from 'firebase/compat/app';
+import { GoogleAuthProvider } from '@angular/fire/auth';
 import { Injectable } from '@angular/core';
 import {
   catchError,
@@ -40,9 +41,10 @@ export class AuthService {
   }
 
   signInGoogle() {
+    console.log(firebase)
     return from(
       this.afAuth
-        .signInWithPopup(new firebase.auth.GoogleAuthProvider())
+        .signInWithPopup(new GoogleAuthProvider())
         .then((user) => {
           this.userState$.next(user);
         })
@@ -70,7 +72,7 @@ export class AuthService {
   }
 
   resetPass(email: string) {
-    return from(firebase.auth().sendPasswordResetEmail(email).then()).pipe(
+    return from(this.afAuth.sendPasswordResetEmail(email).then()).pipe(
       tap((_) => {
         console.log('Password Reset Sent.');
       }),

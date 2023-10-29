@@ -11,7 +11,7 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth'
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SharedModule } from './modules/shared/shared.module';
-import { TuiRootModule } from '@taiga-ui/core';
+import { StoreModule } from '@ngrx/store';
 
 const modules = [
     BrowserModule,
@@ -22,7 +22,6 @@ const modules = [
     AngularFirestoreModule,
     AngularFireAuthModule,
     SharedModule,
-    TuiRootModule
 ]
 
 @NgModule({
@@ -30,7 +29,8 @@ const modules = [
     AppComponent,
   ],
   imports: [
-    ...modules
+    ...modules,
+    StoreModule.forRoot({}, {})
   ],
   providers: [],
   bootstrap: [AppComponent]
