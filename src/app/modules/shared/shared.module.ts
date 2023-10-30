@@ -12,6 +12,8 @@ import { ModalComponent } from './components/modal/modal.component';
 import { SelectInputComponent } from './components/forms/select-input/select-input.component';
 import { TableComponent } from './components/table/table.component';
 import { TableRowComponent } from './components/table-row/table-row.component';
+import { ArcChartComponent } from './components/arc-chart/arc-chart.component';
+import { TuiArcChartModule } from '@taiga-ui/addon-charts';
 
 const components = [
   LogoComponent,
@@ -24,14 +26,15 @@ const components = [
   AcctCardComponent,
   ModalComponent,
   TableComponent,
-  TableRowComponent
+  TableRowComponent,
+  ArcChartComponent
 ];
 
 const directives = [IconDirective];
 
 @NgModule({
-  declarations: [...components, ...directives],
-  imports: [CommonModule],
+  declarations: [...components, ...directives ],
+  imports: [CommonModule, TuiArcChartModule],
   exports: [...components, ...directives],
 })
 export class SharedModule {}
