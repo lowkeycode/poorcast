@@ -1,3 +1,4 @@
+import { TuiRootModule } from "@taiga-ui/core";
 import { UserModule } from './modules/user/user.module';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -30,8 +31,10 @@ const modules = [
   ],
   imports: [
     ...modules,
-    StoreModule.forRoot({}, {})
-  ],
+    StoreModule.forRoot({}, {}),
+      BrowserAnimationsModule,
+      TuiRootModule
+],
   providers: [],
   bootstrap: [AppComponent]
 })

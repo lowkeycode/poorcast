@@ -12,20 +12,14 @@
 :host ::ng-deep app-select-input label {
   font-size: var(--fs-xs-1);
   text-align: end;
+  margin: var(--space-xs-3) 0;
 }
 
-.pie-grid {
+.chart-grid {
   display: flex;
   flex-wrap: wrap;
+  gap: var(--space-lrg);
 }
-
-ngx-charts-pie-grid {
-  z-index: 1;
-}
-
-::ng-deep .ngx-charts .percent-label { 
-  fill: var(--primary-light); 
-} 
 
 .overall {
   margin: var(--space-med) 0 var(--space-sml) 0;

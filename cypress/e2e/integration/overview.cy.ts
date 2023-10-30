@@ -12,6 +12,10 @@ describe('Overview', () => {
     cy.get('app-select-input').should('exist').and('be.visible')
   })
 
+  it('renders chart-grid (may be empty)', () => {
+    cy.get('.chart-grid').should('be.visible')
+  })
+
   it('renders all 5 overall items', () => {
     cy.get('.overall__item').should('have.length', 5).each(item => expect(item).to.be.visible)
   })

@@ -1,0 +1,12 @@
+@import '@taiga-ui/core/styles/taiga-ui-local.scss';
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+
+  --tui-chart-0: var(--primary-light);
+  --tui-chart-1: var(--tui-support-01);
+  --tui-chart-2: var(--tui-support-03);
+  --tui-chart-3: var(--tui-support-09);
+}
