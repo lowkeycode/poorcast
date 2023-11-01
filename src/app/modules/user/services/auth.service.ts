@@ -11,6 +11,9 @@ import {
 } from 'rxjs';
 import { ErrorService } from '../../shared/services/error.service';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/app.module';
+import { createCurrentUser, removeCurrentUser } from 'src/app/store/user/user.actions';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +25,8 @@ export class AuthService {
   constructor(
     private afAuth: AngularFireAuth,
     private errorService: ErrorService,
-    private router: Router
+    private router: Router,
+    private store: Store<AppState>
   ) {}
 
   signInEmailPass(email: string, password: string) {
@@ -32,6 +36,7 @@ export class AuthService {
       tap((user) => {
         console.log('user', user);
         this.userState$.next(user);
+        this.store.dispatch(createCurrentUser(user));
       }),
       catchError((err) => {
         this.errorService.onError(err);
@@ -47,6 +52,8 @@ export class AuthService {
         .signInWithPopup(new GoogleAuthProvider())
         .then((user) => {
           this.userState$.next(user);
+          console.log('auth service - google')
+          this.store.dispatch(createCurrentUser(user));
         })
     ).pipe(
       catchError((err: Error) => {
@@ -63,6 +70,7 @@ export class AuthService {
     ).pipe(
       tap((user) => {
         this.userState$.next(user);
+        this.store.dispatch(createCurrentUser(user));
       }),
       catchError((err: Error) => {
         this.errorService.onError(err);
@@ -87,6 +95,7 @@ export class AuthService {
     this.afAuth.signOut().then(() => {
       this.userState$.next(null);
       this.router.navigate(['/'])
+      this.store.dispatch(removeCurrentUser())
     });
   }
 
