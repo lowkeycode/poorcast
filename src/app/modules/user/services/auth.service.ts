@@ -1,42 +1,46 @@
+import { selectUserId } from './../../../store/user/user.selectors';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import firebase from 'firebase/compat/app';
 import { GoogleAuthProvider } from '@angular/fire/auth';
 import { Injectable } from '@angular/core';
-import {
-  catchError,
-  from,
-  tap,
-  BehaviorSubject,
-  timer,
-} from 'rxjs';
+import { catchError, from, tap, BehaviorSubject, timer, finalize } from 'rxjs';
 import { ErrorService } from '../../shared/services/error.service';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.module';
-import { createCurrentUser, removeCurrentUser } from 'src/app/store/user/user.actions';
+import { createCurrentUser } from 'src/app/store/user/user.actions';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private userState$ = new BehaviorSubject<firebase.auth.UserCredential | null>(null);
+  private userState$ = new BehaviorSubject<firebase.auth.UserCredential | null>(
+    null
+  );
   user = this.userState$.asObservable();
 
   constructor(
     private afAuth: AngularFireAuth,
     private errorService: ErrorService,
     private router: Router,
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private afs: AngularFirestore
   ) {}
 
   signInEmailPass(email: string, password: string) {
-    console.log(email);
-    
     return from(this.afAuth.signInWithEmailAndPassword(email, password)).pipe(
       tap((user) => {
         console.log('user', user);
-        this.userState$.next(user);
-        this.store.dispatch(createCurrentUser(user));
+        const dispatchUser = JSON.parse(JSON.stringify(user.user));
+        this.store.dispatch(createCurrentUser(dispatchUser));
+
+        this.store.select(selectUserId).subscribe((id) => {
+          //! get user data
+
+          //! if none create
+          this.userState$.next(user);
+        });
       }),
       catchError((err) => {
         this.errorService.onError(err);
@@ -46,15 +50,20 @@ export class AuthService {
   }
 
   signInGoogle() {
-    console.log(firebase)
     return from(
-      this.afAuth
-        .signInWithPopup(new GoogleAuthProvider())
-        .then((user) => {
+      this.afAuth.signInWithPopup(new GoogleAuthProvider()).then((user) => {
+        console.log('user', user);
+
+        const dispatchUser = JSON.parse(JSON.stringify(user.user));
+        this.store.dispatch(createCurrentUser(dispatchUser));
+
+        this.store.select(selectUserId).subscribe((id) => {
+          //! get user data
+
+          //! if none create
           this.userState$.next(user);
-          console.log('auth service - google')
-          this.store.dispatch(createCurrentUser(user));
-        })
+        });
+      })
     ).pipe(
       catchError((err: Error) => {
         err;
@@ -69,8 +78,19 @@ export class AuthService {
       this.afAuth.createUserWithEmailAndPassword(email, password)
     ).pipe(
       tap((user) => {
+        const dispatchUser = JSON.parse(JSON.stringify(user.user));
+
+        this.store.dispatch(createCurrentUser(dispatchUser));
+
+        this.store.select(selectUserId).subscribe((id) => {
+          this.afs
+            .collection('users')
+            .doc(id)
+            .set({ id })
+        });
+
+        
         this.userState$.next(user);
-        this.store.dispatch(createCurrentUser(user));
       }),
       catchError((err: Error) => {
         this.errorService.onError(err);
@@ -94,16 +114,20 @@ export class AuthService {
   signOut() {
     this.afAuth.signOut().then(() => {
       this.userState$.next(null);
-      this.router.navigate(['/'])
-      this.store.dispatch(removeCurrentUser())
+      this.router.navigate(['/']);
     });
   }
 
   deleteAccount() {
     timer(2500).subscribe(() => {
       this.afAuth.currentUser.then((user) => {
-        user?.delete();
-        this.signOut();
+        this.store.select(selectUserId).subscribe((id) => {
+          user?.delete();
+
+          //! Remove user data from firebase
+
+          this.signOut();
+        });
       });
     });
   }

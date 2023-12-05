@@ -13,12 +13,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SharedModule } from './modules/shared/shared.module';
 import { StoreModule } from '@ngrx/store';
-import { userReducer } from "./store/user/user.reduceers";
+import { userReducer } from "./store/user/user.reducers";
 import firebase from 'firebase/compat/app';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 export interface AppState {
-  user: firebase.auth.UserCredential,
+  user: firebase.User;
 }
 
 const modules = [
