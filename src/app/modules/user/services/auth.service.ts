@@ -57,10 +57,24 @@ export class AuthService {
         const dispatchUser = JSON.parse(JSON.stringify(user.user));
         this.store.dispatch(createCurrentUser(dispatchUser));
 
-        this.store.select(selectUserId).subscribe((id) => {
-          //! get user data
+        // todo - create userData slice initially null
+        // todo - action and effect for creating accounts
+        // ? I think the actually filtering by date will possibly need to be done on the client side unless we can guarantee order on initial load
 
-          //! if none create
+        this.store.select(selectUserId).subscribe((id) => {
+          this.afs
+            .collection('users')
+            .doc(id)
+            .valueChanges()
+            .subscribe((data) => {
+              console.log(typeof data);
+            });
+          this.afs
+            .collection('users')
+            .doc(id).collection('accounts').valueChanges().subscribe(data => {
+              console.log(data);
+            })
+
           this.userState$.next(user);
         });
       })
@@ -79,17 +93,7 @@ export class AuthService {
     ).pipe(
       tap((user) => {
         const dispatchUser = JSON.parse(JSON.stringify(user.user));
-
         this.store.dispatch(createCurrentUser(dispatchUser));
-
-        this.store.select(selectUserId).subscribe((id) => {
-          this.afs
-            .collection('users')
-            .doc(id)
-            .set({ id })
-        });
-
-        
         this.userState$.next(user);
       }),
       catchError((err: Error) => {
