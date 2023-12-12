@@ -1,5 +1,5 @@
-import { createFeatureSelector, createSelector } from "@ngrx/store";
-import { AppState } from "src/app/app.module";
+import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { UserState } from './user.reducers'; 
 import firebase from 'firebase/compat/app';
 
 // export const selectUser = createFeatureSelector<firebase.auth.UserCredential | null>('user');
@@ -15,15 +15,15 @@ import firebase from 'firebase/compat/app';
 //   selectUser,
 //   (userCred: string) => {
 //     console.log('userCred', userCred);
-    
+
 //     return userCred.length
 //   }
 // )
 
-const selectUser = createFeatureSelector<AppState>('user');
+const selectUser = createFeatureSelector<UserState>('user');
 
 export const selectUserId = createSelector(selectUser, (state) => {
   console.log('state', state);
-  
+
   return state.user?.uid;
 });

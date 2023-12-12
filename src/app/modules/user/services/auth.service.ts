@@ -7,7 +7,7 @@ import { catchError, from, tap, BehaviorSubject, timer, finalize } from 'rxjs';
 import { ErrorService } from '../../shared/services/error.service';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { AppState } from 'src/app/app.module';
+import { UserState } from 'src/app/store/user/user.reducers';
 import { createCurrentUser } from 'src/app/store/user/user.actions';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 
@@ -24,7 +24,7 @@ export class AuthService {
     private afAuth: AngularFireAuth,
     private errorService: ErrorService,
     private router: Router,
-    private store: Store<AppState>,
+    private store: Store<UserState>,
     private afs: AngularFirestore
   ) {}
 
@@ -71,9 +71,12 @@ export class AuthService {
             });
           this.afs
             .collection('users')
-            .doc(id).collection('accounts').valueChanges().subscribe(data => {
+            .doc(id)
+            .collection('accounts')
+            .valueChanges()
+            .subscribe((data) => {
               console.log(data);
-            })
+            });
 
           this.userState$.next(user);
         });
