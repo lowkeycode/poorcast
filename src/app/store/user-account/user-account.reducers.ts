@@ -17,19 +17,25 @@ export interface UserAccount {
   error: any;
 }
 
-const initialState = {
+const initialState: UserAccount = {
   accounts: [],
   budgetPeriods: [],
   status: 'pending',
-  error: null
-} as UserAccount;
+  error: null,
+};
 
 export const userAcctReducer = createReducer(
   initialState,
   on(UserAccountActions.loadUserAccount, (state, userAcct) => ({
     ...state,
-    status: 'loading' as const
+    status: 'loading' as const,
   })),
 
-  on(UserAccountActions.loadUserAccountSuccess, (state, userAcct) => ({...state, ...userAcct}))
+  on(UserAccountActions.loadUserAccountSuccess, (state, userAcct) => ({
+    ...state,
+    ...userAcct,
+    status: 'success' as const,
+  })),
+
+  on(UserAccountActions.loadUserAccountError, (state, error) => ({...state, error}))
 );

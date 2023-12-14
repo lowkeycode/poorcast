@@ -17,6 +17,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { userReducer } from './store/user/user.reducers';
 import { userAcctReducer } from './store/user-account/user-account.reducers';
+import { EffectsModule } from '@ngrx/effects';
+import { UserAccountEffects } from './store/user-account/user-account.effects';
 
 const modules = [
   BrowserModule,
@@ -45,6 +47,7 @@ const modules = [
     BrowserAnimationsModule,
     TuiRootModule,
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
+    EffectsModule.forRoot([UserAccountEffects]),
   ],
 
   providers: [],

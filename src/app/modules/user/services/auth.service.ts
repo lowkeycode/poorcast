@@ -1,4 +1,3 @@
-import { selectUserId } from './../../../store/user/user.selectors';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import firebase from 'firebase/compat/app';
 import { GoogleAuthProvider } from '@angular/fire/auth';
@@ -8,8 +7,11 @@ import { ErrorService } from '../../shared/services/error.service';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { UserState } from 'src/app/store/user/user.reducers';
-import { createCurrentUser } from 'src/app/store/user/user.actions';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { createCurrentUser } from 'src/app/store/user/user.actions';
+import { loadUserAccount } from 'src/app/store/user-account/user-account.actions';
+import { selectUserId } from './../../../store/user/user.selectors';
+import { selectUserAccount } from 'src/app/store/user-account/user-account.selectors';
 
 @Injectable({
   providedIn: 'root',
@@ -57,29 +59,9 @@ export class AuthService {
         const dispatchUser = JSON.parse(JSON.stringify(user.user));
         this.store.dispatch(createCurrentUser(dispatchUser));
 
-        // todo - create userData slice initially null
-        // todo - action and effect for creating accounts
-        // ? I think the actually filtering by date will possibly need to be done on the client side unless we can guarantee order on initial load
+        this.store.dispatch(loadUserAccount())
 
-        this.store.select(selectUserId).subscribe((id) => {
-          this.afs
-            .collection('users')
-            .doc(id)
-            .valueChanges()
-            .subscribe((data) => {
-              console.log(typeof data);
-            });
-          this.afs
-            .collection('users')
-            .doc(id)
-            .collection('accounts')
-            .valueChanges()
-            .subscribe((data) => {
-              console.log(data);
-            });
-
-          this.userState$.next(user);
-        });
+        this.store.select(selectUserAccount).subscribe(() => this.userState$.next(user))
       })
     ).pipe(
       catchError((err: Error) => {
