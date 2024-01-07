@@ -1,25 +1,32 @@
 import { createReducer, on } from '@ngrx/store';
 import * as UserAccountActions from './user-account.actions';
 
-interface Account {
+export interface FirebaseTimestamp {
+  seconds: number;
+  nanoseconds: number;
+}
+
+export interface Account {
   acctBalance: number;
   acctLimit: number;
   acctName: string;
   acctType: 'Chequings' | 'Credit' | 'Savings' | 'RRSP' | 'Loan';
 }
 
-type BudgetPeriod = [string, string];
+export interface BudgetPeriods {[key: string]: BudgetPeriod};
+
+export type BudgetPeriod = [FirebaseTimestamp, FirebaseTimestamp];
 
 export interface UserAccount {
   accounts: Account[];
-  budgetPeriods: BudgetPeriod[];
+  budgetPeriods: {[key: string]: BudgetPeriod};
   status: 'pending' | 'loading' | 'error' | 'success';
   error: any;
 }
 
 const initialState: UserAccount = {
   accounts: [],
-  budgetPeriods: [],
+  budgetPeriods: {},
   status: 'pending',
   error: null,
 };
@@ -37,5 +44,5 @@ export const userAcctReducer = createReducer(
     status: 'success' as const,
   })),
 
-  on(UserAccountActions.loadUserAccountError, (state, error) => ({...state, error}))
+  on(UserAccountActions.loadUserAccountError, (state, error) => ({...state, error})),
 );

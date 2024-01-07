@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import * as UserAccountActions from './user-account.actions';
-import { catchError, from, map, of, switchMap } from 'rxjs';
+import { catchError, combineLatest, from, map, of, switchMap } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { selectUserId } from '../user/user.selectors';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { UserAccount } from './user-account.reducers';
+import { BudgetPeriod, BudgetPeriods, UserAccount } from './user-account.reducers';
 
 @Injectable()
 export class UserAccountEffects {
@@ -19,23 +19,35 @@ export class UserAccountEffects {
     this.actions$.pipe(
       ofType(UserAccountActions.loadUserAccount),
       switchMap(() => {
-        console.log('Yup')
-        return this.store.select(selectUserId)
+        return this.store.select(selectUserId);
       }),
-      switchMap((userId) =>
-        {
-          console.log('Sure')
-          return this.afs.collection('users').doc(userId).valueChanges()
+      switchMap((userId) => {
+        return combineLatest([
+          this.afs
+            .collection('users')
+            .doc(userId)
+            .collection('accounts')
+            .valueChanges(),
+          this.afs
+            .collection('users')
+            .doc(userId)
+            .collection('budgetPeriods')
+            .valueChanges(),
+        ]);
+      }),
+      map(([accounts, budgetPeriods]) => {
+        console.log('accounts', accounts);
+        console.log('budgetPeriods', budgetPeriods);
+
+        const userAccount = {
+          accounts,
+          budgetPeriods: budgetPeriods[0]
         }
-      ),
-      map((userAccount) => {
-        console.log('userAccount', userAccount);
+
          return UserAccountActions.loadUserAccountSuccess(userAccount as UserAccount)
       }),
       catchError((error) =>
-        of(
-            UserAccountActions.loadUserAccountError({ error })
-        )
+        of(UserAccountActions.loadUserAccountError({ error }))
       )
     )
   );
