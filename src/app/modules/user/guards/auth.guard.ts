@@ -10,8 +10,10 @@ export class AuthGuard  {
   constructor(private pcAuth: AuthService, private router: Router) {}
   canActivate(): Observable<boolean | UrlTree> {
     return this.pcAuth.user.pipe(
-      take(1),
+      // take(1),
       map(user => {
+        console.log('user', user);
+        
         if (!!user) {
           return true;
         }
