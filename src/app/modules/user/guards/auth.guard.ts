@@ -16,6 +16,8 @@ export class AuthGuard  {
 
     return this.authService.user.pipe(
       map(user => {
+        //! I think the store data for user and user accts should be here maybe sho on refresh we get all the state needed
+
         if (!!user) {
           return true;
         }
