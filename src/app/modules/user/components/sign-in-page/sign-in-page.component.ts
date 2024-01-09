@@ -13,12 +13,9 @@ export class SignInPageComponent implements OnInit{
 
   ngOnInit(): void {
     const signedInUser = this.authService.autoLogin();
-    console.log(signedInUser)
     if(!!signedInUser) {
-      console.log('yup');
-      
       this.authService.userState$.next(signedInUser);
-      this.router.navigateByUrl('/overview');
+      this.router.navigateByUrl('app/overview');
     }
   }
 }

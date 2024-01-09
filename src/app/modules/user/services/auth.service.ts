@@ -8,8 +8,6 @@ import {
   tap,
   BehaviorSubject,
   timer,
-  of,
-  shareReplay,
 } from 'rxjs';
 import { ErrorService } from '../../shared/services/error.service';
 import { Router } from '@angular/router';
@@ -19,7 +17,7 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
   userState$ = new BehaviorSubject<firebase.auth.UserCredential | null>(null);
-  user = this.userState$.asObservable().pipe(shareReplay());
+  user = this.userState$.asObservable();
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -106,6 +104,10 @@ export class AuthService {
 
   autoLogin() {
     const user = localStorage.getItem('user');
+    console.log('autologin');
+    console.log('user', user);
+    
+    
     if(!!user) {
       return JSON.parse(user) as firebase.auth.UserCredential ;
     } else {
