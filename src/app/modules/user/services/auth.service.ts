@@ -16,7 +16,7 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class AuthService {
-  private userState$ = new BehaviorSubject<firebase.auth.UserCredential | null>(null);
+  userState$ = new BehaviorSubject<firebase.auth.UserCredential | null>(null);
   user = this.userState$.asObservable();
 
   constructor(
@@ -42,11 +42,13 @@ export class AuthService {
 
   signInGoogle() {
     console.log(firebase)
+  
     return from(
       this.afAuth
         .signInWithPopup(new GoogleAuthProvider())
         .then((user) => {
           this.userState$.next(user);
+          localStorage.setItem('user', JSON.stringify(user));
         })
     ).pipe(
       catchError((err: Error) => {
@@ -86,6 +88,7 @@ export class AuthService {
   signOut() {
     this.afAuth.signOut().then(() => {
       this.userState$.next(null);
+      this.autoLogout();
       this.router.navigate(['/'])
     });
   }
@@ -97,5 +100,22 @@ export class AuthService {
         this.signOut();
       });
     });
+  }
+
+  autoLogin() {
+    const user = localStorage.getItem('user');
+    console.log('autologin');
+    console.log('user', user);
+    
+    
+    if(!!user) {
+      return JSON.parse(user) as firebase.auth.UserCredential ;
+    } else {
+      return null;
+    }
+  }
+
+  autoLogout() {
+    localStorage.clear();
   }
 }
