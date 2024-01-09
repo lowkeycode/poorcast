@@ -7,10 +7,14 @@ import { AuthService } from '../services/auth.service';
   providedIn: 'root',
 })
 export class AuthGuard  {
-  constructor(private pcAuth: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) {}
   canActivate(): Observable<boolean | UrlTree> {
-    return this.pcAuth.user.pipe(
-      take(1),
+    const signedInUser = this.authService.autoLogin();
+    if(!!signedInUser) {
+      this.authService.userState$.next(signedInUser);
+    }
+
+    return this.authService.user.pipe(
       map(user => {
         if (!!user) {
           return true;

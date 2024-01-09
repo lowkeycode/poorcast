@@ -17,9 +17,7 @@ import { selectUserAccount } from 'src/app/store/user-account/user-account.selec
   providedIn: 'root',
 })
 export class AuthService {
-  private userState$ = new BehaviorSubject<firebase.auth.UserCredential | null>(
-    null
-  );
+  userState$ = new BehaviorSubject<firebase.auth.UserCredential | null>(null);
   user = this.userState$.asObservable();
 
   constructor(
@@ -59,9 +57,14 @@ export class AuthService {
         const dispatchUser = JSON.parse(JSON.stringify(user.user));
         this.store.dispatch(createCurrentUser(dispatchUser));
 
-        this.store.dispatch(loadUserAccount())
+        this.store.dispatch(loadUserAccount());
 
-        this.store.select(selectUserAccount).subscribe(() => this.userState$.next(user))
+        // For dev purposes to see the account state that we log in the selector
+        this.store
+          .select(selectUserAccount)
+          .subscribe(() => this.userState$.next(user));
+
+        localStorage.setItem('user', JSON.stringify(user));
       })
     ).pipe(
       catchError((err: Error) => {
@@ -103,6 +106,7 @@ export class AuthService {
   signOut() {
     this.afAuth.signOut().then(() => {
       this.userState$.next(null);
+      this.autoLogout();
       this.router.navigate(['/']);
     });
   }
@@ -119,5 +123,21 @@ export class AuthService {
         });
       });
     });
+  }
+
+  autoLogin() {
+    const user = localStorage.getItem('user');
+    console.log('autologin');
+    console.log('user', user);
+
+    if (!!user) {
+      return JSON.parse(user) as firebase.auth.UserCredential;
+    } else {
+      return null;
+    }
+  }
+
+  autoLogout() {
+    localStorage.clear();
   }
 }
