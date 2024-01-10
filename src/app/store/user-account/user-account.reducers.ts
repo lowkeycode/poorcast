@@ -11,7 +11,7 @@ export interface Account {
   acctBalance: number;
   acctLimit: number;
   acctName: string;
-  acctType: 'Chequings' | 'Credit' | 'Savings' | 'RRSP' | 'Loan';
+  acctType: 'chequings' | 'credit' | 'savings' | 'rrsp' | 'loan';
 }
 
 export interface Expense {

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { combineLatest, map } from 'rxjs';
+import { combineLatest, forkJoin } from 'rxjs';
 import {
   Account,
   BudgetPeriods,
@@ -20,10 +20,11 @@ import {
 })
 export class OverviewComponent implements OnInit {
   isLoading = true;
-  accounts: Account[];
+  accounts: Account[] = [];
   budgetPeriods: BudgetPeriods;
   periodOptions: string[];
-  expenses: Expense[];
+  expenses: Expense[] = [];
+  
 
   constructor(private store: Store<UserAccount>) {}
 
@@ -33,9 +34,16 @@ export class OverviewComponent implements OnInit {
       this.store.select(selectUserBudgetPeriods),
       this.store.select(selectUserExpenses),
     ]).subscribe(([accounts, budgetPeriods, expenses]) => {
+      console.log([accounts, budgetPeriods, expenses]);
+      
       this.accounts = accounts;
       this.budgetPeriods = budgetPeriods;
       this.expenses = expenses;
+
+      this.stats.projected = this.stats.netWorth - expenses.reduce((acc, cur) => {
+        acc += cur.amount;
+        return acc;
+      }, 0);
 
       this.periodOptions = Object.entries(budgetPeriods)
         .sort((a, b) => a[1][0].seconds - b[1][0].seconds)
