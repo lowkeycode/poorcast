@@ -1,50 +1,48 @@
-
-
-<div class="budget-period-select">
-  <app-select-input [label]="'Budget Period'" [options]="periodOptions"></app-select-input>
-</div>
-
-<div class="chart-grid">
-  <app-arc-chart>
-  </app-arc-chart>
-  <app-arc-chart>
-  </app-arc-chart>
-  <app-arc-chart>
-  </app-arc-chart>
-</div>
-
-<div class="overall">
-  <div class="overall__item net">
-    <p>Net Worth</p>
-    <span>$5000</span>
+<div *ngIf="!isLoading">
+  <div class="budget-period-select">
+    <app-select-input
+      [label]="'Budget Period'"
+      [options]="periodOptions"
+    ></app-select-input>
   </div>
-  <div class="overall__item credit-cards">
-    <p>Credit Cards</p>
-    <span>$5000</span>
-  </div>
-  <div class="overall__item total-avail">
-    <p>Total Available</p>
-    <span>$5000</span>
-  </div>
-  <div class="overall__item loans">
-    <p>Loans</p>
-    <span>$5000</span>
-  </div>
-  <div class="overall__item projected">
-    <p>Projected</p>
-    <span>$10000</span>
-  </div>
-</div>
 
-<div class="accts">
-  <app-acct-card></app-acct-card>
-  <app-acct-card></app-acct-card>
-  <app-acct-card></app-acct-card>
-</div>
-
-<div class="upcoming">
-  <div>
-    <h3 class="upcoming__title">Upcoming</h3>
+  <div class="chart-grid">
+    <app-arc-chart size="xl"> </app-arc-chart>
+    <div class="total-avail">
+      <p>Total Available</p>
+      <span>$5000</span>
+    </div>
   </div>
-  <app-table [listItems]="[0, 1, 2, 3, 4]" [isEditable]="false"></app-table>
+
+  <div class="overall">
+    <div class="overall__item net">
+      <p>Net Worth</p>
+      <span>$5000</span>
+    </div>
+    <div class="overall__item credit-cards">
+      <p>Credit Cards</p>
+      <span>$5000</span>
+    </div>
+    <div class="overall__item loans">
+      <p>Loans</p>
+      <span>$5000</span>
+    </div>
+    <div class="overall__item projected">
+      <p>Projected</p>
+      <span>$10000</span>
+    </div>
+  </div>
+
+  <div class="accts">
+    <app-acct-card></app-acct-card>
+    <app-acct-card></app-acct-card>
+    <app-acct-card></app-acct-card>
+  </div>
+
+  <div class="upcoming">
+    <div>
+      <h3 class="upcoming__title">Upcoming</h3>
+    </div>
+    <app-table [listItems]="expenses" [isEditable]="false"></app-table>
+  </div>
 </div>

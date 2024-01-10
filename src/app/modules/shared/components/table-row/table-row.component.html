@@ -3,8 +3,9 @@
 <p class="row-copy row-remaining">{{ item.remaining | currency }}</p>
 <p class="row-copy row-due">{{ item.due }}</p>
 <p class="row-copy row-notes">{{ item.notes }}</p>
-<p class="row-copy">
+<p class="row-copy category-container">
   <span class="row-category">{{ item.category }}</span>
+  <span *ngIf="!item.remaining" class="paid">PAID</span>
 </p>
 <div class="btns">
   <ng-container *ngIf="isEditable">

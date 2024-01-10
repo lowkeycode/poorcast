@@ -57,13 +57,7 @@ export class AuthService {
         const dispatchUser = JSON.parse(JSON.stringify(user.user));
         this.store.dispatch(createCurrentUser(dispatchUser));
 
-        //! This populates store. Shouldn't this be in the auth guard?
-        this.store.dispatch(loadUserAccount());
-
-        // For dev purposes to see the account state that we log in the selector
-        this.store
-          .select(selectUserAccount)
-          .subscribe(() => this.userState$.next(user));
+        this.userState$.next(user)
 
         localStorage.setItem('user', JSON.stringify(user));
       })
@@ -129,6 +123,8 @@ export class AuthService {
   autoLogin() {
     const user = localStorage.getItem('user');
     if (!!user) {
+      const dispatchUser = JSON.parse(user).user;
+        this.store.dispatch(createCurrentUser(dispatchUser));
       return JSON.parse(user) as firebase.auth.UserCredential;
     } else {
       return null;

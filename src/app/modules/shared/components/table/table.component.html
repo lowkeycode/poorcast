@@ -7,6 +7,6 @@
     <p>Notes</p>
     <p>Category</p>
   </div>
- <app-table-row *ngFor="let item of listItems; let i = index;" [index]="i" [isEditable]="isEditable"></app-table-row>
+ <app-table-row *ngFor="let item of listItems; let i = index;" [item]="item" [index]="i" [isEditable]="isEditable"></app-table-row>
  
 </div>

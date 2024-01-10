@@ -1,7 +1,8 @@
 import { createReducer, on } from '@ngrx/store';
 import * as UserAccountActions from './user-account.actions';
 
-export interface FirebaseTimestamp {
+
+export interface Timestamp {
   seconds: number;
   nanoseconds: number;
 }
@@ -13,13 +14,28 @@ export interface Account {
   acctType: 'Chequings' | 'Credit' | 'Savings' | 'RRSP' | 'Loan';
 }
 
+export interface Expense {
+  name: string;
+  amount: number;
+  remaining: number;
+  due: Timestamp | string;
+  notes: string;
+  category: string;
+}
+
 export interface BudgetPeriods {[key: string]: BudgetPeriod};
 
-export type BudgetPeriod = [FirebaseTimestamp, FirebaseTimestamp];
+export type BudgetPeriod = [Timestamp, Timestamp];
+
+export interface Category {
+  categories: string[]
+}
 
 export interface UserAccount {
   accounts: Account[];
   budgetPeriods: {[key: string]: BudgetPeriod};
+  expenses: Expense[],
+  categories: Category[],
   status: 'pending' | 'loading' | 'error' | 'success';
   error: any;
 }
@@ -27,6 +43,8 @@ export interface UserAccount {
 const initialState: UserAccount = {
   accounts: [],
   budgetPeriods: {},
+  expenses: [],
+  categories: [],
   status: 'pending',
   error: null,
 };

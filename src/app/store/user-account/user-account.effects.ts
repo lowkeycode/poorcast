@@ -5,7 +5,11 @@ import { catchError, combineLatest, from, map, of, switchMap } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { selectUserId } from '../user/user.selectors';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { BudgetPeriod, BudgetPeriods, UserAccount } from './user-account.reducers';
+import {
+  BudgetPeriod,
+  BudgetPeriods,
+  UserAccount,
+} from './user-account.reducers';
 
 @Injectable()
 export class UserAccountEffects {
@@ -33,18 +37,34 @@ export class UserAccountEffects {
             .doc(userId)
             .collection('budgetPeriods')
             .valueChanges(),
+          this.afs
+            .collection('users')
+            .doc(userId)
+            .collection('expenses')
+            .valueChanges(),
+          this.afs
+            .collection('users')
+            .doc(userId)
+            .collection('categories')
+            .valueChanges(),
         ]);
       }),
-      map(([accounts, budgetPeriods]) => {
+      map(([accounts, budgetPeriods, expenses, categories]) => {
         console.log('accounts', accounts);
         console.log('budgetPeriods', budgetPeriods);
+        console.log('expenses', expenses);
+        console.log('categories', categories);
 
         const userAccount = {
           accounts,
-          budgetPeriods: budgetPeriods[0]
-        }
+          budgetPeriods: budgetPeriods[0],
+          expenses,
+          categories,
+          status: 'success',
+          error: null
+        };
 
-         return UserAccountActions.loadUserAccountSuccess(userAccount as UserAccount)
+        return UserAccountActions.loadUserAccountSuccess(userAccount as UserAccount);
       }),
       catchError((error) =>
         of(UserAccountActions.loadUserAccountError({ error }))

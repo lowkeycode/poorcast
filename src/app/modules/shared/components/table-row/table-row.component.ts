@@ -64,15 +64,6 @@ export class TableRowComponent {
   };
 
   constructor(private modalService: ModalService) {
-    // ! Fix this obviously. Dont hardcode
-    this.item = {
-      name: 'Rent',
-      amount: 850,
-      remaining: 450,
-      due: new Date(Date.now()).toISOString(),
-      notes: 'Pay the rest on payday',
-      category: 'Rent',
-    };
   }
 
   onEditExpense(index) {

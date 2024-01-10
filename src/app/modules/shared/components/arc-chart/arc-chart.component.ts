@@ -9,8 +9,10 @@ import { TuiSizeXL } from '@taiga-ui/core';
 })
 export class ArcChartComponent {
   readonly value = [40];
-  size: TuiSizeXL = 'm'
+  size: TuiSizeXL = 'l'
   maxValue = 100;
+  minLabel = '$0'
+  maxLabel = '$5000'
  
   activeItemIndex = NaN;
 }
