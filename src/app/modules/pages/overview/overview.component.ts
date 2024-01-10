@@ -8,6 +8,9 @@ import {
   UserAccount,
 } from 'src/app/store/user-account/user-account.reducers';
 import {
+  AppState,
+  selectUserAccount2,
+  selectUserAccountStats,
   selectUserAccounts,
   selectUserBudgetPeriods,
   selectUserExpenses,
@@ -26,39 +29,40 @@ export class OverviewComponent implements OnInit {
   expenses: Expense[] = [];
   
 
-  constructor(private store: Store<UserAccount>) {}
+  constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {
-    combineLatest([
-      this.store.select(selectUserAccounts),
-      this.store.select(selectUserBudgetPeriods),
-      this.store.select(selectUserExpenses),
-    ]).subscribe(([accounts, budgetPeriods, expenses]) => {
-      console.log([accounts, budgetPeriods, expenses]);
+    this.store.select(selectUserAccountStats).subscribe((userAcct) => console.log('== acct', userAcct));
+    // combineLatest([
+    //   this.store.select(selectUserAccounts),
+    //   this.store.select(selectUserBudgetPeriods),
+    //   this.store.select(selectUserExpenses),
+    // ]).subscribe(([accounts, budgetPeriods, expenses]) => {
+    //   console.log([accounts, budgetPeriods, expenses]);
       
-      this.accounts = accounts;
-      this.budgetPeriods = budgetPeriods;
-      this.expenses = expenses;
+    //   this.accounts = accounts;
+    //   this.budgetPeriods = budgetPeriods;
+    //   this.expenses = expenses;
 
-      this.stats.projected = this.stats.netWorth - expenses.reduce((acc, cur) => {
-        acc += cur.amount;
-        return acc;
-      }, 0);
+    //   // this.stats.projected = this.stats.netWorth - expenses.reduce((acc, cur) => {
+    //   //   acc += cur.amount;
+    //   //   return acc;
+    //   // }, 0);
 
-      this.periodOptions = Object.entries(budgetPeriods)
-        .sort((a, b) => a[1][0].seconds - b[1][0].seconds)
-        .map((period) => period[0]);
+    //   this.periodOptions = Object.entries(budgetPeriods)
+    //     .sort((a, b) => a[1][0].seconds - b[1][0].seconds)
+    //     .map((period) => period[0]);
 
-      this.expenses = expenses.map((expense) => {
-        if (typeof expense.due !== 'string') {
-          return { ...expense, due: this.formatDate(expense.due.seconds * 1000) };
-        } else {
-          return expense
-        }
-      });
+    //   this.expenses = expenses.map((expense) => {
+    //     if (typeof expense.due !== 'string') {
+    //       return { ...expense, due: this.formatDate(expense.due.seconds * 1000) };
+    //     } else {
+    //       return expense
+    //     }
+    //   });
 
-      this.isLoading = false;
-    });
+    //   this.isLoading = false;
+    // });
   }
 
   private formatDate(seconds: number) {

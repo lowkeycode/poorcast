@@ -1,5 +1,6 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
 import { UserAccount } from "./user-account.reducers";
+import firebase from 'firebase/compat/app';
 
 export interface AccountStats {
   netWorth: number;
@@ -8,8 +9,17 @@ export interface AccountStats {
   projected: number;
 }
 
+export interface AppState {
+  user: firebase.User;
+  userAcct: UserAccount
+}
+
 
 const getUserAccount = createFeatureSelector<UserAccount>('userAcct');
+
+const getUserAccount2 = (state: AppState) => state.userAcct;
+
+export const selectUserAccount2 = createSelector(getUserAccount2, (state) => state);
 
 export const selectUserAccount = createSelector(getUserAccount, (state) => state);
 
@@ -21,7 +31,7 @@ export const selectUserExpenses = createSelector(getUserAccount, (state) => stat
 
 export const selectUserCategories = createSelector(getUserAccount, (state) => state.categories[0].categories);
 
-export const selectUserAccountStats = createSelector(getUserAccount, (userAcct) => {
+export const selectUserAccountStats = createSelector(getUserAccount2, (userAcct) => {
   let stats: AccountStats = {
     netWorth: 0,
     creditCards: 0,
