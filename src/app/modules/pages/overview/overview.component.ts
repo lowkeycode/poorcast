@@ -5,15 +5,11 @@ import {
   Account,
   BudgetPeriods,
   Expense,
-  UserAccount,
 } from 'src/app/store/user-account/user-account.reducers';
 import {
+  AccountStats,
   AppState,
-  selectUserAccount2,
-  selectUserAccountStats,
-  selectUserAccounts,
-  selectUserBudgetPeriods,
-  selectUserExpenses,
+  selectUserOverview,
 } from 'src/app/store/user-account/user-account.selectors';
 
 @Component({
@@ -27,42 +23,41 @@ export class OverviewComponent implements OnInit {
   budgetPeriods: BudgetPeriods;
   periodOptions: string[];
   expenses: Expense[] = [];
-  
+  stats: AccountStats
 
   constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {
-    this.store.select(selectUserAccountStats).subscribe((userAcct) => console.log('== acct', userAcct));
-    // combineLatest([
-    //   this.store.select(selectUserAccounts),
-    //   this.store.select(selectUserBudgetPeriods),
-    //   this.store.select(selectUserExpenses),
-    // ]).subscribe(([accounts, budgetPeriods, expenses]) => {
-    //   console.log([accounts, budgetPeriods, expenses]);
+    this.store
+      .select(selectUserOverview)
+      .subscribe((overview) => {
+        const [userAcct, stats] = overview;
+
+      this.accounts = userAcct.accounts;
+      this.budgetPeriods = userAcct.budgetPeriods;
+      this.stats = stats;
+
+      this.expenses = userAcct.expenses.map((expense) => {
+        if (typeof expense.due !== 'string') {
+          return { ...expense, due: this.formatDate(expense.due.seconds * 1000) };
+        } else {
+          return expense
+        }
+      });
+
+      this.stats.projected = stats.netWorth - this.expenses.reduce((acc, cur) => {
+        acc += cur.amount;
+        return acc;
+      }, 0);
+
+      this.periodOptions = Object.entries(this.budgetPeriods)
+        .sort((a, b) => a[1][0].seconds - b[1][0].seconds)
+        .map((period) => period[0]);
       
-    //   this.accounts = accounts;
-    //   this.budgetPeriods = budgetPeriods;
-    //   this.expenses = expenses;
 
-    //   // this.stats.projected = this.stats.netWorth - expenses.reduce((acc, cur) => {
-    //   //   acc += cur.amount;
-    //   //   return acc;
-    //   // }, 0);
-
-    //   this.periodOptions = Object.entries(budgetPeriods)
-    //     .sort((a, b) => a[1][0].seconds - b[1][0].seconds)
-    //     .map((period) => period[0]);
-
-    //   this.expenses = expenses.map((expense) => {
-    //     if (typeof expense.due !== 'string') {
-    //       return { ...expense, due: this.formatDate(expense.due.seconds * 1000) };
-    //     } else {
-    //       return expense
-    //     }
-    //   });
-
-    //   this.isLoading = false;
-    // });
+      this.isLoading = false;
+      });
+    
   }
 
   private formatDate(seconds: number) {
