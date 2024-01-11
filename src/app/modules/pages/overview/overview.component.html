@@ -7,7 +7,7 @@
   </div>
 
   <div class="chart-grid">
-    <app-arc-chart size="xl"> </app-arc-chart>
+    <app-arc-chart [maxValue]="stats.netWorth" [maxLabel]="'$' + stats.netWorth.toFixed(0)"></app-arc-chart>
     <div class="total-avail">
       <p>Total Available</p>
       <span>$5000</span>

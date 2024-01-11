@@ -24,6 +24,7 @@ export class OverviewComponent implements OnInit {
   periodOptions: string[];
   expenses: Expense[] = [];
   stats: AccountStats
+  expenseTotal: number;
 
   constructor(private store: Store<AppState>) {}
 
@@ -45,10 +46,12 @@ export class OverviewComponent implements OnInit {
         }
       });
 
-      this.stats.projected = stats.netWorth - this.expenses.reduce((acc, cur) => {
+      this.expenseTotal = this.expenses.reduce((acc, cur) => {
         acc += cur.amount;
         return acc;
       }, 0);
+
+      this.stats.projected = stats.netWorth - this.expenseTotal;
 
       this.periodOptions = Object.entries(this.budgetPeriods)
         .sort((a, b) => a[1][0].seconds - b[1][0].seconds)

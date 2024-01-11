@@ -1,6 +1,7 @@
 <p class="row-copy row-name">{{ item.name }}</p>
 <p class="row-copy row-amount">{{ item.amount | currency }}</p>
-<p class="row-copy row-remaining">{{ item.remaining | currency }}</p>
+<p class="row-copy row-remaining" *ngIf="item.remaining">{{ item.remaining | currency }}</p>
+<p class="row-copy row-remaining" *ngIf="!item.remaining"><s>{{ item.remaining | currency }}</s></p>
 <p class="row-copy row-due">{{ item.due }}</p>
 <p class="row-copy row-notes">{{ item.notes }}</p>
 <p class="row-copy category-container">

@@ -67,7 +67,6 @@ export class TableRowComponent {
   }
 
   onEditExpense(index) {
-    //  todo need to figure out how to get the index to pass in. (Do we make name and inputs optional? Or is there a better way)
     this.modalService.openModal(this.editExpenseModalConfig);
   }
 
