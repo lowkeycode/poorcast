@@ -1,4 +1,7 @@
-<div [appIconSize]="1.4" class="icon-container">
-  <img src="{{sources[iconName]}}" alt="{{alt}}">
+<div
+  [appIconSize]="1.4"
+  [ngClass]="{ 'icon-container': navOpen, 'icon-container-closed': !navOpen }"
+>
+  <img src="{{ sources[iconName] }}" alt="{{ alt }}" />
 </div>
-<p class="label" *ngIf="navOpen" @label>{{label}}</p>
+<p class="label" *ngIf="navOpen" @label>{{ label }}</p>

@@ -18,8 +18,8 @@ export class ArcChartComponent {
   
   constructor(private store: Store<AppState>){
     this.store.select(selectUserExpenses).subscribe(expenses => this.value = [expenses.reduce((acc, cur) => {
-      acc += cur.amount;
-      return acc;
+      const addedValue = acc + cur.amount;
+      return addedValue;
     }, 0)]);
   }
 }
