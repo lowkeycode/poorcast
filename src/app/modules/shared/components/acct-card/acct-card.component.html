@@ -1,25 +1,36 @@
 <div class="card">
   <div *ngIf="isBudgetCard" class="card__budget-btns">
-    <app-solo-icon [appIconSize]=".9" [iconName]="'ellipsisHorizontal'" [attr.data-test]="'edit-acct-btn-' + index" (click)="onEditAcct(index)"></app-solo-icon>
-    <app-solo-icon [appIconSize]=".9" [iconName]="'closeCircle'"></app-solo-icon>
+    <app-solo-icon
+      [appIconSize]="0.9"
+      [iconName]="'ellipsisHorizontal'"
+      [attr.data-test]="'edit-acct-btn-' + index"
+      (click)="onEditAcct(index)"
+    ></app-solo-icon>
+    <app-solo-icon
+      [appIconSize]="0.9"
+      [iconName]="'closeCircle'"
+    ></app-solo-icon>
   </div>
   <div class="card__heading">
     <p class="card__heading--available">Available Balance</p>
-    <h3 class="card__heading--acct-name">Visa</h3>
+    <h3 class="card__heading--acct-name">{{ account.acctName }}</h3>
   </div>
   <div class="card__balance">
-    <p class="card__balance--amount">$6594</p>
+    <p class="card__balance--amount">${{ account.acctBalance.toFixed(2) }}</p>
   </div>
-  <!-- *ngIf -->
-  <div class="card__progress">
-    <p class="card__progress--title">Used</p>
-    <div class="card__progress--bar">
-      <div class="bar-container">
-        <div class="progress"></div>
+  <div class="progress-container">
+    <div class="card__progress" *ngIf="account.acctLimit">
+      <p class="card__progress--title">Used</p>
+      <div class="card__progress--bar">
+        <progress
+          class="progress"
+          [value]="account.acctBalance"
+          [max]="account.acctLimit"
+        ></progress>
       </div>
+      <p class="card__progess--spend">
+        ${{ account.acctBalance }} / ${{ account.acctLimit }}
+      </p>
     </div>
-    <p class="card__progess--spend">
-      $3456 / $9834
-    </p>
   </div>
 </div>

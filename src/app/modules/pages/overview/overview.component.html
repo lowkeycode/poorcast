@@ -34,9 +34,7 @@
   </div>
 
   <div class="accts">
-    <app-acct-card></app-acct-card>
-    <app-acct-card></app-acct-card>
-    <app-acct-card></app-acct-card>
+    <app-acct-card *ngFor="let account of accounts; let index = index" [account]="account" [index]="index"></app-acct-card>
   </div>
 
   <div class="upcoming">

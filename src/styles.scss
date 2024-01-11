@@ -140,6 +140,19 @@ input:focus::placeholder {
   color: transparent;
 }
 
+select {
+  -moz-appearance:none; 
+  -webkit-appearance:none; 
+  appearance:none;
+  background: transparent;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+  background-image: url("data:image/svg+xml;utf8,<svg style='transform: rotate(90deg);' xmlns='http://www.w3.org/2000/svg' fill='black' height='20' viewBox='0 0 512 512'><path fill='none' stroke='black' stroke-linecap='round' stroke-linejoin='round' stroke-width='48' d='M184 112l144 144-144 144'/></svg>");
+  background-repeat: no-repeat;
+  background-position-x: 97%;
+  background-position-y: 5px;
+  cursor: pointer;
+}
+
 select:focus {
   outline: 1px solid var(--primary-dark);
   border: 1px solid var(--primary-dark);
