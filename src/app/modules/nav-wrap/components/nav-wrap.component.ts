@@ -10,6 +10,8 @@ export class NavWrapComponent {
   isNavOpen = true;
 
   onPageNameChange($event: string) {
+    console.log($event);
+    
     this.pageName = $event;
   }
 
