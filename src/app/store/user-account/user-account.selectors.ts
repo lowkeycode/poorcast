@@ -78,8 +78,5 @@ export const selectUserOverview = createSelector(getUserAccount, (userAcct):[Use
     return newStats;
   }, stats);
 
-  console.log('stats', stats);
-  
-
   return [userAcct, stats];
 });

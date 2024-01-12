@@ -19,8 +19,6 @@ export class UserAccountEffects {
     this.actions$.pipe(
       ofType(UserAccountActions.loadUserAccount),
       switchMap(() => {
-        console.log('effect triggered');
-
         return this.store.select(selectUserId);
       }),
       switchMap((userId) => {
@@ -47,29 +45,18 @@ export class UserAccountEffects {
             .valueChanges(),
         ]).pipe(
           catchError((error) => {
-            console.log('error', error);
+            console.error('error', error);
 
             return of(null);
           })
         );
       }),
       map((response) => {
-
         if(!response) {
           return UserAccountActions.loadUserAccountError(response);
         }
 
         const [accounts, budgetPeriods, expenses, categories] = response;
-        // console.log('accounts', accounts);
-        // console.log('budgetPeriods', budgetPeriods);
-        // console.log('expenses', expenses);
-        // console.log('categories', categories);
-        console.log('account info', [
-          accounts,
-          budgetPeriods,
-          expenses,
-          categories,
-        ]);
 
         const userAccount = {
           accounts,

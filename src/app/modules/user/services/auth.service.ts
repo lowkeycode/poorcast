@@ -28,7 +28,6 @@ export class AuthService {
   signInEmailPass(email: string, password: string) {
     return from(this.afAuth.signInWithEmailAndPassword(email, password)).pipe(
       tap((user) => {
-        console.log('user', user);
         const dispatchUser = JSON.parse(JSON.stringify(user.user));
         this.store.dispatch(signInUser(dispatchUser));
 
@@ -46,8 +45,6 @@ export class AuthService {
   signInGoogle() {
     return from(
       this.afAuth.signInWithPopup(new GoogleAuthProvider()).then((user) => {
-        console.log('user', user);
-
         const dispatchUser = JSON.parse(JSON.stringify(user.user));
         this.store.dispatch(signInUser(dispatchUser));
 
@@ -69,7 +66,6 @@ export class AuthService {
       this.afAuth.createUserWithEmailAndPassword(email, password)
     ).pipe(
       tap((user) => {
-        console.log('user', user);
         const dispatchUser = JSON.parse(JSON.stringify(user.user));
         this.store.dispatch(signInUser(dispatchUser));
 
