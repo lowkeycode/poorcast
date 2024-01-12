@@ -10,7 +10,9 @@ const initialState = {} as UserState;
 
 export const userReducer = createReducer(
   initialState,
-  on(UserActions.createCurrentUser, (state, user) => {
+  on(UserActions.signInUser, (state, user) => {
     return { ...state, user };
-  })
+  }),
+
+  on(UserActions.signOutUser, (state) => initialState)
 );

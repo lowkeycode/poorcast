@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 import { ModalConfig } from 'src/app/models/interfaces';
 import { ModalService } from 'src/app/modules/shared/services/modal.service';
 import { Expense } from 'src/app/store/user-account/user-account.reducers';
@@ -11,8 +12,9 @@ import { formatDate } from 'src/app/utils/utils';
   templateUrl: './expenses.component.html',
   styleUrls: ['./expenses.component.scss'],
 })
-export class ExpensesComponent implements OnInit {
+export class ExpensesComponent implements OnInit, OnDestroy {
   expenses: Expense[];
+  subscriptions = new Subscription();
 
   payExpenseModalConfig: ModalConfig = {
     title: 'Pay Expense',
@@ -129,7 +131,7 @@ export class ExpensesComponent implements OnInit {
   constructor(private modalService: ModalService, private store: Store<AppState>) {}
 
   ngOnInit(): void {
-    this.store.select(selectUserExpenses).subscribe(expenses => {
+    const sub = this.store.select(selectUserExpenses).subscribe(expenses => {
       this.expenses = expenses.map((expense) => {
         if (typeof expense.due !== 'string') {
           return { ...expense, due: formatDate(expense.due.seconds * 1000) };
@@ -138,6 +140,11 @@ export class ExpensesComponent implements OnInit {
         }
       });
     })
+    this.subscriptions.add(sub)
+  }
+
+  ngOnDestroy(): void {
+      this.subscriptions.unsubscribe();
   }
 
   onPayExpense() {

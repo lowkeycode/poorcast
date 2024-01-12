@@ -7,11 +7,9 @@ import { ErrorService } from '../../shared/services/error.service';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { UserState } from 'src/app/store/user/user.reducers';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { createCurrentUser } from 'src/app/store/user/user.actions';
-import { loadUserAccount } from 'src/app/store/user-account/user-account.actions';
-import { selectUserId } from './../../../store/user/user.selectors';
-import { selectUserAccount } from 'src/app/store/user-account/user-account.selectors';
+import { signInUser, signOutUser } from 'src/app/store/user/user.actions';
+import { signOutUserAccount } from 'src/app/store/user-account/user-account.actions';
+
 
 @Injectable({
   providedIn: 'root',
@@ -25,7 +23,6 @@ export class AuthService {
     private errorService: ErrorService,
     private router: Router,
     private store: Store<UserState>,
-    private afs: AngularFirestore
   ) {}
 
   signInEmailPass(email: string, password: string) {
@@ -33,14 +30,11 @@ export class AuthService {
       tap((user) => {
         console.log('user', user);
         const dispatchUser = JSON.parse(JSON.stringify(user.user));
-        this.store.dispatch(createCurrentUser(dispatchUser));
+        this.store.dispatch(signInUser(dispatchUser));
 
-        this.store.select(selectUserId).subscribe((id) => {
-          //! get user data
-
-          //! if none create
-          this.userState$.next(user);
-        });
+        this.userState$.next(user);
+        
+        localStorage.setItem('user', JSON.stringify(user));
       }),
       catchError((err) => {
         this.errorService.onError(err);
@@ -55,9 +49,9 @@ export class AuthService {
         console.log('user', user);
 
         const dispatchUser = JSON.parse(JSON.stringify(user.user));
-        this.store.dispatch(createCurrentUser(dispatchUser));
+        this.store.dispatch(signInUser(dispatchUser));
 
-        this.userState$.next(user)
+        this.userState$.next(user);
 
         localStorage.setItem('user', JSON.stringify(user));
       })
@@ -75,9 +69,13 @@ export class AuthService {
       this.afAuth.createUserWithEmailAndPassword(email, password)
     ).pipe(
       tap((user) => {
+        console.log('user', user);
         const dispatchUser = JSON.parse(JSON.stringify(user.user));
-        this.store.dispatch(createCurrentUser(dispatchUser));
+        this.store.dispatch(signInUser(dispatchUser));
+
         this.userState$.next(user);
+        
+        localStorage.setItem('user', JSON.stringify(user));
       }),
       catchError((err: Error) => {
         this.errorService.onError(err);
@@ -100,7 +98,6 @@ export class AuthService {
 
   signOut() {
     this.afAuth.signOut().then(() => {
-      this.userState$.next(null);
       this.autoLogout();
       this.router.navigate(['/']);
     });
@@ -109,13 +106,9 @@ export class AuthService {
   deleteAccount() {
     timer(2500).subscribe(() => {
       this.afAuth.currentUser.then((user) => {
-        this.store.select(selectUserId).subscribe((id) => {
-          user?.delete();
+        user?.delete();
 
-          //! Remove user data from firebase
-
-          this.signOut();
-        });
+        this.signOut();
       });
     });
   }
@@ -124,7 +117,7 @@ export class AuthService {
     const user = localStorage.getItem('user');
     if (!!user) {
       const dispatchUser = JSON.parse(user).user;
-        this.store.dispatch(createCurrentUser(dispatchUser));
+      this.store.dispatch(signInUser(dispatchUser));
       return JSON.parse(user) as firebase.auth.UserCredential;
     } else {
       return null;
@@ -133,5 +126,8 @@ export class AuthService {
 
   autoLogout() {
     localStorage.clear();
+    this.store.dispatch(signOutUser());
+    this.store.dispatch(signOutUserAccount());
+    this.userState$.next(null);
   }
 }

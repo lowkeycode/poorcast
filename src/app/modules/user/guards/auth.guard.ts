@@ -13,13 +13,20 @@ export class AuthGuard  {
   constructor(private authService: AuthService, private router: Router, private store: Store<UserAccount>) {}
   canActivate(): Observable<boolean | UrlTree> {
     const signedInUser = this.authService.autoLogin();
+    console.log('signedInUser', signedInUser);
+    
     if(!!signedInUser) {
+      
       this.authService.userState$.next(signedInUser);
+      
+      console.log('next line fires loadUserAccount',!!signedInUser);
       this.store.dispatch(loadUserAccount());
     }
 
     return this.authService.user.pipe(
       map(user => {
+
+        console.log('auth guard', user);
 
         if (!!user) {
           return true;

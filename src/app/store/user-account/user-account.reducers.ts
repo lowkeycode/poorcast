@@ -63,4 +63,6 @@ export const userAcctReducer = createReducer(
   })),
 
   on(UserAccountActions.loadUserAccountError, (state, error) => ({...state, error})),
+
+  on(UserAccountActions.signOutUserAccount, (state) => initialState)
 );

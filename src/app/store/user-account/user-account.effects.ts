@@ -5,11 +5,7 @@ import { catchError, combineLatest, from, map, of, switchMap } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { selectUserId } from '../user/user.selectors';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import {
-  BudgetPeriod,
-  BudgetPeriods,
-  UserAccount,
-} from './user-account.reducers';
+import { UserAccount } from './user-account.reducers';
 
 @Injectable()
 export class UserAccountEffects {
@@ -23,6 +19,8 @@ export class UserAccountEffects {
     this.actions$.pipe(
       ofType(UserAccountActions.loadUserAccount),
       switchMap(() => {
+        console.log('effect triggered');
+
         return this.store.select(selectUserId);
       }),
       switchMap((userId) => {
@@ -47,13 +45,31 @@ export class UserAccountEffects {
             .doc(userId)
             .collection('categories')
             .valueChanges(),
-        ]);
+        ]).pipe(
+          catchError((error) => {
+            console.log('error', error);
+
+            return of(null);
+          })
+        );
       }),
-      map(([accounts, budgetPeriods, expenses, categories]) => {
+      map((response) => {
+
+        if(!response) {
+          return UserAccountActions.loadUserAccountError(response);
+        }
+
+        const [accounts, budgetPeriods, expenses, categories] = response;
         // console.log('accounts', accounts);
         // console.log('budgetPeriods', budgetPeriods);
         // console.log('expenses', expenses);
         // console.log('categories', categories);
+        console.log('account info', [
+          accounts,
+          budgetPeriods,
+          expenses,
+          categories,
+        ]);
 
         const userAccount = {
           accounts,
@@ -61,14 +77,13 @@ export class UserAccountEffects {
           expenses,
           categories,
           status: 'success',
-          error: null
+          error: null,
         };
 
-        return UserAccountActions.loadUserAccountSuccess(userAccount as UserAccount);
-      }),
-      catchError((error) =>
-        of(UserAccountActions.loadUserAccountError({ error }))
-      )
+        return UserAccountActions.loadUserAccountSuccess(
+          userAccount as UserAccount
+        );
+      })
     )
   );
 }
