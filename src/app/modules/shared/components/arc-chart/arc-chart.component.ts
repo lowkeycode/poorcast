@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { TuiSizeXL } from '@taiga-ui/core';
 import { AppState, selectUserExpenses } from 'src/app/store/user-account/user-account.selectors';
@@ -9,7 +9,7 @@ import { AppState, selectUserExpenses } from 'src/app/store/user-account/user-ac
   styleUrls: ['./arc-chart.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ArcChartComponent {
+export class ArcChartComponent implements OnInit{
   @Input() maxValue;
   @Input() maxLabel;
   @Input () minLabel;
@@ -17,6 +17,10 @@ export class ArcChartComponent {
   size: TuiSizeXL = 'l'
   
   constructor(private store: Store<AppState>){
+    
+  }
+
+  ngOnInit() {
     this.store.select(selectUserExpenses).subscribe(expenses => this.value = [expenses.reduce((acc, cur) => {
       const addedValue = acc + cur.amount;
       return addedValue;

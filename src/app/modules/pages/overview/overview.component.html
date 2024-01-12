@@ -7,10 +7,10 @@
   </div>
 
   <div class="chart-grid">
-    <app-arc-chart [maxValue]="stats.netWorth" [maxLabel]="'$' + stats.netWorth.toFixed(0)"></app-arc-chart>
+    <app-arc-chart [maxValue]="stats.totalAvailable" [minLabel]="'$' + expenseTotal" [maxLabel]="'$' + stats.totalAvailable"></app-arc-chart>
     <div class="total-avail">
       <p>Total Available</p>
-      <span>$5000</span>
+      <span>${{stats.totalAvailable - expenseTotal}}</span>
     </div>
   </div>
 

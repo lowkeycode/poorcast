@@ -25,6 +25,7 @@ export class OverviewComponent implements OnInit {
   expenses: Expense[] = [];
   stats: AccountStats
   expenseTotal: number;
+  totalAvailable: number;
 
   constructor(private store: Store<AppState>) {}
 
@@ -38,6 +39,7 @@ export class OverviewComponent implements OnInit {
       this.budgetPeriods = userAcct.budgetPeriods;
       this.stats = stats;
 
+
       this.expenses = userAcct.expenses.map((expense) => {
         if (typeof expense.due !== 'string') {
           return { ...expense, due: this.formatDate(expense.due.seconds * 1000) };
@@ -47,8 +49,8 @@ export class OverviewComponent implements OnInit {
       });
 
       this.expenseTotal = this.expenses.reduce((acc, cur) => {
-        acc += cur.amount;
-        return acc;
+        const accTotal = cur.remaining ? acc += cur.remaining : acc;
+        return accTotal;
       }, 0);
 
       this.stats.projected = stats.netWorth - this.expenseTotal;

@@ -6,6 +6,7 @@ export interface AccountStats {
   netWorth: number;
   creditCards: number;
   loans: number;
+  totalAvailable: number;
   projected: number;
 }
 
@@ -46,11 +47,21 @@ export const selectUserOverview = createSelector(getUserAccount, (userAcct):[Use
     netWorth: 0,
     creditCards: 0,
     loans: 0,
+    totalAvailable: 0,
     projected: 0,
   };
 
   stats = userAcct.accounts.reduce((acc, cur) => {
-    acc = {
+    let totalAvailable = 0;
+
+    if(cur.acctLimit) {
+      totalAvailable += cur.acctLimit - cur.acctBalance;
+      console.log( cur)
+    } else {
+      totalAvailable += cur.acctBalance;
+    }
+
+    const newStats: AccountStats = {
       netWorth: cur.acctLimit
         ? acc.netWorth - cur.acctBalance
         : acc.netWorth + cur.acctBalance,
@@ -62,10 +73,14 @@ export const selectUserOverview = createSelector(getUserAccount, (userAcct):[Use
         cur.acctLimit && cur.acctType === 'loan'
           ? acc.loans + cur.acctBalance
           : acc.loans,
+      totalAvailable: acc.totalAvailable + totalAvailable,
       projected: acc.projected,
     };
-    return acc;
+    return newStats;
   }, stats);
+
+  console.log('stats', stats);
+  
 
   return [userAcct, stats];
 });
