@@ -56,7 +56,6 @@ export const selectUserOverview = createSelector(getUserAccount, (userAcct):[Use
 
     if(cur.acctLimit) {
       totalAvailable += cur.acctLimit - cur.acctBalance;
-      console.log( cur)
     } else {
       totalAvailable += cur.acctBalance;
     }

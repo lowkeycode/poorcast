@@ -6,6 +6,7 @@
     <p>Due</p>
     <p>Notes</p>
     <p>Category</p>
+    <p [hidden]="true">Buttons</p>
   </div>
  <app-table-row *ngFor="let item of listItems; let i = index;" [item]="item" [index]="i" [isEditable]="isEditable"></app-table-row>
  

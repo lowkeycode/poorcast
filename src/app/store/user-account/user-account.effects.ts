@@ -50,10 +50,10 @@ export class UserAccountEffects {
         ]);
       }),
       map(([accounts, budgetPeriods, expenses, categories]) => {
-        console.log('accounts', accounts);
-        console.log('budgetPeriods', budgetPeriods);
-        console.log('expenses', expenses);
-        console.log('categories', categories);
+        // console.log('accounts', accounts);
+        // console.log('budgetPeriods', budgetPeriods);
+        // console.log('expenses', expenses);
+        // console.log('categories', categories);
 
         const userAccount = {
           accounts,

@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { ModalConfig } from 'src/app/models/interfaces';
 import { ModalService } from 'src/app/modules/shared/services/modal.service';
+import { Account, Expense } from 'src/app/store/user-account/user-account.reducers';
+import { AppState, selectUserAccount, selectUserAccounts } from 'src/app/store/user-account/user-account.selectors';
+import { formatDate } from 'src/app/utils/utils';
 
 @Component({
   selector: 'app-budget-accts',
@@ -8,7 +12,8 @@ import { ModalService } from 'src/app/modules/shared/services/modal.service';
   styleUrls: ['./budget-accts.component.scss'],
 })
 export class BudgetAcctsComponent implements OnInit {
-  accts = [0, 1, 2];
+  accounts: Account[];
+  expenses: Expense[];
 
   transactionsModalConfig: ModalConfig = {
     title: 'Transactions',
@@ -160,9 +165,11 @@ export class BudgetAcctsComponent implements OnInit {
     ],
   };
 
-  constructor(private modalService: ModalService) {}
+  constructor(private modalService: ModalService, private store: Store<AppState>) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.store.select(selectUserAccounts).subscribe(accounts => this.accounts = accounts);
+  }
 
   onAddAccount() {
     this.modalService.openModal(this.addAcctModalConfig);

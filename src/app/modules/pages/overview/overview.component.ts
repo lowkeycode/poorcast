@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { combineLatest, forkJoin } from 'rxjs';
 import {
   Account,
   BudgetPeriods,
@@ -11,6 +10,7 @@ import {
   AppState,
   selectUserOverview,
 } from 'src/app/store/user-account/user-account.selectors';
+import { formatDate } from 'src/app/utils/utils';
 
 @Component({
   selector: 'app-overview',
@@ -42,7 +42,7 @@ export class OverviewComponent implements OnInit {
 
       this.expenses = userAcct.expenses.map((expense) => {
         if (typeof expense.due !== 'string') {
-          return { ...expense, due: this.formatDate(expense.due.seconds * 1000) };
+          return { ...expense, due: formatDate(expense.due.seconds * 1000) };
         } else {
           return expense
         }
@@ -63,13 +63,5 @@ export class OverviewComponent implements OnInit {
       this.isLoading = false;
       });
     
-  }
-
-  private formatDate(seconds: number) {
-    return new Intl.DateTimeFormat('en-CA', {
-      weekday: 'short',
-      day: 'numeric',
-      year: 'numeric',
-    }).format(new Date(seconds));
   }
 }
