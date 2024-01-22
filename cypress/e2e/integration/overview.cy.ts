@@ -16,8 +16,8 @@ describe('Overview', () => {
     cy.get('.chart-grid').should('be.visible')
   })
 
-  it('renders all 5 overall items', () => {
-    cy.get('.overall__item').should('have.length', 5).each(item => expect(item).to.be.visible)
+  it('renders all 4 overall items', () => {
+    cy.get('.overall__item').should('have.length', 4).each(item => expect(item).to.be.visible)
   })
 
   it('renders accounts section (may be empty)', () => {

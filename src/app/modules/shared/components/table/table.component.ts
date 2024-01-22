@@ -7,7 +7,6 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class TableComponent implements OnInit {
   @Input() listItems: any[];
-  //! Remove this after. Make listItems an object with an isEditable property;
   @Input() isEditable: boolean;
 
   constructor() { }

@@ -1,50 +1,43 @@
-
-
-<div class="budget-period-select">
-  <app-select-input [label]="'Budget Period'" [options]="['Mar 1, 2023 - Mar 15, 2023', 'Mar 16, 2023 - Mar 31, 2023']"></app-select-input>
-</div>
-
-<div class="chart-grid">
-  <app-arc-chart>
-  </app-arc-chart>
-  <app-arc-chart>
-  </app-arc-chart>
-  <app-arc-chart>
-  </app-arc-chart>
-</div>
-
-<div class="overall">
-  <div class="overall__item net">
-    <p>Net Worth</p>
-    <span>$5000</span>
+<div *ngIf="!isLoading">
+  <div class="budget-period-select">
+    <app-select-input
+      [label]="'Budget Period'"
+      [options]="periodOptions"
+    ></app-select-input>
   </div>
-  <div class="overall__item credit-cards">
-    <p>Credit Cards</p>
-    <span>$5000</span>
-  </div>
-  <div class="overall__item total-avail">
-    <p>Total Available</p>
-    <span>$5000</span>
-  </div>
-  <div class="overall__item loans">
-    <p>Loans</p>
-    <span>$5000</span>
-  </div>
-  <div class="overall__item projected">
-    <p>Projected</p>
-    <span>$10000</span>
-  </div>
-</div>
 
-<div class="accts">
-  <app-acct-card></app-acct-card>
-  <app-acct-card></app-acct-card>
-  <app-acct-card></app-acct-card>
-</div>
-
-<div class="upcoming">
-  <div>
-    <h3 class="upcoming__title">Upcoming</h3>
+  <div class="chart-grid">
+    <app-arc-chart [maxValue]="stats.totalAvailable" [minLabel]="'$' + expenseTotal" [maxLabel]="'$' + stats.totalAvailable"></app-arc-chart>
+    <div class="total-avail">
+      <p>Net</p>
+      <span>${{stats.totalAvailable - expenseTotal}}</span>
+    </div>
   </div>
-  <app-table [listItems]="[0, 1, 2, 3, 4]" [isEditable]="false"></app-table>
+
+  <div class="overall">
+    <div class="overall__item net">
+      <p>Net Worth</p>
+      <span>${{stats.netWorth.toFixed(2)}}</span>
+    </div>
+    <div class="overall__item credit-cards">
+      <p>Credit Cards</p>
+      <span>${{stats.creditCards.toFixed(2)}}</span>
+    </div>
+    <div class="overall__item loans">
+      <p>Loans</p>
+      <span>${{stats.loans.toFixed(2)}}</span>
+    </div>
+    <div class="overall__item projected">
+      <p>Projected</p>
+      <span>${{stats.projected.toFixed(2)}}</span>
+    </div>
+  </div>
+
+  <div class="accts">
+    <app-acct-card *ngFor="let account of accounts; let index = index" [account]="account" [index]="index"></app-acct-card>
+  </div>
+
+  <div class="upcoming">
+    <app-table [listItems]="expenses" [isEditable]="false"></app-table>
+  </div>
 </div>

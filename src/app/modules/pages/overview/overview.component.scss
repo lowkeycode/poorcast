@@ -17,12 +17,17 @@
 
 .chart-grid {
   display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-lrg);
+  flex-direction: column;
+  align-items: center;
+
+  & .total-avail {
+    display: flex;
+    gap: var(--space-sml)
+  }
 }
 
 .overall {
-  margin: var(--space-med) 0 var(--space-sml) 0;
+  margin: var(--space-lrg) auto var(--space-sml) auto;
   width: 65%;
   display: flex;
   flex-wrap: wrap;
@@ -57,11 +62,6 @@
 
 .upcoming {
   padding: var(--space-med) 0;
-
-  &__title {
-    font-weight: 500;
-    font-size: var(--fs-xs);
-    padding-bottom: var(--space-xs-1);
-  }
+  width: 100%;
 }
 

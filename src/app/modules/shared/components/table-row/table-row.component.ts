@@ -64,19 +64,9 @@ export class TableRowComponent {
   };
 
   constructor(private modalService: ModalService) {
-    // ! Fix this obviously. Dont hardcode
-    this.item = {
-      name: 'Rent',
-      amount: 850,
-      remaining: 450,
-      due: new Date(Date.now()).toISOString(),
-      notes: 'Pay the rest on payday',
-      category: 'Rent',
-    };
   }
 
   onEditExpense(index) {
-    //  todo need to figure out how to get the index to pass in. (Do we make name and inputs optional? Or is there a better way)
     this.modalService.openModal(this.editExpenseModalConfig);
   }
 

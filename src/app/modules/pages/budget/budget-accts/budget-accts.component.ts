@@ -1,14 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 import { ModalConfig } from 'src/app/models/interfaces';
 import { ModalService } from 'src/app/modules/shared/services/modal.service';
+import { Account, Expense } from 'src/app/store/user-account/user-account.reducers';
+import { AppState, selectUserAccount, selectUserAccounts } from 'src/app/store/user-account/user-account.selectors';
+import { formatDate } from 'src/app/utils/utils';
 
 @Component({
   selector: 'app-budget-accts',
   templateUrl: './budget-accts.component.html',
   styleUrls: ['./budget-accts.component.scss'],
 })
-export class BudgetAcctsComponent implements OnInit {
-  accts = [0, 1, 2];
+export class BudgetAcctsComponent implements OnInit, OnDestroy {
+  accounts: Account[];
+  expenses: Expense[];
+  subscriptions = new Subscription();
 
   transactionsModalConfig: ModalConfig = {
     title: 'Transactions',
@@ -160,9 +167,16 @@ export class BudgetAcctsComponent implements OnInit {
     ],
   };
 
-  constructor(private modalService: ModalService) {}
+  constructor(private modalService: ModalService, private store: Store<AppState>) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const sub = this.store.select(selectUserAccounts).subscribe(accounts => this.accounts = accounts);
+    this.subscriptions.add(sub);
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
+  }
 
   onAddAccount() {
     this.modalService.openModal(this.addAcctModalConfig);

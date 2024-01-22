@@ -1,13 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 import { ModalConfig } from 'src/app/models/interfaces';
 import { ModalService } from 'src/app/modules/shared/services/modal.service';
+import { Expense } from 'src/app/store/user-account/user-account.reducers';
+import { AppState, selectUserExpenses } from 'src/app/store/user-account/user-account.selectors';
+import { formatDate } from 'src/app/utils/utils';
 
 @Component({
   selector: 'app-expenses',
   templateUrl: './expenses.component.html',
   styleUrls: ['./expenses.component.scss'],
 })
-export class ExpensesComponent implements OnInit {
+export class ExpensesComponent implements OnInit, OnDestroy {
+  expenses: Expense[];
+  subscriptions = new Subscription();
+
   payExpenseModalConfig: ModalConfig = {
     title: 'Pay Expense',
     icon: {
@@ -118,10 +126,26 @@ export class ExpensesComponent implements OnInit {
       },
     ],
   };
+  
 
-  constructor(private modalService: ModalService) {}
+  constructor(private modalService: ModalService, private store: Store<AppState>) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const sub = this.store.select(selectUserExpenses).subscribe(expenses => {
+      this.expenses = expenses.map((expense) => {
+        if (typeof expense.due !== 'string') {
+          return { ...expense, due: formatDate(expense.due.seconds * 1000) };
+        } else {
+          return expense
+        }
+      });
+    })
+    this.subscriptions.add(sub)
+  }
+
+  ngOnDestroy(): void {
+      this.subscriptions.unsubscribe();
+  }
 
   onPayExpense() {
     this.modalService.openModal(this.payExpenseModalConfig);

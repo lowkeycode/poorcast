@@ -3,5 +3,5 @@
     <button class="btn btn-primary" data-test="pay-expense-btn" (click)="onPayExpense()">Pay Expense</button>
     <button class="btn btn-primary" data-test="add-expense-btn" (click)="onAddExpense()">Add Expense</button>
   </div>
-  <app-table [listItems]="[0, 1, 2, 3, 4]" [isEditable]="true"></app-table>
+  <app-table [listItems]="expenses" [isEditable]="true"></app-table>
 </div>

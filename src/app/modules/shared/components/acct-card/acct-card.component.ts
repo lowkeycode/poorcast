@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ModalConfig } from 'src/app/models/interfaces';
 import { ModalService } from '../../services/modal.service';
+import { Account } from 'src/app/store/user-account/user-account.reducers';
 
 @Component({
   selector: 'app-acct-card',
@@ -9,6 +10,7 @@ import { ModalService } from '../../services/modal.service';
 })
 export class AcctCardComponent implements OnInit {
   @Input() isBudgetCard = false;
+  @Input() account: Account;
   @Input() index: number;
 
   editAcctModalConfig: ModalConfig = {
