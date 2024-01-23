@@ -1,5 +1,9 @@
 @import '../../../../../styles.scss';
 
+form {
+  height: 100%;
+}
+
 .sign-in {
   height: 100%;
   border-radius: var(--br-lrg);

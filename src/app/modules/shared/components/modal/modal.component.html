@@ -21,6 +21,7 @@
               <app-text-input
                 [attr.formControlName]="input.formControlName"
                 [label]="input.label"
+                [placeholder]="input.placeholder"
                 [hidden]="input.hidden"
               ></app-text-input>
             </ng-template>
@@ -29,6 +30,7 @@
               <app-select-input
                 [attr.formControlName]="input.formControlName"
                 [label]="input.label"
+                [placeholder]="input.placeholder"
                 [hidden]="input.hidden"
               ></app-select-input>
             </ng-template>
@@ -47,12 +49,12 @@
     <div class="modal__btns">
       <button
         *ngFor="let button of modal.modalButtons"
-        [type]="button.type"
+        [type]="button.type === 'primary' ? 'submit' : 'button'"
         (click)="(button.clickFn())"
         class="btn"
         [ngClass]="{
-          'btn-primary': button.type === 'submit',
-          'btn-neutral': button.type === 'button'
+          'btn-primary': button.type === 'primary',
+          'btn-neutral': button.type === 'neutral'
         }"
         [attr.data-test]="button.dataTest"
       >

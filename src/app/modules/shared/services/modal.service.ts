@@ -10,9 +10,7 @@ export class ModalService {
   modal = new ReplaySubject<ModalConfig | null>(1);
   modalState$ = this.modal.asObservable();
 
-  constructor() {}
-
-  openModal(modalConfig: ModalConfig) {
+  updateModal(modalConfig: ModalConfig) {
     this.modal.next(modalConfig);
   }
 

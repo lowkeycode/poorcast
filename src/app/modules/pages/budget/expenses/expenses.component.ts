@@ -4,7 +4,10 @@ import { Subscription } from 'rxjs';
 import { ModalConfig } from 'src/app/models/interfaces';
 import { ModalService } from 'src/app/modules/shared/services/modal.service';
 import { Expense } from 'src/app/store/user-account/user-account.reducers';
-import { AppState, selectUserExpenses } from 'src/app/store/user-account/user-account.selectors';
+import {
+  AppState,
+  selectUserExpenses,
+} from 'src/app/store/user-account/user-account.selectors';
 import { formatDate } from 'src/app/utils/utils';
 
 @Component({
@@ -61,7 +64,7 @@ export class ExpensesComponent implements OnInit, OnDestroy {
     modalButtons: [
       {
         buttonText: 'Cancel',
-        type: 'button',
+        type: 'neutral',
         dataTest: 'modal-cancel-btn',
         clickFn: () => {
           this.modalService.closeModal();
@@ -69,7 +72,7 @@ export class ExpensesComponent implements OnInit, OnDestroy {
       },
       {
         buttonText: 'Pay Expense',
-        type: 'submit',
+        type: 'primary',
         dataTest: 'modal-save-btn',
         clickFn: () => console.log('Transferring'),
       },
@@ -85,25 +88,41 @@ export class ExpensesComponent implements OnInit, OnDestroy {
           {
             formControlName: 'expenseName',
             label: 'Expense',
+            placeholder: 'Groceries, Rent, etc.',
             type: 'text',
-            hidden: false,
-          },
-          {
-            formControlName: 'acctType',
-            label: 'Due',
-            type: 'select',
             hidden: false,
           },
           {
             formControlName: 'expenseAmount',
             label: 'Amount',
             type: 'text',
+            placeholder: '$0.00',
+            hidden: false,
+          },
+          {
+            formControlName: 'expenseRemaining',
+            label: 'Remaining',
+            type: 'text',
+            placeholder: '$0.00',
+            hidden: false,
+          },
+          {
+            formControlName: 'expenseDue',
+            label: 'Due',
+            type: 'select',
             hidden: false,
           },
           {
             formControlName: 'expenseNotes',
             label: 'Notes',
+            placeholder: 'Additional notes...',
             type: 'text',
+            hidden: false,
+          },
+          {
+            formControlName: 'expenseCategory',
+            label: 'Category',
+            type: 'select',
             hidden: false,
           },
         ],
@@ -111,47 +130,49 @@ export class ExpensesComponent implements OnInit, OnDestroy {
     ],
     modalButtons: [
       {
-        buttonText: 'Cancel',
-        type: 'button',
-        dataTest: 'modal-cancel-btn',
+        buttonText: 'Add/Edit Category',
+        type: 'neutral',
+        dataTest: 'modal-categories-btn',
         clickFn: () => {
-          this.modalService.closeModal();
+          console.log('Going to categories');
         },
       },
       {
         buttonText: 'Save',
-        type: 'submit',
+        type: 'primary',
         dataTest: 'modal-save-btn',
         clickFn: () => console.log('Saving'),
       },
     ],
   };
-  
 
-  constructor(private modalService: ModalService, private store: Store<AppState>) {}
+  constructor(
+    private modalService: ModalService,
+    private store: Store<AppState>
+  ) {}
 
   ngOnInit(): void {
-    const sub = this.store.select(selectUserExpenses).subscribe(expenses => {
+    const sub = this.store.select(selectUserExpenses).subscribe((expenses) => {
       this.expenses = expenses.map((expense) => {
         if (typeof expense.due !== 'string') {
           return { ...expense, due: formatDate(expense.due.seconds * 1000) };
         } else {
-          return expense
+          return expense;
         }
       });
-    })
-    this.subscriptions.add(sub)
+    });
+    this.subscriptions.add(sub);
   }
 
   ngOnDestroy(): void {
-      this.subscriptions.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 
   onPayExpense() {
-    this.modalService.openModal(this.payExpenseModalConfig);
+    this.modalService.updateModal(this.payExpenseModalConfig);
   }
 
   onAddExpense() {
-    this.modalService.openModal(this.addExpenseModalConfig);
+    this.modalService.updateModal(this.addExpenseModalConfig);
   }
 }

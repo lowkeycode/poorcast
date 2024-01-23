@@ -16,6 +16,7 @@ export class SelectInputComponent implements ControlValueAccessor  {
   @Input() showFeedback: boolean;
   @Input() feedBackMsg: string;
   @Input() label: string;
+  @Input() placeholder?: string;
   inputValue = this.options[0];
 
   touched = false;
