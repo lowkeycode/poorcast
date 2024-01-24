@@ -1,5 +1,5 @@
 <div class="overlay" (click)="closeModal()"></div>
-<form class="modal" *ngIf="modal$ | async as modal">
+<form class="modal" *ngIf="modal$ | async as modal" [formGroup]="form" (ngSubmit)="onSubmit()">
   <div class="modal__main">
     <app-solo-icon
       [iconName]="'closeCircle'"
