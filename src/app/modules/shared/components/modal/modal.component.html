@@ -1,64 +1,79 @@
 <div class="overlay" (click)="closeModal()"></div>
 <form class="modal" *ngIf="modal$ | async as modal">
-    <div class="modal__main">
-      <app-solo-icon
-          [iconName]="'closeCircle'"
-          [appIconSize]="1.6"
-          class="modal__main--close"
-          (click)="closeModal()"
-        ></app-solo-icon>
-      <h2 class="modal__main--title">{{ modal.title }}</h2>
-      <div class="modal__main--fieldsets">
-        <app-fieldset
-          *ngFor="let fieldset of modal.fieldsets"
-          [legend]="fieldset.name"
-        >
-          <ng-container
-            *ngFor="let input of fieldset.inputs"
-            [ngSwitch]="input.type"
-          >
-            <ng-template ngSwitchCase="text">
-              <app-text-input
-                [attr.formControlName]="input.formControlName"
-                [label]="input.label"
-                [placeholder]="input.placeholder"
-                [hidden]="input.hidden"
-              ></app-text-input>
-            </ng-template>
-  
-            <ng-template ngSwitchCase="select">
-              <app-select-input
-                [attr.formControlName]="input.formControlName"
-                [label]="input.label"
-                [placeholder]="input.placeholder"
-                [hidden]="input.hidden"
-              ></app-select-input>
-            </ng-template>
-          </ng-container>
-        </app-fieldset>
-      </div>
-  
-      <div class="modal__main--icon" *ngIf="modal.icon">
-        <app-solo-icon
-          [iconName]="modal.icon.iconName"
-          [appIconSize]="modal.icon.iconSize"
-        ></app-solo-icon>
-      </div>
-      
-    </div>
-    <div class="modal__btns">
-      <button
-        *ngFor="let button of modal.modalButtons"
-        [type]="button.type === 'primary' ? 'submit' : 'button'"
-        (click)="(button.clickFn())"
-        class="btn"
-        [ngClass]="{
-          'btn-primary': button.type === 'primary',
-          'btn-neutral': button.type === 'neutral'
-        }"
-        [attr.data-test]="button.dataTest"
+  <div class="modal__main">
+    <app-solo-icon
+      [iconName]="'closeCircle'"
+      [appIconSize]="1.6"
+      class="modal__main--close"
+      (click)="closeModal()"
+    ></app-solo-icon>
+    <h2 class="modal__main--title">{{ modal.title }}</h2>
+    <div class="modal__main--fieldsets">
+      <app-fieldset
+        *ngFor="let fieldset of modal.fieldsets"
+        [legend]="fieldset.name"
       >
-        {{ button.buttonText }}
-      </button>
+       
+        <ng-container
+          *ngFor="let input of fieldset.inputs"
+          [ngSwitch]="input.type"
+        >
+        <!-- The docs with *ngSwitchCase expressions don't work to group cases like a regular switch can it seems. Hurray Angular. -->
+
+          <!-- Text Input -->
+          <ng-template ngSwitchCase="text">
+            <app-text-input
+              [attr.formControlName]="input.formControlName"
+              [label]="input.label"
+              [placeholder]="input.placeholder"
+              [hidden]="input.hidden"
+            ></app-text-input>
+          </ng-template>
+
+          <!-- Date Input -->
+          <ng-template ngSwitchCase="date">
+            <app-text-input
+              [attr.formControlName]="input.formControlName"
+              [label]="input.label"
+              [placeholder]="input.placeholder"
+              [hidden]="input.hidden"
+              [type]="input.type"
+            ></app-text-input>
+          </ng-template>
+
+          <!-- Select Input -->
+          <ng-template ngSwitchCase="select">
+            <app-select-input
+              [attr.formControlName]="input.formControlName"
+              [label]="input.label"
+              [placeholder]="input.placeholder"
+              [hidden]="input.hidden"
+            ></app-select-input>
+          </ng-template>
+        </ng-container>
+      </app-fieldset>
     </div>
+
+    <div class="modal__main--icon" *ngIf="modal.icon">
+      <app-solo-icon
+        [iconName]="modal.icon.iconName"
+        [appIconSize]="modal.icon.iconSize"
+      ></app-solo-icon>
+    </div>
+  </div>
+  <div class="modal__btns">
+    <button
+      *ngFor="let button of modal.modalButtons"
+      [type]="button.type === 'primary' ? 'submit' : 'button'"
+      (click)="button.clickFn()"
+      class="btn"
+      [ngClass]="{
+        'btn-primary': button.type === 'primary',
+        'btn-neutral': button.type === 'neutral'
+      }"
+      [attr.data-test]="button.dataTest"
+    >
+      {{ button.buttonText }}
+    </button>
+  </div>
 </form>

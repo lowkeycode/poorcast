@@ -109,7 +109,7 @@ export class ExpensesComponent implements OnInit, OnDestroy {
           {
             formControlName: 'expenseDue',
             label: 'Due',
-            type: 'select',
+            type: 'date',
             hidden: false,
           },
           {

@@ -70,6 +70,4 @@ export class TextInputComponent implements ControlValueAccessor {
       this.touched = true;
     }
   }
-  
-
 }
