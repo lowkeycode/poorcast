@@ -51,9 +51,6 @@ export class ModalComponent implements OnInit, OnDestroy, AfterViewInit {
             Validators.required
           ))
       );
-
-      console.log(group)
-
       this.form = this.fb.group(group);
     });
     this.subs.add(modalSub);
@@ -73,6 +70,6 @@ export class ModalComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onSubmit() {
-    console.log('submit');
+    console.log('this.form', this.form);
   }
 }
