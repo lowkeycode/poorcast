@@ -37,6 +37,7 @@ export class TextInputComponent implements ControlValueAccessor {
   @Input() type = '';
   @Input() showFeedback?: boolean = false;
   @Input() feedBackMsg = ''
+  @Input() fromControlName: string;
 
   inputValue = '';
   touched = false;
