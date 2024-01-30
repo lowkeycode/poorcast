@@ -26,15 +26,19 @@ export interface FieldsetInput {
   type: string;
   hidden: boolean;
   placeholder?: string;
+  options?: string[];
   valid?: boolean;
   invalid?: boolean;
   feedBackMsg?: string;
   showFeedback?: boolean;
 }
 
+export type PayloadFunction = (payload: any) => any;
+
 export interface ButtonConfig {
   buttonText: string;
   type: 'primary' | 'neutral' | 'danger';
   dataTest: string;
-  clickFn: () => any;
+  submitFn?: PayloadFunction;
+  clickFn?: () => any;
 }

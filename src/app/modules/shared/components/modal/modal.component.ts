@@ -14,7 +14,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
-import { FieldsetInput, ModalConfig } from 'src/app/models/interfaces';
+import { FieldsetInput, ModalConfig, PayloadFunction } from 'src/app/models/interfaces';
 import { TextInputComponent } from '../forms/text-input/text-input.component';
 import { SelectInputComponent } from '../forms/select-input/select-input.component';
 
@@ -30,6 +30,8 @@ export class ModalComponent implements OnInit, OnDestroy, AfterViewInit {
   selectInputs: QueryList<SelectInputComponent>;
   modal$: Observable<ModalConfig | null>;
   form!: UntypedFormGroup;
+  private modal: ModalConfig | null;
+  private submitFn: PayloadFunction;
   private subs = new Subscription();
 
   constructor(
@@ -41,6 +43,8 @@ export class ModalComponent implements OnInit, OnDestroy, AfterViewInit {
     this.modal$ = this.modalService.modalState$;
     const modalSub = this.modal$.subscribe((modal) => {
       console.log('modal', modal);
+      this.modal = modal;
+      this.submitFn = this.modal?.modalButtons.find(button => button.type === 'primary')?.submitFn as PayloadFunction;
 
       const group = {} as UntypedFormGroup;
 
@@ -48,7 +52,7 @@ export class ModalComponent implements OnInit, OnDestroy, AfterViewInit {
         (input) =>
           (group[input.formControlName] = new UntypedFormControl(
             { value: null, disabled: false },
-            Validators.required
+            [Validators.required]
           ))
       );
       this.form = this.fb.group(group);
@@ -70,6 +74,8 @@ export class ModalComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onSubmit() {
-    console.log('this.form', this.form);
+    const payload = this.form.value;
+    this.submitFn(payload);
+    console.log(this.form)
   }
 }

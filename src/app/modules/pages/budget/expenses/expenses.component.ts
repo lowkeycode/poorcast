@@ -123,6 +123,7 @@ export class ExpensesComponent implements OnInit, OnDestroy {
             formControlName: 'expenseCategory',
             label: 'Category',
             type: 'select',
+            options: ['Update', 'These options'],
             hidden: false,
           },
         ],
@@ -141,7 +142,7 @@ export class ExpensesComponent implements OnInit, OnDestroy {
         buttonText: 'Save',
         type: 'primary',
         dataTest: 'modal-save-btn',
-        clickFn: () => console.log('Saving'),
+        submitFn: (payload) => console.log(payload),
       },
     ],
   };

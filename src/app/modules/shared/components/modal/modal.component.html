@@ -52,6 +52,7 @@
               [placeholder]="input.placeholder"
               [hidden]="input.hidden"
               [formControlName]="input.formControlName"
+              [options]="input.options || []"
             ></app-select-input>
           </ng-template>
         </ng-container>
@@ -69,7 +70,7 @@
     <button
       *ngFor="let button of modal.modalButtons"
       [type]="button.type === 'primary' ? 'submit' : 'button'"
-      (click)="button.clickFn()"
+      (click)="button?.clickFn && button?.clickFn()"
       class="btn"
       [ngClass]="{
         'btn-primary': button.type === 'primary',
