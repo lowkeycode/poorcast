@@ -69,6 +69,7 @@
   <div class="modal__btns">
     <button
       *ngFor="let button of modal.modalButtons"
+      [disabled]="button.type === 'primary' && !form.valid"
       [type]="button.type === 'primary' ? 'submit' : 'button'"
       (click)="button?.clickFn && button?.clickFn()"
       class="btn"

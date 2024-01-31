@@ -17,7 +17,7 @@ export class SelectInputComponent implements ControlValueAccessor, OnInit  {
   @Input() feedBackMsg: string;
   @Input() label: string;
   @Input() placeholder?: string;
-  @Input() fromControlName: string;
+  @Input() formControlName: string;
   inputValue;
 
   touched = false;
@@ -32,7 +32,7 @@ export class SelectInputComponent implements ControlValueAccessor, OnInit  {
   }
 
   writeValue(value: string) {
-    this.inputValue = value;
+      this.inputValue = value;
   }
 
   registerOnTouched(onTouched: any) {
@@ -45,7 +45,7 @@ export class SelectInputComponent implements ControlValueAccessor, OnInit  {
 
   onInput($event: any) {
     this.markAsTouched();
-    this.inputValue = $event.currentTarget.value;
+    this.inputValue = $event.target.value;
     this.onChange(this.inputValue)
   }
 
