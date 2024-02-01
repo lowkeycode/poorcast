@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { ModalConfig } from 'src/app/models/interfaces';
@@ -8,6 +9,7 @@ import {
   AppState,
   selectUserExpenses,
 } from 'src/app/store/user-account/user-account.selectors';
+import { selectUserId } from 'src/app/store/user/user.selectors';
 import { formatDate } from 'src/app/utils/utils';
 
 @Component({
@@ -79,77 +81,10 @@ export class ExpensesComponent implements OnInit, OnDestroy {
     ],
   };
 
-  addExpenseModalConfig: ModalConfig = {
-    title: 'Add Expense',
-    fieldsets: [
-      {
-        name: 'Expense Info',
-        inputs: [
-          {
-            formControlName: 'expenseName',
-            label: 'Expense',
-            placeholder: 'Groceries, Rent, etc.',
-            type: 'text',
-            hidden: false,
-          },
-          {
-            formControlName: 'expenseAmount',
-            label: 'Amount',
-            type: 'text',
-            placeholder: '$0.00',
-            hidden: false,
-          },
-          {
-            formControlName: 'expenseRemaining',
-            label: 'Remaining',
-            type: 'text',
-            placeholder: '$0.00',
-            hidden: false,
-          },
-          {
-            formControlName: 'expenseDue',
-            label: 'Due',
-            type: 'date',
-            hidden: false,
-          },
-          {
-            formControlName: 'expenseNotes',
-            label: 'Notes',
-            placeholder: 'Additional notes...',
-            type: 'text',
-            hidden: false,
-          },
-          {
-            formControlName: 'expenseCategory',
-            label: 'Category',
-            type: 'select',
-            options: ['Update', 'These options'],
-            hidden: false,
-          },
-        ],
-      },
-    ],
-    modalButtons: [
-      {
-        buttonText: 'Add/Edit Category',
-        type: 'neutral',
-        dataTest: 'modal-categories-btn',
-        clickFn: () => {
-          console.log('Going to categories');
-        },
-      },
-      {
-        buttonText: 'Save',
-        type: 'primary',
-        dataTest: 'modal-save-btn',
-        submitFn: (payload) => console.log(payload),
-      },
-    ],
-  };
-
   constructor(
     private modalService: ModalService,
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private afStore: AngularFirestore
   ) {}
 
   ngOnInit(): void {
@@ -174,6 +109,84 @@ export class ExpensesComponent implements OnInit, OnDestroy {
   }
 
   onAddExpense() {
-    this.modalService.updateModal(this.addExpenseModalConfig);
+    const addExpenseModalConfig: ModalConfig = {
+      title: 'Add Expense',
+      fieldsets: [
+        {
+          name: 'Expense Info',
+          inputs: [
+            {
+              formControlName: 'name',
+              label: 'Expense',
+              placeholder: 'Groceries, Rent, etc.',
+              type: 'text',
+              hidden: false,
+            },
+            {
+              formControlName: 'amount',
+              label: 'Amount',
+              type: 'text',
+              placeholder: '$0.00',
+              hidden: false,
+            },
+            {
+              formControlName: 'remaining',
+              label: 'Remaining',
+              type: 'text',
+              placeholder: '$0.00',
+              hidden: false,
+            },
+            {
+              formControlName: 'due',
+              label: 'Due',
+              type: 'date',
+              hidden: false,
+            },
+            {
+              formControlName: 'notes',
+              label: 'Notes',
+              placeholder: 'Additional notes...',
+              type: 'text',
+              hidden: false,
+            },
+            {
+              formControlName: 'category',
+              label: 'Category',
+              type: 'select',
+              options: ['Update', 'These options'],
+              hidden: false,
+            },
+          ],
+        },
+      ],
+      modalButtons: [
+        {
+          buttonText: 'Add/Edit Category',
+          type: 'neutral',
+          dataTest: 'modal-categories-btn',
+          clickFn: () => {
+            console.log('Going to categories');
+          },
+        },
+        {
+          buttonText: 'Save',
+          type: 'primary',
+          dataTest: 'modal-save-btn',
+          submitFn: (payload) => {
+            this.store
+              .select(selectUserId)
+              .subscribe((id) =>
+                this.afStore
+                  .collection('users')
+                  .doc(id)
+                  .collection('expenses')
+                  .add(payload)
+              );
+          },
+        },
+      ],
+    };
+
+    this.modalService.updateModal(addExpenseModalConfig);
   }
 }

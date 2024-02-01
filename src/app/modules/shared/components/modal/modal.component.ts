@@ -45,7 +45,6 @@ export class ModalComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnInit(): void {
     this.modal$ = this.modalService.modalState$;
     const modalSub = this.modal$.subscribe((modal) => {
-      console.log('modal', modal);
       this.modal = modal;
       this.submitFn = this.modal?.modalButtons.find(
         (button) => button.type === 'primary'
@@ -67,8 +66,6 @@ export class ModalComponent implements OnInit, OnDestroy, AfterViewInit {
           ))
       );
       this.form = this.fb.group(group);
-
-      console.log(this.form);
     });
     this.subs.add(modalSub);
   }
@@ -88,7 +85,7 @@ export class ModalComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onSubmit() {
     const payload = this.form.value;
+    console.log('payload', payload);
     this.submitFn(payload);
-    console.log(this.form);
   }
 }
