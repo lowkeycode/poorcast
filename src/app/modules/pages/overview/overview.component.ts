@@ -35,6 +35,8 @@ export class OverviewComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     const sub = this.store.select(selectUserOverview).subscribe((overview) => {
       const [userAcct, stats] = overview;
+      console.log('overview', overview);
+      
 
       if (userAcct.status === 'success') {
         this.accounts = userAcct.accounts;

@@ -1,8 +1,8 @@
 <div class="input">
   <label for="select-{{ label }}">{{ label }}</label>
 
-  <select >
-    <option *ngFor="let option of options" [value]="option">{{option}}</option>
+  <select (change)="onInput($event)">
+    <option *ngFor="let option of options; let i = index" [value]="option">{{option}}</option>
   </select>
   
   <div @container *ngIf="showFeedback">

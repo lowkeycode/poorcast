@@ -5,7 +5,7 @@ import { ModalService } from '../../services/modal.service';
 @Component({
   selector: 'app-table-row',
   templateUrl: './table-row.component.html',
-  styleUrls: ['./table-row.component.scss']
+  styleUrls: ['./table-row.component.scss'],
 })
 export class TableRowComponent {
   @Input() item: any;
@@ -48,7 +48,7 @@ export class TableRowComponent {
     modalButtons: [
       {
         buttonText: 'Cancel',
-        type: 'button',
+        type: 'neutral',
         dataTest: 'modal-cancel-btn',
         clickFn: () => {
           this.modalService.closeModal();
@@ -56,18 +56,16 @@ export class TableRowComponent {
       },
       {
         buttonText: 'Save',
-        type: 'submit',
+        type: 'primary',
         dataTest: 'modal-save-btn',
         clickFn: () => console.log('Saving'),
       },
     ],
   };
 
-  constructor(private modalService: ModalService) {
-  }
+  constructor(private modalService: ModalService) {}
 
   onEditExpense(index) {
-    this.modalService.openModal(this.editExpenseModalConfig);
+    this.modalService.updateModal(this.editExpenseModalConfig);
   }
-
 }

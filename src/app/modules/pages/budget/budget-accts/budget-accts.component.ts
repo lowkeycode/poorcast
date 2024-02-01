@@ -3,8 +3,15 @@ import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { ModalConfig } from 'src/app/models/interfaces';
 import { ModalService } from 'src/app/modules/shared/services/modal.service';
-import { Account, Expense } from 'src/app/store/user-account/user-account.reducers';
-import { AppState, selectUserAccount, selectUserAccounts } from 'src/app/store/user-account/user-account.selectors';
+import {
+  Account,
+  Expense,
+} from 'src/app/store/user-account/user-account.reducers';
+import {
+  AppState,
+  selectUserAccount,
+  selectUserAccounts,
+} from 'src/app/store/user-account/user-account.selectors';
 import { formatDate } from 'src/app/utils/utils';
 
 @Component({
@@ -34,14 +41,14 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
             label: 'Amount',
             type: 'text',
             hidden: false,
-          }
+          },
         ],
       },
     ],
     modalButtons: [
       {
         buttonText: 'Cancel',
-        type: 'button',
+        type: 'neutral',
         dataTest: 'modal-cancel-btn',
         clickFn: () => {
           this.modalService.closeModal();
@@ -49,7 +56,7 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
       },
       {
         buttonText: 'Save',
-        type: 'submit',
+        type: 'primary',
         dataTest: 'modal-save-btn',
         clickFn: () => console.log('Saving'),
       },
@@ -86,7 +93,7 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
     modalButtons: [
       {
         buttonText: 'Cancel',
-        type: 'button',
+        type: 'neutral',
         dataTest: 'modal-cancel-btn',
         clickFn: () => {
           this.modalService.closeModal();
@@ -94,7 +101,7 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
       },
       {
         buttonText: 'Save',
-        type: 'submit',
+        type: 'primary',
         dataTest: 'modal-save-btn',
         clickFn: () => console.log('Saving'),
       },
@@ -152,7 +159,7 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
     modalButtons: [
       {
         buttonText: 'Cancel',
-        type: 'button',
+        type: 'neutral',
         dataTest: 'modal-cancel-btn',
         clickFn: () => {
           this.modalService.closeModal();
@@ -160,17 +167,22 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
       },
       {
         buttonText: 'Transfer',
-        type: 'submit',
+        type: 'primary',
         dataTest: 'modal-save-btn',
         clickFn: () => console.log('Transferring'),
       },
     ],
   };
 
-  constructor(private modalService: ModalService, private store: Store<AppState>) {}
+  constructor(
+    private modalService: ModalService,
+    private store: Store<AppState>
+  ) {}
 
   ngOnInit(): void {
-    const sub = this.store.select(selectUserAccounts).subscribe(accounts => this.accounts = accounts);
+    const sub = this.store
+      .select(selectUserAccounts)
+      .subscribe((accounts) => (this.accounts = accounts));
     this.subscriptions.add(sub);
   }
 
@@ -179,14 +191,14 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
   }
 
   onAddAccount() {
-    this.modalService.openModal(this.addAcctModalConfig);
+    this.modalService.updateModal(this.addAcctModalConfig);
   }
 
   onTransfer() {
-    this.modalService.openModal(this.transferModalConfig);
+    this.modalService.updateModal(this.transferModalConfig);
   }
 
-  onTransactions(){
-    this.modalService.openModal(this.transactionsModalConfig);
+  onTransactions() {
+    this.modalService.updateModal(this.transactionsModalConfig);
   }
 }

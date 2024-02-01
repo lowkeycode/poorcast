@@ -14,6 +14,7 @@ import { TableComponent } from './components/table/table.component';
 import { TableRowComponent } from './components/table-row/table-row.component';
 import { ArcChartComponent } from './components/arc-chart/arc-chart.component';
 import { TuiArcChartModule } from '@taiga-ui/addon-charts';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 const components = [
   LogoComponent,
@@ -34,7 +35,7 @@ const directives = [IconDirective];
 
 @NgModule({
   declarations: [...components, ...directives ],
-  imports: [CommonModule, TuiArcChartModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, TuiArcChartModule],
   exports: [...components, ...directives],
 })
 export class SharedModule {}

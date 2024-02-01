@@ -43,7 +43,7 @@ export class AcctCardComponent implements OnInit {
     modalButtons: [
       {
         buttonText: 'Cancel',
-        type: 'button',
+        type: 'neutral',
         dataTest: 'modal-cancel-btn',
         clickFn: () => {
           this.modalService.closeModal();
@@ -51,7 +51,7 @@ export class AcctCardComponent implements OnInit {
       },
       {
         buttonText: 'Save',
-        type: 'submit',
+        type: 'primary',
         dataTest: 'modal-save-btn',
         clickFn: () => console.log('Saving'),
       },
@@ -63,6 +63,6 @@ export class AcctCardComponent implements OnInit {
   ngOnInit(): void {}
 
   onEditAcct(index) {
-    this.modalService.openModal(this.editAcctModalConfig);
+    this.modalService.updateModal(this.editAcctModalConfig);
   }
 }

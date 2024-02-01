@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-sign-in-form',
   templateUrl: './sign-in-form.component.html',
+  styleUrls: ['../sign-in-page.component.scss']
 })
 export class SignInFormComponent implements OnInit {
   @ViewChildren(TextInputComponent) inputs!: QueryList<TextInputComponent>;
