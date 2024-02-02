@@ -5,15 +5,16 @@ describe('Settings', () => {
     cy.get('app-side-nav-icon').eq(2).click()
   })
 
-  after(() => {
-    cy.visit('http://localhost:4200')
-    cy.getByData('new-account').click();
-    cy.getByData('email').type('test@test.com')
-    cy.getByData('password').type('testtest')
-    cy.getByData('password-confirm').type('testtest')
-    cy.getByData('submit').click()
-    cy.getByData("signout-btn").click();
-  })
+  // ** See notes at bottom of test suite
+  // after(() => {
+  //   cy.visit('http://localhost:4200')
+  //   cy.getByData('new-account').click();
+  //   cy.getByData('email').type('test@test.com')
+  //   cy.getByData('password').type('testtest')
+  //   cy.getByData('password-confirm').type('testtest')
+  //   cy.getByData('submit').click()
+  //   cy.getByData("signout-btn").click();
+  // })
 
   it('displays delete account button', () => {
     cy.getByData("delete-acct-btn").should('exist').and('be.visible')
