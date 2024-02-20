@@ -15,6 +15,7 @@ export interface Account {
 }
 
 export interface Expense {
+  id: string;
   name: string;
   amount: number;
   remaining: number;
