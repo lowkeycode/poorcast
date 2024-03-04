@@ -52,14 +52,19 @@ export class ModalComponent implements OnInit, OnDestroy, AfterViewInit {
       //! This might bite me when it comes to two fieldsets
 
       modal?.fieldsets[0].inputs.forEach((input) => {
+
+        console.log(input);
+        
       
 
         group[input.formControlName] = new UntypedFormControl(
           {
             value:
               input.type === 'select' && !!input?.options
-                ? input.options[0]
+                ? input.options[0] || input.defaultValue
                 : input.type === 'text' && input.defaultValue
+                ? input.defaultValue
+                : input.type === 'date' && input.defaultValue
                 ? input.defaultValue
                 : null,
             disabled: false,
@@ -77,8 +82,8 @@ export class ModalComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    console.log('this.genericInputs', this.genericInputs);
-    console.log('this.selects', this.selectInputs);
+    // console.log('this.genericInputs', this.genericInputs);
+    // console.log('this.selects', this.selectInputs);
   }
 
   closeModal() {

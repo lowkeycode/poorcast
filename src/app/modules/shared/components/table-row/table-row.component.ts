@@ -5,8 +5,9 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AppState } from 'src/app/store/user-account/user-account.selectors';
 import { Store } from '@ngrx/store';
 import { selectUserId } from 'src/app/store/user/user.selectors';
-import { Subscription } from 'rxjs';
+import { Subscription} from 'rxjs';
 import { FormatDatePipe } from '../../pipes/format-date.pipe';
+import { Timestamp } from 'src/app/store/user-account/user-account.reducers';
 
 @Component({
   selector: 'app-table-row',
@@ -104,7 +105,7 @@ export class TableRowComponent {
   }
 
   onEditExpense(item: any) {
-    const itemKeyVals: Array<[string, string]> = Object.entries(item);
+    const itemKeyVals: Array<[string, string & Timestamp]> = Object.entries(item);
     console.log(item);
     itemKeyVals.forEach((keyVal) => {
       const input = this.editExpenseModalConfig.fieldsets
@@ -114,11 +115,18 @@ export class TableRowComponent {
         });
 
       if (input) {
-        input['defaultValue'] = keyVal[1];
+        if (input.type === 'date') {
+          input['defaultValue'] = new Date(keyVal[1].seconds * 1000).toISOString().substring(0, 10);
+        } else {
+          input['defaultValue'] = keyVal[1];
+        }
       }
     });
 
-    console.log(this.editExpenseModalConfig);
+    // console.log(this.editExpenseModalConfig);
+
+    console.log(item);
+    
 
     this.modalService.updateModal(this.editExpenseModalConfig);
   }
