@@ -10,7 +10,6 @@ import {
   selectUserExpenses,
 } from 'src/app/store/user-account/user-account.selectors';
 import { selectUserId } from 'src/app/store/user/user.selectors';
-import { formatDate } from 'src/app/utils/utils';
 
 @Component({
   selector: 'app-expenses',
@@ -88,15 +87,9 @@ export class ExpensesComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    const sub = this.store.select(selectUserExpenses).subscribe((expenses) => {
-      this.expenses = expenses.map((expense) => {
-        if (typeof expense.due !== 'string') {
-          return { ...expense, due: formatDate(expense.due.seconds * 1000) };
-        } else {
-          return expense;
-        }
-      });
-    });
+    const sub = this.store
+      .select(selectUserExpenses)
+      .subscribe((expenses) => (this.expenses = expenses));
     this.subscriptions.add(sub);
   }
 
@@ -161,11 +154,11 @@ export class ExpensesComponent implements OnInit, OnDestroy {
       ],
       modalButtons: [
         {
-          buttonText: 'Add/Edit Category',
+          buttonText: 'Cancel',
           type: 'neutral',
-          dataTest: 'modal-categories-btn',
+          dataTest: 'modal-cancel-btn',
           clickFn: () => {
-            console.log('Going to categories');
+            this.modalService.closeModal();
           },
         },
         {

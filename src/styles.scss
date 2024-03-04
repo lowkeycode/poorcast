@@ -299,3 +299,7 @@ app-solo-icon {
   justify-content: center;
   align-items: center;
 }
+
+button:focus {
+  outline: var(--grey-dark) solid 2px;
+}

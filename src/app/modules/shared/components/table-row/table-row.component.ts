@@ -6,11 +6,13 @@ import { AppState } from 'src/app/store/user-account/user-account.selectors';
 import { Store } from '@ngrx/store';
 import { selectUserId } from 'src/app/store/user/user.selectors';
 import { Subscription } from 'rxjs';
+import { FormatDatePipe } from '../../pipes/format-date.pipe';
 
 @Component({
   selector: 'app-table-row',
   templateUrl: './table-row.component.html',
   styleUrls: ['./table-row.component.scss'],
+  providers: [FormatDatePipe]
 })
 export class TableRowComponent {
   @Input() item: any;
@@ -27,27 +29,39 @@ export class TableRowComponent {
         name: 'Expense Info',
         inputs: [
           {
-            formControlName: 'ExpenseName',
+            formControlName: 'name',
             label: 'Expense',
             type: 'text',
             hidden: false,
           },
           {
-            formControlName: 'acctType',
-            label: 'Due',
-            type: 'select',
-            hidden: false,
-          },
-          {
-            formControlName: 'expenseAmount',
+            formControlName: 'amount',
             label: 'Amount',
             type: 'text',
             hidden: false,
           },
           {
-            formControlName: 'expenseNotes',
+            formControlName: 'remaining',
+            label: 'Remaining',
+            type: 'text',
+            hidden: false,
+          },
+          {
+            formControlName: 'due',
+            label: 'Due',
+            type: 'date',
+            hidden: false,
+          },
+          {
+            formControlName: 'notes',
             label: 'Notes',
             type: 'text',
+            hidden: false,
+          },
+          {
+            formControlName: 'category',
+            label: 'Category',
+            type: 'select',
             hidden: false,
           },
         ],
@@ -71,10 +85,17 @@ export class TableRowComponent {
     ],
   };
 
-  constructor(private modalService: ModalService, private afs: AngularFirestore, private store: Store<AppState>) {}
+  constructor(
+    private modalService: ModalService,
+    private afs: AngularFirestore,
+    private store: Store<AppState>,
+    public formatDate: FormatDatePipe
+  ) {}
 
   ngOnInit() {
-    const userIdSub = this.store.select(selectUserId).subscribe(uid => this.userId = uid);
+    const userIdSub = this.store
+      .select(selectUserId)
+      .subscribe((uid) => (this.userId = uid));
     this.subscriptions.add(userIdSub);
   }
 
@@ -82,11 +103,32 @@ export class TableRowComponent {
     this.subscriptions.unsubscribe();
   }
 
-  onEditExpense(index) {
+  onEditExpense(item: any) {
+    const itemKeyVals: Array<[string, string]> = Object.entries(item);
+    console.log(item);
+    itemKeyVals.forEach((keyVal) => {
+      const input = this.editExpenseModalConfig.fieldsets
+        .find((fieldset) => fieldset.name === 'Expense Info')
+        ?.inputs.find((input) => {
+          return input.formControlName === keyVal[0];
+        });
+
+      if (input) {
+        input['defaultValue'] = keyVal[1];
+      }
+    });
+
+    console.log(this.editExpenseModalConfig);
+
     this.modalService.updateModal(this.editExpenseModalConfig);
   }
 
   onDeleteExpense(item: any) {
-    this.afs.collection('users').doc(this.userId).collection(this.collectionName).doc(item.id).delete();
+    this.afs
+      .collection('users')
+      .doc(this.userId)
+      .collection(this.collectionName)
+      .doc(item.id)
+      .delete();
   }
 }

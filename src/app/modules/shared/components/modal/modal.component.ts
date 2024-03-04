@@ -14,10 +14,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
-import {
-  ModalConfig,
-  PayloadFunction,
-} from 'src/app/models/interfaces';
+import { ModalConfig, PayloadFunction } from 'src/app/models/interfaces';
 import { TextInputComponent } from '../forms/text-input/text-input.component';
 import { SelectInputComponent } from '../forms/select-input/select-input.component';
 
@@ -52,19 +49,24 @@ export class ModalComponent implements OnInit, OnDestroy, AfterViewInit {
 
       const group = {} as UntypedFormGroup;
 
-      modal?.fieldsets[0].inputs.forEach(
-        (input) =>
-          (group[input.formControlName] = new UntypedFormControl(
-            {
-              value:
-                input.type === 'select' && !!input?.options
-                  ? input.options[0]
-                  : null,
-              disabled: false,
-            },
-            [Validators.required]
-          ))
-      );
+      //! This might bite me when it comes to two fieldsets
+
+      modal?.fieldsets[0].inputs.forEach((input) => {
+      
+
+        group[input.formControlName] = new UntypedFormControl(
+          {
+            value:
+              input.type === 'select' && !!input?.options
+                ? input.options[0]
+                : input.type === 'text' && input.defaultValue
+                ? input.defaultValue
+                : null,
+            disabled: false,
+          },
+          [Validators.required]
+        );
+      });
       this.form = this.fb.group(group);
     });
     this.subs.add(modalSub);

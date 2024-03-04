@@ -31,6 +31,7 @@ export interface FieldsetInput {
   invalid?: boolean;
   feedBackMsg?: string;
   showFeedback?: boolean;
+  defaultValue?: string | Date;
 }
 
 export type PayloadFunction = (payload: any) => any;

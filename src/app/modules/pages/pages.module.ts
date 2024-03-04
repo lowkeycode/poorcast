@@ -8,21 +8,19 @@ import { UpcomingCardComponent } from './overview/upcoming-card/upcoming-card.co
 import { BudgetAcctsComponent } from './budget/budget-accts/budget-accts.component';
 import { ExpensesComponent } from './budget/expenses/expenses.component';
 
+
 const components = [
   OverviewComponent,
   BudgetComponent,
   SettingsComponent,
   UpcomingCardComponent,
   BudgetAcctsComponent,
-  ExpensesComponent
+  ExpensesComponent,
 ];
 
 @NgModule({
   declarations: [...components],
-  imports: [
-    CommonModule,
-    SharedModule,
-  ],
+  imports: [CommonModule, SharedModule],
   exports: [...components],
 })
 export class PagesModule {}
