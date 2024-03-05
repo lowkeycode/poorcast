@@ -1,3 +1,5 @@
+import { AbstractControl, ValidationErrors, Validator } from "@angular/forms";
+
 export interface FeedBackMsgs {
   [key: string]: string;
 }
@@ -7,6 +9,7 @@ export interface ModalConfig {
   fieldsets: Fieldset[];
   modalButtons: ButtonConfig[];
   icon?: ModalIcon;
+  contentList?: string[];
 }
 
 export interface ModalIcon {
@@ -18,6 +21,7 @@ export interface Fieldset {
   name: string;
   inputs: FieldsetInput[];
   index?: number;
+  button?: ButtonConfig
 }
 
 export interface FieldsetInput {
@@ -25,6 +29,7 @@ export interface FieldsetInput {
   label: string;
   type: string;
   hidden: boolean;
+  validators: ((control: AbstractControl<any, any>) => ValidationErrors | null)[]
   placeholder?: string;
   options?: string[];
   valid?: boolean;

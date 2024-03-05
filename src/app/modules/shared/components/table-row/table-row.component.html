@@ -5,7 +5,7 @@
 <p class="row-copy row-due">{{ item.due.seconds | formatDate }}</p>
 <p class="row-copy row-notes">{{ item.notes }}</p>
 <p class="row-copy category-container">
-  <span class="row-category">{{ item.category }}</span>
+  <span class="category">{{ item.category }}</span>
   <span *ngIf="!item.remaining" class="paid">PAID</span>
 </p>
 <div class="btns">

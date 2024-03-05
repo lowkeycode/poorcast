@@ -8,6 +8,7 @@ import { selectUserId } from 'src/app/store/user/user.selectors';
 import { Subscription} from 'rxjs';
 import { FormatDatePipe } from '../../pipes/format-date.pipe';
 import { Timestamp } from 'src/app/store/user-account/user-account.reducers';
+import { Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-table-row',
@@ -34,36 +35,42 @@ export class TableRowComponent {
             label: 'Expense',
             type: 'text',
             hidden: false,
+            validators: [Validators.required]
           },
           {
             formControlName: 'amount',
             label: 'Amount',
             type: 'text',
             hidden: false,
+            validators: [Validators.required]
           },
           {
             formControlName: 'remaining',
             label: 'Remaining',
             type: 'text',
             hidden: false,
+            validators: [Validators.required]
           },
           {
             formControlName: 'due',
             label: 'Due',
             type: 'date',
             hidden: false,
+            validators: [Validators.required]
           },
           {
             formControlName: 'notes',
             label: 'Notes',
             type: 'text',
             hidden: false,
+            validators: [Validators.required]
           },
           {
             formControlName: 'category',
             label: 'Category',
             type: 'select',
             hidden: false,
+            validators: [Validators.required]
           },
         ],
       },

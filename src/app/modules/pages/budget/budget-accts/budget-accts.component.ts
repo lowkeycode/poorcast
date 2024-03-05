@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { ModalConfig } from 'src/app/models/interfaces';
@@ -33,12 +34,14 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
             label: 'Transaction Type',
             type: 'select',
             hidden: false,
+            validators: [Validators.required]
           },
           {
             formControlName: 'amount',
             label: 'Amount',
             type: 'text',
             hidden: false,
+            validators: [Validators.required]
           },
         ],
       },
@@ -72,18 +75,21 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
             label: 'Account Name',
             type: 'text',
             hidden: false,
+            validators: [Validators.required]
           },
           {
             formControlName: 'acctType',
             label: 'Account Type',
             type: 'select',
             hidden: false,
+            validators: [Validators.required]
           },
           {
             formControlName: 'acctName',
             label: 'Account Balance',
             type: 'text',
             hidden: false,
+            validators: [Validators.required]
           },
         ],
       },
@@ -121,18 +127,21 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
             label: 'User',
             type: 'select',
             hidden: false,
+            validators: [Validators.required]
           },
           {
             formControlName: 'fromAcct',
             label: 'Account',
             type: 'select',
             hidden: false,
+            validators: [Validators.required]
           },
           {
             formControlName: 'fromAmount',
             label: 'Amount',
             type: 'text',
             hidden: false,
+            validators: [Validators.required]
           },
         ],
       },
@@ -144,12 +153,14 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
             label: 'User',
             type: 'select',
             hidden: false,
+            validators: [Validators.required]
           },
           {
             formControlName: 'toAcct',
             label: 'Account',
             type: 'select',
             hidden: false,
+            validators: [Validators.required]
           },
         ],
       },

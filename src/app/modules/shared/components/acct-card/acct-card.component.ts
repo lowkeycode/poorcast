@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ModalConfig } from 'src/app/models/interfaces';
 import { ModalService } from '../../services/modal.service';
 import { Account } from 'src/app/store/user-account/user-account.reducers';
+import { Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-acct-card',
@@ -24,18 +25,21 @@ export class AcctCardComponent implements OnInit {
             label: 'Account Name',
             type: 'text',
             hidden: false,
+            validators: [Validators.required]
           },
           {
             formControlName: 'acctType',
             label: 'Account Type',
             type: 'select',
             hidden: false,
+            validators: [Validators.required]
           },
           {
             formControlName: 'acctName',
             label: 'Account Balance',
             type: 'text',
             hidden: false,
+            validators: [Validators.required]
           },
         ],
       },

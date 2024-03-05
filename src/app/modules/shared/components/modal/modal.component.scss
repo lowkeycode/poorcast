@@ -72,6 +72,19 @@
       left: 50%;
       transform: translate(-50%, -50%);
     }
+
+    &--content-list {
+      flex: 4;
+      display: flex;
+      // border: 1px solid red;
+      list-style: none;
+      gap: var(--space-xs);
+      padding: 0 var(--space-xs) var(--space-xs) var(--space-xs);
+      & > * {
+        // border: 1px solid blue;
+        height: min-content;
+      }
+    }
     
   }
 

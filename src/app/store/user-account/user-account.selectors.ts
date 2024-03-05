@@ -39,7 +39,7 @@ export const selectUserExpenses = createSelector(
 
 export const selectUserCategories = createSelector(
   getUserAccount,
-  (state) => state.categories[0].categories
+  (state) => state.categories[0]
 );
 
 export const selectUserOverview = createSelector(getUserAccount, (userAcct):[UserAccount, AccountStats] => {

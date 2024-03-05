@@ -53,10 +53,6 @@ export class ModalComponent implements OnInit, OnDestroy, AfterViewInit {
 
       modal?.fieldsets[0].inputs.forEach((input) => {
 
-        console.log(input);
-        
-      
-
         group[input.formControlName] = new UntypedFormControl(
           {
             value:
@@ -69,7 +65,7 @@ export class ModalComponent implements OnInit, OnDestroy, AfterViewInit {
                 : null,
             disabled: false,
           },
-          [Validators.required]
+          input.validators
         );
       });
       this.form = this.fb.group(group);
