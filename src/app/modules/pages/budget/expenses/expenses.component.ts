@@ -24,6 +24,7 @@ export class ExpensesComponent implements OnInit, OnDestroy {
 
   payExpenseModalConfig: ModalConfig = {
     title: 'Pay Expense',
+    contentList: [],
     icon: {
       iconName: 'arrowForward',
       iconSize: 2,
@@ -90,6 +91,7 @@ export class ExpensesComponent implements OnInit, OnDestroy {
 
   manageCategoriesConfig: ModalConfig = {
     title: 'Categories',
+    contentList: [],
     fieldsets: [{
       name: 'Add Category',
       inputs: [
@@ -103,9 +105,14 @@ export class ExpensesComponent implements OnInit, OnDestroy {
       ],
       button: {
         buttonText: 'Add',
-        type: 'primary',
+        type: 'neutral',
         dataTest: 'add-category-btn',
-        clickFn: () => console.log('adding')
+        clickFn: (modal, formValue) => {
+          const category = formValue.category as string;
+          if(!category) return;
+          this.manageCategoriesConfig.contentList = [...modal.contentList, category];
+          this.modalService.updateModal(this.manageCategoriesConfig);
+        }
       }
 
     }],
@@ -153,6 +160,7 @@ export class ExpensesComponent implements OnInit, OnDestroy {
   onAddExpense() {
     const addExpenseModalConfig: ModalConfig = {
       title: 'Add Expense',
+      contentList: [],
       fieldsets: [
         {
           name: 'Expense Info',

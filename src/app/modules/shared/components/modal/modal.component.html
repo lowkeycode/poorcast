@@ -69,7 +69,7 @@
             *ngIf="fieldset.button"
             [disabled]="fieldset.button.type === 'primary' && !form.valid"
             [type]="fieldset.button.type === 'primary' ? 'submit' : 'button'"
-            (click)="fieldset.button.clickFn && fieldset.button.clickFn()"
+            (click)="fieldset.button.clickFn && fieldset.button.clickFn(modal, form.value)"
             class="btn"
             [ngClass]="{
               'btn-primary': fieldset.button.type === 'primary',
@@ -93,11 +93,20 @@
   </div>
 
   <!-- Content -->
-  <ul class="modal__main--content-list">
-    <li *ngFor="let item of modal.contentList" class="category-container">
-      <span class="category">{{ item }}</span>
-    </li>
-  </ul>
+  <div *ngIf="!!modal.contentList.length" class="modal__main--content-list">
+    <p>Hover to delete</p>
+    <ul>
+      <li *ngFor="let item of modal.contentList" class="category-container">
+        <span class="category">{{ item }}
+          <app-solo-icon
+          [appIconSize]="0.9"
+          [iconName]="'closeCircle'"
+          (click)="onDeleteItem(item)"
+        ></app-solo-icon>
+        </span>
+      </li>
+    </ul>
+  </div>
 
   <div class="modal__btns">
     <button

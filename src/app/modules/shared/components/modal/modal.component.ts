@@ -91,4 +91,13 @@ export class ModalComponent implements OnInit, OnDestroy, AfterViewInit {
     console.log('payload', payload);
     this.submitFn(payload);
   }
+
+  onDeleteItem(item: any) {
+    console.log(item);
+    console.log(this.modal);
+    if(this.modal) {
+      const newList = this.modal.contentList.filter(listItem => listItem !== item);
+      this.modal.contentList = newList;
+    }
+  }
 }

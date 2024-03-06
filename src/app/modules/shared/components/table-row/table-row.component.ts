@@ -26,6 +26,7 @@ export class TableRowComponent {
 
   editExpenseModalConfig: ModalConfig = {
     title: 'Edit Expense',
+    contentList: [],
     fieldsets: [
       {
         name: 'Expense Info',

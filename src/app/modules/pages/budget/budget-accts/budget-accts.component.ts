@@ -25,6 +25,7 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
 
   transactionsModalConfig: ModalConfig = {
     title: 'Transactions',
+    contentList: [],
     fieldsets: [
       {
         name: 'Transactions',
@@ -66,6 +67,7 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
 
   addAcctModalConfig: ModalConfig = {
     title: 'Add Account',
+    contentList: [],
     fieldsets: [
       {
         name: 'Account Info',
@@ -118,6 +120,7 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
       iconName: 'arrowForward',
       iconSize: 2,
     },
+    contentList: [],
     fieldsets: [
       {
         name: 'From',

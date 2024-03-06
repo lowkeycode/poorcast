@@ -300,8 +300,13 @@ app-solo-icon {
   align-items: center;
 }
 
-button:focus {
-  outline: var(--grey-dark) solid 2px;
+button {
+  transform: translateY(0);
+  transition: all .1s;
+}
+
+button:active {
+  transform: translateY(1px);
 }
 
 // Category Tags

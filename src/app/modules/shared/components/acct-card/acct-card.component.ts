@@ -16,6 +16,7 @@ export class AcctCardComponent implements OnInit {
 
   editAcctModalConfig: ModalConfig = {
     title: 'Edit Account',
+    contentList: [],
     fieldsets: [
       {
         name: 'Account Info',
