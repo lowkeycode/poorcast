@@ -1,3 +1,4 @@
+import { ContentListActions } from './../../../../models/interfaces';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Validators } from '@angular/forms';
@@ -5,11 +6,14 @@ import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { ModalConfig } from 'src/app/models/interfaces';
 import { ModalService } from 'src/app/modules/shared/services/modal.service';
-import { Category, Expense } from 'src/app/store/user-account/user-account.reducers';
+import { updateCategories } from 'src/app/store/user-account/user-account.actions';
+import {
+  Categories,
+  Expense,
+} from 'src/app/store/user-account/user-account.reducers';
 import {
   AppState,
   selectUserAccount,
-  selectUserExpenses,
 } from 'src/app/store/user-account/user-account.selectors';
 import { selectUserId } from 'src/app/store/user/user.selectors';
 
@@ -38,23 +42,21 @@ export class ExpensesComponent implements OnInit, OnDestroy {
             label: 'User',
             type: 'select',
             hidden: false,
-            validators: [Validators.required]
-
+            validators: [Validators.required],
           },
           {
             formControlName: 'fromAcct',
             label: 'Account',
             type: 'select',
             hidden: false,
-            validators: [Validators.required]
-
+            validators: [Validators.required],
           },
           {
             formControlName: 'fromAmount',
             label: 'Amount',
             type: 'text',
             hidden: false,
-            validators: [Validators.required]
+            validators: [Validators.required],
           },
         ],
       },
@@ -66,7 +68,7 @@ export class ExpensesComponent implements OnInit, OnDestroy {
             label: 'Expense',
             type: 'select',
             hidden: false,
-            validators: [Validators.required]
+            validators: [Validators.required],
           },
         ],
       },
@@ -91,47 +93,66 @@ export class ExpensesComponent implements OnInit, OnDestroy {
 
   manageCategoriesConfig: ModalConfig = {
     title: 'Categories',
-    contentList: [],
-    fieldsets: [{
-      name: 'Add Category',
-      inputs: [
-        {
-          formControlName: 'category',
-          label: '',
-          type: 'text',
-          hidden: false,
-          validators: []
-        }
-      ],
-      button: {
-        buttonText: 'Add',
-        type: 'neutral',
-        dataTest: 'add-category-btn',
-        clickFn: (modal, formValue) => {
-          const category = formValue.category as string;
-          if(!category) return;
-          this.manageCategoriesConfig.contentList = [...modal.contentList, category];
-          this.modalService.updateModal(this.manageCategoriesConfig);
-        }
+    contentList: {},
+    contentListActions: {
+      delete: (item) => {
+        const newList = this.categories.categories.filter(listItem => listItem !== item);
+        const updatedCategories = {id: this.categories.id, categories: [...newList]};
+        this.store.dispatch(updateCategories(updatedCategories))
+        this.manageCategoriesConfig.contentList = this.categories;
+        this.modalService.updateModal(this.manageCategoriesConfig);
       }
-
-    }],
+    },
+    fieldsets: [
+      {
+        name: 'Add Category',
+        inputs: [
+          {
+            formControlName: 'category',
+            label: '',
+            type: 'text',
+            hidden: false,
+            validators: [],
+          },
+        ],
+        button: {
+          buttonText: 'Add',
+          type: 'neutral',
+          dataTest: 'add-category-btn',
+          clickFn: (formValue) => {
+            const { category } = formValue;
+            this.store.dispatch(updateCategories({id: this.categories.id, categories: [...this.categories.categories, category]}))
+            this.manageCategoriesConfig.contentList = this.categories;
+            this.modalService.updateModal(this.manageCategoriesConfig);
+          },
+        },
+      },
+    ],
     modalButtons: [
       {
         buttonText: 'Cancel',
         type: 'neutral',
-        dataTest:'modal-cancel-btn',
-        clickFn: () => this.modalService.closeModal()
+        dataTest: 'modal-cancel-btn',
+        clickFn: () => this.modalService.closeModal(),
       },
       {
         buttonText: 'Save',
         type: 'primary',
-        dataTest:'modal-save-btn',
-        clickFn: () => console.log('saving')
+        dataTest: 'modal-save-btn',
+        submitFn: () => {
+          this.store.select(selectUserId).subscribe((id) => {
+            this.afStore
+              .collection('users')
+              .doc(id)
+              .collection('categories')
+              .doc(this.categories.id).update({categories: this.categories.categories});
+          });
+          this.modalService.closeModal();
+        },
       },
     ],
-  }
-  categories: Category[];
+  };
+  categories: Categories;
 
   constructor(
     private modalService: ModalService,
@@ -140,12 +161,10 @@ export class ExpensesComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    const sub = this.store
-      .select(selectUserAccount)
-      .subscribe((acct) => {
-        this.expenses = acct.expenses
-        this.categories = acct.categories;
-      });
+    const sub = this.store.select(selectUserAccount).subscribe((acct) => {
+      this.expenses = acct.expenses;
+      this.categories = acct.categories;
+    });
     this.subscriptions.add(sub);
   }
 
@@ -171,7 +190,7 @@ export class ExpensesComponent implements OnInit, OnDestroy {
               placeholder: 'Groceries, Rent, etc.',
               type: 'text',
               hidden: false,
-              validators: [Validators.required]
+              validators: [Validators.required],
             },
             {
               formControlName: 'amount',
@@ -179,7 +198,7 @@ export class ExpensesComponent implements OnInit, OnDestroy {
               type: 'text',
               placeholder: '$0.00',
               hidden: false,
-              validators: [Validators.required]
+              validators: [Validators.required],
             },
             {
               formControlName: 'remaining',
@@ -187,14 +206,14 @@ export class ExpensesComponent implements OnInit, OnDestroy {
               type: 'text',
               placeholder: '$0.00',
               hidden: false,
-              validators: [Validators.required]
+              validators: [Validators.required],
             },
             {
               formControlName: 'due',
               label: 'Due',
               type: 'date',
               hidden: false,
-              validators: [Validators.required]
+              validators: [Validators.required],
             },
             {
               formControlName: 'notes',
@@ -202,7 +221,7 @@ export class ExpensesComponent implements OnInit, OnDestroy {
               placeholder: 'Additional notes...',
               type: 'text',
               hidden: false,
-              validators: [Validators.required]
+              validators: [Validators.required],
             },
             {
               formControlName: 'category',
@@ -210,7 +229,7 @@ export class ExpensesComponent implements OnInit, OnDestroy {
               type: 'select',
               options: ['Update', 'These options'],
               hidden: false,
-              validators: [Validators.required]
+              validators: [Validators.required],
             },
           ],
         },
@@ -247,7 +266,7 @@ export class ExpensesComponent implements OnInit, OnDestroy {
   }
 
   manageCategories() {
-    this.manageCategoriesConfig.contentList = this.categories[0].categories;
+    this.manageCategoriesConfig.contentList = this.categories;
     this.modalService.updateModal(this.manageCategoriesConfig);
   }
 }

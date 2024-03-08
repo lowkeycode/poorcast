@@ -8,7 +8,8 @@ export interface ModalConfig {
   title: string;
   fieldsets: Fieldset[];
   modalButtons: ButtonConfig[];
-  contentList: string[];
+  contentList: any;
+  contentListActions?: ContentListActions,
   icon?: ModalIcon;
 }
 
@@ -46,5 +47,9 @@ export interface ButtonConfig {
   type: 'primary' | 'neutral' | 'danger';
   dataTest: string;
   submitFn?: PayloadFunction;
-  clickFn?: (modal?: any, form?: any) => any;
+  clickFn?: (form?: any) => any;
+}
+
+export interface ContentListActions {
+  delete?: (item) => void
 }

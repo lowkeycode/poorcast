@@ -28,7 +28,8 @@ export interface BudgetPeriods {[key: string]: BudgetPeriod};
 
 export type BudgetPeriod = [Timestamp, Timestamp];
 
-export interface Category {
+export interface Categories {
+  id: string;
   categories: string[]
 }
 
@@ -36,7 +37,7 @@ export interface UserAccount {
   accounts: Account[];
   budgetPeriods: {[key: string]: BudgetPeriod};
   expenses: Expense[],
-  categories: Category[],
+  categories: Categories,
   status: 'pending' | 'loading' | 'error' | 'success';
   error: any;
 }
@@ -45,7 +46,10 @@ const initialState: UserAccount = {
   accounts: [],
   budgetPeriods: {},
   expenses: [],
-  categories: [],
+  categories: {
+    id: '',
+    categories: []
+  },
   status: 'pending',
   error: null,
 };
@@ -65,5 +69,7 @@ export const userAcctReducer = createReducer(
 
   on(UserAccountActions.loadUserAccountError, (state, error) => ({...state, error})),
 
-  on(UserAccountActions.signOutUserAccount, (state) => initialState)
+  on(UserAccountActions.signOutUserAccount, (state) => initialState),
+
+  on(UserAccountActions.updateCategories, (state, categories) => ({...state, categories}))
 );

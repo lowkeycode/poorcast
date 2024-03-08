@@ -42,7 +42,7 @@ export class UserAccountEffects {
             .collection('users')
             .doc(userId)
             .collection('categories')
-            .valueChanges(),
+            .valueChanges({idField: 'id'}),
         ]).pipe(
           catchError((error) => {
             console.error('error', error);
@@ -58,11 +58,14 @@ export class UserAccountEffects {
 
         const [accounts, budgetPeriods, expenses, categories] = response;
 
+        console.log(categories);
+        
+
         const userAccount = {
           accounts,
           budgetPeriods: budgetPeriods[0],
           expenses,
-          categories,
+          categories: categories[0],
           status: 'success',
           error: null,
         };
