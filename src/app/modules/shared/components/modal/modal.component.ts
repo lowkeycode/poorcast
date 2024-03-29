@@ -61,6 +61,9 @@ export class ModalComponent implements OnInit, OnDestroy, AfterViewInit {
 
       modal?.fieldsets[0].inputs.forEach((input) => {
 
+        console.log(input);
+        
+
         group[input.formControlName] = new UntypedFormControl(
           {
             value:
@@ -70,6 +73,8 @@ export class ModalComponent implements OnInit, OnDestroy, AfterViewInit {
                 ? input.defaultValue
                 : input.type === 'date' && input.defaultValue
                 ? input.defaultValue
+                : input.defaultValue === 0
+                ? input.defaultValue.toString()
                 : null,
             disabled: false,
           },

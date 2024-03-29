@@ -5,7 +5,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AppState } from 'src/app/store/user-account/user-account.selectors';
 import { Store } from '@ngrx/store';
 import { selectUserId } from 'src/app/store/user/user.selectors';
-import { Subscription} from 'rxjs';
+import { Subscription } from 'rxjs';
 import { FormatDatePipe } from '../../pipes/format-date.pipe';
 import { Timestamp } from 'src/app/store/user-account/user-account.reducers';
 import { Validators } from '@angular/forms';
@@ -14,85 +14,18 @@ import { Validators } from '@angular/forms';
   selector: 'app-table-row',
   templateUrl: './table-row.component.html',
   styleUrls: ['./table-row.component.scss'],
-  providers: [FormatDatePipe]
+  providers: [FormatDatePipe],
 })
 export class TableRowComponent {
   @Input() item: any;
   @Input() index: number;
   @Input() isEditable: boolean;
   @Input() collectionName: string;
+  @Input() selectOptions: { [key: string]: string[] };
   private subscriptions = new Subscription();
   private userId: string;
 
-  editExpenseModalConfig: ModalConfig = {
-    title: 'Edit Expense',
-    contentList: [],
-    fieldsets: [
-      {
-        name: 'Expense Info',
-        inputs: [
-          {
-            formControlName: 'name',
-            label: 'Expense',
-            type: 'text',
-            hidden: false,
-            validators: [Validators.required]
-          },
-          {
-            formControlName: 'amount',
-            label: 'Amount',
-            type: 'text',
-            hidden: false,
-            validators: [Validators.required]
-          },
-          {
-            formControlName: 'remaining',
-            label: 'Remaining',
-            type: 'text',
-            hidden: false,
-            validators: [Validators.required]
-          },
-          {
-            formControlName: 'due',
-            label: 'Due',
-            type: 'date',
-            hidden: false,
-            validators: [Validators.required]
-          },
-          {
-            formControlName: 'notes',
-            label: 'Notes',
-            type: 'text',
-            hidden: false,
-            validators: [Validators.required]
-          },
-          {
-            formControlName: 'category',
-            label: 'Category',
-            type: 'select',
-            hidden: false,
-            validators: [Validators.required]
-          },
-        ],
-      },
-    ],
-    modalButtons: [
-      {
-        buttonText: 'Cancel',
-        type: 'neutral',
-        dataTest: 'modal-cancel-btn',
-        clickFn: () => {
-          this.modalService.closeModal();
-        },
-      },
-      {
-        buttonText: 'Save',
-        type: 'primary',
-        dataTest: 'modal-save-btn',
-        clickFn: () => console.log('Saving'),
-      },
-    ],
-  };
+  editExpenseModalConfig: ModalConfig;
 
   constructor(
     private modalService: ModalService,
@@ -102,10 +35,94 @@ export class TableRowComponent {
   ) {}
 
   ngOnInit() {
+    console.log(this.item);
+    
     const userIdSub = this.store
       .select(selectUserId)
       .subscribe((uid) => (this.userId = uid));
     this.subscriptions.add(userIdSub);
+
+    this.editExpenseModalConfig = {
+      title: 'Edit Expense',
+      contentList: [],
+      fieldsets: [
+        {
+          name: 'Expense Info',
+          inputs: [
+            {
+              formControlName: 'name',
+              label: 'Expense',
+              type: 'text',
+              hidden: false,
+              validators: [Validators.required],
+            },
+            {
+              formControlName: 'amount',
+              label: 'Amount',
+              type: 'text',
+              hidden: false,
+              validators: [Validators.required],
+            },
+            {
+              formControlName: 'remaining',
+              label: 'Remaining',
+              type: 'text',
+              hidden: false,
+              validators: [Validators.required],
+            },
+            {
+              formControlName: 'due',
+              label: 'Due',
+              type: 'date',
+              hidden: false,
+              validators: [Validators.required],
+            },
+            {
+              formControlName: 'notes',
+              label: 'Notes',
+              type: 'text',
+              hidden: false,
+              validators: [],
+            },
+            {
+              formControlName: 'category',
+              label: 'Category',
+              type: 'select',
+              hidden: false,
+              validators: [Validators.required],
+              options: this.selectOptions['categories'],
+            },
+          ],
+        },
+      ],
+      modalButtons: [
+        {
+          buttonText: 'Cancel',
+          type: 'neutral',
+          dataTest: 'modal-cancel-btn',
+          clickFn: () => {
+            this.modalService.closeModal();
+          },
+        },
+        {
+          buttonText: 'Save',
+          type: 'primary',
+          dataTest: 'modal-save-btn',
+          submitFn: (payload) => {
+            console.log(payload);
+            console.log(new Date(payload.due));
+
+            this.afs
+              .collection('users')
+              .doc(this.userId)
+              .collection(this.collectionName)
+              .doc(this.item.id)
+              .update({ ...payload, due: new Date(payload.due) });
+            this.modalService.closeModal();
+          },
+        },
+      ],
+    };
   }
 
   ngOnDestroy() {
@@ -113,7 +130,8 @@ export class TableRowComponent {
   }
 
   onEditExpense(item: any) {
-    const itemKeyVals: Array<[string, string & Timestamp]> = Object.entries(item);
+    const itemKeyVals: Array<[string, string & Timestamp]> =
+      Object.entries(item);
     itemKeyVals.forEach((keyVal) => {
       const input = this.editExpenseModalConfig.fieldsets
         .find((fieldset) => fieldset.name === 'Expense Info')
@@ -123,7 +141,9 @@ export class TableRowComponent {
 
       if (input) {
         if (input.type === 'date') {
-          input['defaultValue'] = new Date(keyVal[1].seconds * 1000).toISOString().substring(0, 10);
+          input['defaultValue'] = new Date(keyVal[1].seconds * 1000)
+            .toISOString()
+            .substring(0, 10);
         } else {
           input['defaultValue'] = keyVal[1];
         }

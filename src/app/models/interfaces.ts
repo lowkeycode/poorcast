@@ -37,7 +37,7 @@ export interface FieldsetInput {
   invalid?: boolean;
   feedBackMsg?: string;
   showFeedback?: boolean;
-  defaultValue?: string | Date;
+  defaultValue?: string | Date | number;
   dataTest?: string;
 }
 
