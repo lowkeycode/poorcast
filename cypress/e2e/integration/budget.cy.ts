@@ -59,7 +59,7 @@ describe('Budget', () => {
     cy.get('.modal__main--title').should('be.visible').contains('Edit Expense');
   });
 
-  it.only('can add/delete a category', () => {
+  it('can add/delete a category', () => {
     // For whatever reason cypress needs to wait even though the correct data comes in from firebase, set to state and is logged by cypress.
     cy.wait(1000);
     cy.getByData('manage-categories-btn').click();
