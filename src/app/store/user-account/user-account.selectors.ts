@@ -19,8 +19,7 @@ const getUserAccount = (state: AppState) => state.userAcct;
 
 export const selectUserAccount = createSelector(
   getUserAccount,
-  (state) => state
-);
+  (state) => state);
 
 export const selectUserAccounts = createSelector(
   getUserAccount,

@@ -21,6 +21,25 @@ export class UserAccountEffects {
       switchMap(() => {
         return this.store.select(selectUserId);
       }),
+      switchMap((userId) => this.afs
+      .collection('users')
+      .doc(userId)
+      .collection('categories')
+      .valueChanges({ idField: 'id' })),
+      switchMap((categories) => {
+        if(!categories.length) {
+          return this.store.select(selectUserId).pipe(switchMap((userId) => {
+            return this.afs
+          .collection('users')
+          .doc(userId)
+          .collection('categories').add({categories: []})
+          }))
+        }
+        return of(null)
+      }),
+      switchMap(() => {
+        return this.store.select(selectUserId);
+      }),
       switchMap((userId) => {
         return combineLatest([
           this.afs
@@ -67,6 +86,7 @@ export class UserAccountEffects {
         const allUniqueCategories = Array.from(
           new Set([...existingExpenseCategories, ...existingCategories])
         );
+        
         categories[0]['categories'] = allUniqueCategories;
 
         const userAccount = {

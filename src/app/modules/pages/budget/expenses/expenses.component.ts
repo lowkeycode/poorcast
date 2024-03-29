@@ -1,4 +1,3 @@
-import { ContentListActions } from './../../../../models/interfaces';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Validators } from '@angular/forms';
@@ -113,6 +112,7 @@ export class ExpensesComponent implements OnInit, OnDestroy {
             type: 'text',
             hidden: false,
             validators: [],
+            dataTest: 'category'
           },
         ],
         button: {

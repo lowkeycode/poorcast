@@ -49,6 +49,8 @@ export class ModalComponent implements OnInit, OnDestroy, AfterViewInit {
       this.modal = modal;
       // This should be done with better typing
       this.contentList = this.modal?.contentList.categories;
+      console.log(this.modal);
+      
       this.submitFn = this.modal?.modalButtons.find(
         (button) => button.type === 'primary'
       )?.submitFn as PayloadFunction;
@@ -94,8 +96,6 @@ export class ModalComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onSubmit() {
     const payload = this.modal?.contentList.length ? this.modal.contentList.categories : this.form.value;
-    console.log('payload', payload);
-
     this.submitFn(payload);
   }
 }

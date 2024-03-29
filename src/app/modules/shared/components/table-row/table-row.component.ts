@@ -114,7 +114,6 @@ export class TableRowComponent {
 
   onEditExpense(item: any) {
     const itemKeyVals: Array<[string, string & Timestamp]> = Object.entries(item);
-    console.log(item);
     itemKeyVals.forEach((keyVal) => {
       const input = this.editExpenseModalConfig.fieldsets
         .find((fieldset) => fieldset.name === 'Expense Info')
@@ -130,11 +129,6 @@ export class TableRowComponent {
         }
       }
     });
-
-    // console.log(this.editExpenseModalConfig);
-
-    console.log(item);
-    
 
     this.modalService.updateModal(this.editExpenseModalConfig);
   }
