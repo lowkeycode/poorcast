@@ -76,7 +76,7 @@ describe('Budget', () => {
         .contains('Edit Expense');
     });
 
-    it.only('can add/delete a category', () => {
+    it('can add/delete a category', () => {
       // For whatever reason cypress needs to wait even though the correct data comes in from firebase, set to state and is logged by cypress.
       cy.wait(1000);
       cy.getByData('manage-categories-btn').click();
@@ -116,7 +116,7 @@ describe('Budget', () => {
       cy.getByData('delete-expense-btn-1').click();
       cy.get('app-table-row').should('have.length', 1);
     });
-  
+
     it('can edit an expense', () => {
       cy.getByData('edit-expense-btn-0').click();
       cy.getByData('amount-input').find('input').clear();
@@ -130,6 +130,4 @@ describe('Budget', () => {
       cy.get('.row-amount').contains('$1,000.00');
     });
   });
-
-  
 });
