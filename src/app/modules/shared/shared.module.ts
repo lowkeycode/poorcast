@@ -15,6 +15,7 @@ import { TableRowComponent } from './components/table-row/table-row.component';
 import { ArcChartComponent } from './components/arc-chart/arc-chart.component';
 import { TuiArcChartModule } from '@taiga-ui/addon-charts';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormatDatePipe } from './pipes/format-date.pipe';
 
 const components = [
   LogoComponent,
@@ -32,10 +33,11 @@ const components = [
 ];
 
 const directives = [IconDirective];
+const pipes = [FormatDatePipe];
 
 @NgModule({
-  declarations: [...components, ...directives ],
+  declarations: [...components, ...directives, ...pipes],
   imports: [CommonModule, FormsModule, ReactiveFormsModule, TuiArcChartModule],
-  exports: [...components, ...directives],
+  exports: [...components, ...directives, ...pipes],
 })
 export class SharedModule {}

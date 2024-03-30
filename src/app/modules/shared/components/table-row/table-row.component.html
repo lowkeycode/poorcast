@@ -2,10 +2,10 @@
 <p class="row-copy row-amount">{{ item.amount | currency }}</p>
 <p class="row-copy row-remaining" *ngIf="item.remaining">{{ item.remaining | currency }}</p>
 <p class="row-copy row-remaining" *ngIf="!item.remaining"><s>{{ item.remaining | currency }}</s></p>
-<p class="row-copy row-due">{{ item.due }}</p>
+<p class="row-copy row-due">{{ item.due.seconds | formatDate }}</p>
 <p class="row-copy row-notes">{{ item.notes }}</p>
 <p class="row-copy category-container">
-  <span class="row-category">{{ item.category }}</span>
+  <span class="category" [hidden]="!item.category">{{ item.category }}</span>
   <span *ngIf="!item.remaining" class="paid">PAID</span>
 </p>
 <div class="btns">
@@ -14,11 +14,12 @@
       [appIconSize]="1.2"
       [iconName]="'ellipsisHorizontal'"
       [attr.data-test]="'edit-expense-btn-' + index"
-      (click)="onEditExpense(index)"
+      (click)="onEditExpense(item)"
     ></app-solo-icon>
     <app-solo-icon
       [appIconSize]="1.2"
       [iconName]="'closeCircle'"
+      [attr.data-test]="'delete-expense-btn-' + index"
       (click)="onDeleteExpense(item)"
     ></app-solo-icon>
   </ng-container>

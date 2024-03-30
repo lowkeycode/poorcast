@@ -15,23 +15,6 @@
   display: flex;
 }
 
-.category-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-xs-3)
-}
-
-.row-category {
-  font-size: var(--fs-xs-1);
-  padding: 2px 5px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: var(--white-light);
-  background: linear-gradient(122deg, var(--grey-dark) 62%, var(--primary-light) 62%);
-  border-radius: var(--br-sml);
-  box-shadow: var(--bs-secondary);
-}
-
 .paid {
   font-size: var(--fs-xs-1);
   padding: 2px 5px;

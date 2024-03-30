@@ -1,5 +1,10 @@
 <div class="overlay" (click)="closeModal()"></div>
-<form class="modal" *ngIf="modal$ | async as modal" [formGroup]="form" (ngSubmit)="onSubmit()">
+<form
+  class="modal"
+  *ngIf="modal$ | async as modal"
+  [formGroup]="form"
+  (ngSubmit)="onSubmit()"
+>
   <div class="modal__main">
     <app-solo-icon
       [iconName]="'closeCircle'"
@@ -12,13 +17,15 @@
       <app-fieldset
         *ngFor="let fieldset of modal.fieldsets"
         [legend]="fieldset.name"
+        [ngStyle]="{
+          height: fieldset.button && 'min-content'
+        }"
       >
-       
         <ng-container
           *ngFor="let input of fieldset.inputs"
           [ngSwitch]="input.type"
         >
-        <!-- The docs with *ngSwitchCase expressions don't work to group cases like a regular switch can it seems. Hurray Angular. -->
+          <!-- The docs with *ngSwitchCase expressions don't work to group cases like a regular switch can it seems. Hurray Angular. -->
 
           <!-- Text Input -->
           <ng-template ngSwitchCase="text">
@@ -29,6 +36,7 @@
               [hidden]="input.hidden"
               [type]="input.type"
               [formControlName]="input.formControlName"
+              [attr.data-test]="input.dataTest"
             ></app-text-input>
           </ng-template>
 
@@ -41,6 +49,7 @@
               [hidden]="input.hidden"
               [type]="input.type"
               [formControlName]="input.formControlName"
+              [attr.data-test]="input.dataTest"
             ></app-text-input>
           </ng-template>
 
@@ -53,12 +62,31 @@
               [hidden]="input.hidden"
               [formControlName]="input.formControlName"
               [options]="input.options || []"
+              [attr.data-test]="input.dataTest"
             ></app-select-input>
           </ng-template>
         </ng-container>
+
+        <div class="btn-container" [ngStyle]="{ padding: '0' }">
+          <button
+            *ngIf="fieldset.button"
+            [disabled]="fieldset.button.type === 'primary' && !form.valid"
+            [type]="fieldset.button.type === 'primary' ? 'submit' : 'button'"
+            (click)="fieldset.button.clickFn && fieldset.button.clickFn(form.value)"
+            class="btn"
+            [ngClass]="{
+              'btn-primary': fieldset.button.type === 'primary',
+              'btn-neutral': fieldset.button.type === 'neutral'
+            }"
+            [attr.data-test]="fieldset.button.dataTest"
+          >
+            {{ fieldset.button.buttonText }}
+          </button>
+        </div>
       </app-fieldset>
     </div>
 
+    <!-- Icon between fieldsets -->
     <div class="modal__main--icon" *ngIf="modal.icon">
       <app-solo-icon
         [iconName]="modal.icon.iconName"
@@ -66,6 +94,24 @@
       ></app-solo-icon>
     </div>
   </div>
+
+  <!-- Content -->
+  <div *ngIf="!!contentList?.length" class="modal__main--content-list">
+    <p>Hover to delete</p>
+    <ul>
+      <li *ngFor="let item of contentList" class="category-container">
+        <span class="category manage-category" [hidden]="!item">{{ item }}
+          <app-solo-icon
+          [appIconSize]="0.9"
+          [iconName]="'closeCircle'"
+          (click)="modal.contentListActions?.delete(item)"
+          [attr.data-test]="'delete-item-btn-' + item"
+        ></app-solo-icon>
+        </span>
+      </li>
+    </ul>
+  </div>
+
   <div class="modal__btns">
     <button
       *ngFor="let button of modal.modalButtons"

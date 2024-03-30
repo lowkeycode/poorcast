@@ -1,3 +1,5 @@
+import { AbstractControl, ValidationErrors, Validator } from "@angular/forms";
+
 export interface FeedBackMsgs {
   [key: string]: string;
 }
@@ -6,6 +8,8 @@ export interface ModalConfig {
   title: string;
   fieldsets: Fieldset[];
   modalButtons: ButtonConfig[];
+  contentList: any;
+  contentListActions?: ContentListActions,
   icon?: ModalIcon;
 }
 
@@ -18,6 +22,7 @@ export interface Fieldset {
   name: string;
   inputs: FieldsetInput[];
   index?: number;
+  button?: ButtonConfig
 }
 
 export interface FieldsetInput {
@@ -25,12 +30,15 @@ export interface FieldsetInput {
   label: string;
   type: string;
   hidden: boolean;
+  validators: ((control: AbstractControl<any, any>) => ValidationErrors | null)[]
   placeholder?: string;
   options?: string[];
   valid?: boolean;
   invalid?: boolean;
   feedBackMsg?: string;
   showFeedback?: boolean;
+  defaultValue?: string | Date | number;
+  dataTest?: string;
 }
 
 export type PayloadFunction = (payload: any) => any;
@@ -40,5 +48,9 @@ export interface ButtonConfig {
   type: 'primary' | 'neutral' | 'danger';
   dataTest: string;
   submitFn?: PayloadFunction;
-  clickFn?: () => any;
+  clickFn?: (form?: any) => any;
+}
+
+export interface ContentListActions {
+  delete?: (item) => void
 }

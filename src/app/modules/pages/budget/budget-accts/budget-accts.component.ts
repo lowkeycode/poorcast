@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { ModalConfig } from 'src/app/models/interfaces';
@@ -9,10 +10,8 @@ import {
 } from 'src/app/store/user-account/user-account.reducers';
 import {
   AppState,
-  selectUserAccount,
   selectUserAccounts,
 } from 'src/app/store/user-account/user-account.selectors';
-import { formatDate } from 'src/app/utils/utils';
 
 @Component({
   selector: 'app-budget-accts',
@@ -26,6 +25,7 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
 
   transactionsModalConfig: ModalConfig = {
     title: 'Transactions',
+    contentList: [],
     fieldsets: [
       {
         name: 'Transactions',
@@ -35,12 +35,14 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
             label: 'Transaction Type',
             type: 'select',
             hidden: false,
+            validators: [Validators.required]
           },
           {
             formControlName: 'amount',
             label: 'Amount',
             type: 'text',
             hidden: false,
+            validators: [Validators.required]
           },
         ],
       },
@@ -65,6 +67,7 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
 
   addAcctModalConfig: ModalConfig = {
     title: 'Add Account',
+    contentList: [],
     fieldsets: [
       {
         name: 'Account Info',
@@ -74,18 +77,21 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
             label: 'Account Name',
             type: 'text',
             hidden: false,
+            validators: [Validators.required]
           },
           {
             formControlName: 'acctType',
             label: 'Account Type',
             type: 'select',
             hidden: false,
+            validators: [Validators.required]
           },
           {
             formControlName: 'acctName',
             label: 'Account Balance',
             type: 'text',
             hidden: false,
+            validators: [Validators.required]
           },
         ],
       },
@@ -114,6 +120,7 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
       iconName: 'arrowForward',
       iconSize: 2,
     },
+    contentList: [],
     fieldsets: [
       {
         name: 'From',
@@ -123,18 +130,21 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
             label: 'User',
             type: 'select',
             hidden: false,
+            validators: [Validators.required]
           },
           {
             formControlName: 'fromAcct',
             label: 'Account',
             type: 'select',
             hidden: false,
+            validators: [Validators.required]
           },
           {
             formControlName: 'fromAmount',
             label: 'Amount',
             type: 'text',
             hidden: false,
+            validators: [Validators.required]
           },
         ],
       },
@@ -146,12 +156,14 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
             label: 'User',
             type: 'select',
             hidden: false,
+            validators: [Validators.required]
           },
           {
             formControlName: 'toAcct',
             label: 'Account',
             type: 'select',
             hidden: false,
+            validators: [Validators.required]
           },
         ],
       },

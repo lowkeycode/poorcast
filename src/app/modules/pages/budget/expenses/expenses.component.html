@@ -1,7 +1,31 @@
 <div class="expenses">
   <div class="expenses__btns">
-    <button class="btn btn-primary" data-test="pay-expense-btn" (click)="onPayExpense()">Pay Expense</button>
-    <button class="btn btn-primary" data-test="add-expense-btn" (click)="onAddExpense()">Add Expense</button>
+    <button
+      class="btn btn-primary"
+      data-test="pay-expense-btn"
+      (click)="onPayExpense()"
+    >
+      Pay Expense
+    </button>
+    <button
+      class="btn btn-primary"
+      data-test="add-expense-btn"
+      (click)="onAddExpense()"
+    >
+      Add Expense
+    </button>
+    <button
+      class="btn btn-primary"
+      data-test="manage-categories-btn"
+      (click)="manageCategories()"
+    >
+      Categories
+    </button>
   </div>
-  <app-table [listItems]="expenses" [isEditable]="true" [collectionName]="'expenses'"></app-table>
+  <app-table
+    [listItems]="expenses"
+    [isEditable]="true"
+    [collectionName]="'expenses'"
+    [selectOptions]="{ categories: categories.categories }"
+  ></app-table>
 </div>
