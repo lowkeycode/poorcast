@@ -101,7 +101,7 @@ describe('Budget', () => {
     });
   });
 
-  it.only('can add/delete an expense', () => {
+  it('can add/delete an expense', () => {
     cy.wait(1000);
     cy.getByData('add-expense-btn').click();
     cy.getByData('name-input').type('Testing');
