@@ -35,8 +35,6 @@ export class TableRowComponent {
   ) {}
 
   ngOnInit() {
-    console.log(this.item);
-    
     const userIdSub = this.store
       .select(selectUserId)
       .subscribe((uid) => (this.userId = uid));
@@ -52,23 +50,29 @@ export class TableRowComponent {
             {
               formControlName: 'name',
               label: 'Expense',
+              placeholder: 'Groceries, Rent, etc.',
               type: 'text',
               hidden: false,
               validators: [Validators.required],
+              dataTest: 'name-input'
             },
             {
               formControlName: 'amount',
               label: 'Amount',
               type: 'text',
+              placeholder: '$0.00',
               hidden: false,
               validators: [Validators.required],
+              dataTest: 'amount-input'
             },
             {
               formControlName: 'remaining',
               label: 'Remaining',
               type: 'text',
+              placeholder: '$0.00',
               hidden: false,
               validators: [Validators.required],
+              dataTest: 'remaining-input'
             },
             {
               formControlName: 'due',
@@ -76,13 +80,16 @@ export class TableRowComponent {
               type: 'date',
               hidden: false,
               validators: [Validators.required],
+              dataTest: 'due-input'
             },
             {
               formControlName: 'notes',
               label: 'Notes',
+              placeholder: 'Additional notes...',
               type: 'text',
               hidden: false,
               validators: [],
+              dataTest: 'notes-input'
             },
             {
               formControlName: 'category',
@@ -109,15 +116,19 @@ export class TableRowComponent {
           type: 'primary',
           dataTest: 'modal-save-btn',
           submitFn: (payload) => {
-            console.log(payload);
-            console.log(new Date(payload.due));
+            const formattedPayload = {
+              ...payload,
+              amount: Number(payload.amount),
+              remaining: Number(payload.remaining),
+              due: new Date(payload.due)
+            }
 
             this.afs
               .collection('users')
               .doc(this.userId)
               .collection(this.collectionName)
               .doc(this.item.id)
-              .update({ ...payload, due: new Date(payload.due) });
+              .update(formattedPayload);
             this.modalService.closeModal();
           },
         },

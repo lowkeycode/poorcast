@@ -191,6 +191,7 @@ export class ExpensesComponent implements OnInit, OnDestroy {
               type: 'text',
               hidden: false,
               validators: [Validators.required],
+              dataTest: 'name-input'
             },
             {
               formControlName: 'amount',
@@ -199,6 +200,7 @@ export class ExpensesComponent implements OnInit, OnDestroy {
               placeholder: '$0.00',
               hidden: false,
               validators: [Validators.required],
+              dataTest: 'amount-input'
             },
             {
               formControlName: 'remaining',
@@ -207,6 +209,7 @@ export class ExpensesComponent implements OnInit, OnDestroy {
               placeholder: '$0.00',
               hidden: false,
               validators: [Validators.required],
+              dataTest: 'remaining-input'
             },
             {
               formControlName: 'due',
@@ -214,6 +217,7 @@ export class ExpensesComponent implements OnInit, OnDestroy {
               type: 'date',
               hidden: false,
               validators: [Validators.required],
+              dataTest: 'due-input'
             },
             {
               formControlName: 'notes',
@@ -222,14 +226,16 @@ export class ExpensesComponent implements OnInit, OnDestroy {
               type: 'text',
               hidden: false,
               validators: [],
+              dataTest: 'notes-input'
             },
             {
               formControlName: 'category',
               label: 'Category',
               type: 'select',
               options: this.categories.categories,
-              hidden: false,
-              validators: [Validators.required],
+              hidden: !this.categories.categories.length,
+              validators: !this.categories.categories.length ? []: [Validators.required],
+              dataTest: 'category-input'
             },
           ],
         },
@@ -248,6 +254,15 @@ export class ExpensesComponent implements OnInit, OnDestroy {
           type: 'primary',
           dataTest: 'modal-save-btn',
           submitFn: (payload) => {
+            console.log(payload);
+            
+            const formattedPayload = {
+              ...payload,
+              amount: Number(payload.amount),
+              remaining: Number(payload.remaining),
+              due: new Date(payload.due),
+              category: payload.category ?? null
+            }
             this.store
               .select(selectUserId)
               .subscribe((id) =>
@@ -255,8 +270,9 @@ export class ExpensesComponent implements OnInit, OnDestroy {
                   .collection('users')
                   .doc(id)
                   .collection('expenses')
-                  .add(payload)
+                  .add(formattedPayload)
               );
+              this.modalService.closeModal();
           },
         },
       ],

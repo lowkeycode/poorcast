@@ -100,7 +100,7 @@
     <p>Hover to delete</p>
     <ul>
       <li *ngFor="let item of contentList" class="category-container">
-        <span class="category manage-category">{{ item }}
+        <span class="category manage-category" [hidden]="!item">{{ item }}
           <app-solo-icon
           [appIconSize]="0.9"
           [iconName]="'closeCircle'"

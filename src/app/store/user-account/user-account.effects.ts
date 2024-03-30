@@ -21,21 +21,26 @@ export class UserAccountEffects {
       switchMap(() => {
         return this.store.select(selectUserId);
       }),
-      switchMap((userId) => this.afs
-      .collection('users')
-      .doc(userId)
-      .collection('categories')
-      .valueChanges({ idField: 'id' })),
-      switchMap((categories) => {
-        if(!categories.length) {
-          return this.store.select(selectUserId).pipe(switchMap((userId) => {
-            return this.afs
+      switchMap((userId) =>
+        this.afs
           .collection('users')
           .doc(userId)
-          .collection('categories').add({categories: []})
-          }))
+          .collection('categories')
+          .valueChanges({ idField: 'id' })
+      ),
+      switchMap((categories) => {
+        if (!categories.length) {
+          return this.store.select(selectUserId).pipe(
+            switchMap((userId) => {
+              return this.afs
+                .collection('users')
+                .doc(userId)
+                .collection('categories')
+                .add({ categories: [] });
+            })
+          );
         }
-        return of(null)
+        return of(null);
       }),
       switchMap(() => {
         return this.store.select(selectUserId);
@@ -86,14 +91,13 @@ export class UserAccountEffects {
         const allUniqueCategories = Array.from(
           new Set([...existingExpenseCategories, ...existingCategories])
         );
-        
-        categories[0]['categories'] = allUniqueCategories;
+
 
         const userAccount = {
           accounts,
           budgetPeriods: budgetPeriods[0],
           expenses,
-          categories: categories[0],
+          categories: { categories: allUniqueCategories },
           status: 'success',
           error: null,
         };

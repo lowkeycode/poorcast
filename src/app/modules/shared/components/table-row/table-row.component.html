@@ -5,7 +5,7 @@
 <p class="row-copy row-due">{{ item.due.seconds | formatDate }}</p>
 <p class="row-copy row-notes">{{ item.notes }}</p>
 <p class="row-copy category-container">
-  <span class="category">{{ item.category }}</span>
+  <span class="category" [hidden]="!item.category">{{ item.category }}</span>
   <span *ngIf="!item.remaining" class="paid">PAID</span>
 </p>
 <div class="btns">
@@ -19,6 +19,7 @@
     <app-solo-icon
       [appIconSize]="1.2"
       [iconName]="'closeCircle'"
+      [attr.data-test]="'delete-expense-btn-' + index"
       (click)="onDeleteExpense(item)"
     ></app-solo-icon>
   </ng-container>

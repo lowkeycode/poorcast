@@ -47,9 +47,7 @@ export class ModalComponent implements OnInit, OnDestroy, AfterViewInit {
     this.modal$ = this.modalService.modalState$;
     const modalSub = this.modal$.subscribe((modal) => {
       this.modal = modal;
-      // This should be done with better typing
       this.contentList = this.modal?.contentList.categories;
-      console.log(this.modal);
       
       this.submitFn = this.modal?.modalButtons.find(
         (button) => button.type === 'primary'
@@ -60,9 +58,6 @@ export class ModalComponent implements OnInit, OnDestroy, AfterViewInit {
       //! This might bite me when it comes to two fieldsets
 
       modal?.fieldsets[0].inputs.forEach((input) => {
-
-        console.log(input);
-        
 
         group[input.formControlName] = new UntypedFormControl(
           {

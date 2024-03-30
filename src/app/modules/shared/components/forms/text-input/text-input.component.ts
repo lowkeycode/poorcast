@@ -72,7 +72,7 @@ export class TextInputComponent implements ControlValueAccessor {
     this.markAsTouched();
     this.inputValue = $event.currentTarget.value;
     if(this.type === 'date') {
-      this.inputValue = new Date($event.currentTarget.value);
+      this.inputValue = $event.currentTarget.value;
     }
     this.onChange(this.inputValue);
   }
