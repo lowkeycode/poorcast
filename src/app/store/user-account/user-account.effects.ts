@@ -89,7 +89,7 @@ export class UserAccountEffects {
         const existingCategories = categories[0]['categories'];
 
         const allUniqueCategories = Array.from(
-          new Set([...existingExpenseCategories, ...existingCategories])
+          new Set([...existingExpenseCategories, ...existingCategories].map(category => category.toLowerCase()))
         );
 
 
