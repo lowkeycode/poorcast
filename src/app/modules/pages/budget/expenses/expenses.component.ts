@@ -254,8 +254,6 @@ export class ExpensesComponent implements OnInit, OnDestroy {
           type: 'primary',
           dataTest: 'modal-save-btn',
           submitFn: (payload) => {
-            console.log(payload);
-            
             const formattedPayload = {
               ...payload,
               amount: Number(payload.amount),
