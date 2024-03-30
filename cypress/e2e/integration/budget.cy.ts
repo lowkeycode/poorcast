@@ -99,35 +99,37 @@ describe('Budget', () => {
       cy.getByData('manage-categories-btn').click();
       cy.get('.manage-category').should('have.length', 1);
     });
+
+    it('can add/delete an expense', () => {
+      cy.wait(1000);
+      cy.getByData('add-expense-btn').click();
+      cy.getByData('name-input').type('Testing');
+      cy.getByData('amount-input').type('1500');
+      cy.getByData('remaining-input').type('0');
+      cy.getByData('due-input').type('2024-02-21');
+      cy.getByData('notes-input').type('This is alot of notes');
+      cy.getByData('category-input').type('stub');
+      cy.getByData('modal-save-btn').click();
+      cy.wait(1000);
+      cy.get('app-table-row').should('have.length', 2);
+      cy.get('.paid').should('exist');
+      cy.getByData('delete-expense-btn-1').click();
+      cy.get('app-table-row').should('have.length', 1);
+    });
+  
+    it('can edit an expense', () => {
+      cy.getByData('edit-expense-btn-0').click();
+      cy.getByData('amount-input').find('input').clear();
+      cy.getByData('amount-input').type('1500');
+      cy.getByData('modal-save-btn').click();
+      cy.get('.row-amount').contains('$1,500.00');
+      cy.getByData('edit-expense-btn-0').click();
+      cy.getByData('amount-input').find('input').clear();
+      cy.getByData('amount-input').type('1000');
+      cy.getByData('modal-save-btn').click();
+      cy.get('.row-amount').contains('$1,000.00');
+    });
   });
 
-  it('can add/delete an expense', () => {
-    cy.wait(1000);
-    cy.getByData('add-expense-btn').click();
-    cy.getByData('name-input').type('Testing');
-    cy.getByData('amount-input').type('1500');
-    cy.getByData('remaining-input').type('0');
-    cy.getByData('due-input').type('2024-02-21');
-    cy.getByData('notes-input').type('This is alot of notes');
-    cy.getByData('category-input').type('yup');
-    cy.getByData('modal-save-btn').click();
-    cy.wait(1000);
-    cy.get('app-table-row').should('have.length', 2);
-    cy.get('.paid').should('exist');
-    cy.getByData('delete-expense-btn-1').click();
-    cy.get('app-table-row').should('have.length', 1);
-  });
-
-  it('can edit an expense', () => {
-    cy.getByData('edit-expense-btn-0').click();
-    cy.getByData('amount-input').find('input').clear();
-    cy.getByData('amount-input').type('1500');
-    cy.getByData('modal-save-btn').click();
-    cy.get('.row-amount').contains('$1,500.00');
-    cy.getByData('edit-expense-btn-0').click();
-    cy.getByData('amount-input').find('input').clear();
-    cy.getByData('amount-input').type('1000');
-    cy.getByData('modal-save-btn').click();
-    cy.get('.row-amount').contains('$1,000.00');
-  });
+  
 });
