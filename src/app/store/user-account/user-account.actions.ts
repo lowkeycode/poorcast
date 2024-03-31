@@ -14,3 +14,5 @@ export const getUserBudgetPeriods = createAction('[ Global ] Get User Budget Per
 export const signOutUserAccount = createAction('[ Global ] Sign Out User Account')
 
 export const updateCategories = createAction('[ Expenses Page ] Update Categories', props<Categories>())
+
+export const depositAccount = createAction('[ Accounts ] Deposit', props<{acctName: string; amount: number}>())

@@ -6,7 +6,8 @@ import {
   AfterViewInit,
   ViewChildren,
   QueryList,
-  ChangeDetectorRef,
+  OnChanges,
+  SimpleChanges,
 } from '@angular/core';
 import {
   UntypedFormBuilder,
@@ -25,7 +26,7 @@ import { UserAccount } from 'src/app/store/user-account/user-account.reducers';
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.scss'],
 })
-export class ModalComponent implements OnInit, OnDestroy, AfterViewInit {
+export class ModalComponent implements OnInit, OnChanges, OnDestroy, AfterViewInit {
   @ViewChildren(TextInputComponent)
   genericInputs: QueryList<TextInputComponent>;
   @ViewChildren(SelectInputComponent)
@@ -79,6 +80,12 @@ export class ModalComponent implements OnInit, OnDestroy, AfterViewInit {
       this.form = this.fb.group(group);
     });
     this.subs.add(modalSub);
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    console.log(changes);
+    console.log(this.form.value);
+    
   }
 
   ngOnDestroy(): void {

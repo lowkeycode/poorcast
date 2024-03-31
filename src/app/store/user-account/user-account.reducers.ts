@@ -1,13 +1,13 @@
 import { createReducer, on } from '@ngrx/store';
 import * as UserAccountActions from './user-account.actions';
 
-
 export interface Timestamp {
   seconds: number;
   nanoseconds: number;
 }
 
 export interface Account {
+  id: string;
   acctBalance: number;
   acctLimit: number;
   acctName: string;
@@ -24,20 +24,22 @@ export interface Expense {
   category: string;
 }
 
-export interface BudgetPeriods {[key: string]: BudgetPeriod};
+export interface BudgetPeriods {
+  [key: string]: BudgetPeriod;
+}
 
 export type BudgetPeriod = [Timestamp, Timestamp];
 
 export interface Categories {
   id: string;
-  categories: string[]
+  categories: string[];
 }
 
 export interface UserAccount {
   accounts: Account[];
-  budgetPeriods: {[key: string]: BudgetPeriod};
-  expenses: Expense[],
-  categories: Categories,
+  budgetPeriods: { [key: string]: BudgetPeriod };
+  expenses: Expense[];
+  categories: Categories;
   status: 'pending' | 'loading' | 'error' | 'success';
   error: any;
 }
@@ -48,7 +50,7 @@ const initialState: UserAccount = {
   expenses: [],
   categories: {
     id: '',
-    categories: []
+    categories: [],
   },
   status: 'pending',
   error: null,
@@ -67,9 +69,31 @@ export const userAcctReducer = createReducer(
     status: 'success' as const,
   })),
 
-  on(UserAccountActions.loadUserAccountError, (state, error) => ({...state, error})),
+  on(UserAccountActions.loadUserAccountError, (state, error) => ({
+    ...state,
+    error,
+  })),
 
   on(UserAccountActions.signOutUserAccount, (state) => initialState),
 
-  on(UserAccountActions.updateCategories, (state, categories) => ({...state, categories}))
+  on(UserAccountActions.updateCategories, (state, categories) => ({
+    ...state,
+    categories,
+  })),
+
+  on(UserAccountActions.depositAccount, (state, deposit) => {
+    return {
+      ...state,
+      accounts: state.accounts.map((acct) => {
+        if (acct.acctName === deposit.acctName) {
+          const newValue = acct.acctBalance + deposit.amount;
+          return {
+            ...acct,
+            acctBalance: newValue
+          };
+        }
+        return acct;
+      }),
+    };
+  })
 );

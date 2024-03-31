@@ -51,7 +51,7 @@ export class UserAccountEffects {
             .collection('users')
             .doc(userId)
             .collection('accounts')
-            .valueChanges(),
+            .valueChanges({ idField: 'id' }),
           this.afs
             .collection('users')
             .doc(userId)
