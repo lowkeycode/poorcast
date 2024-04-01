@@ -2,16 +2,12 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import {
-  first,
-  forkJoin,
-  Subscription,
-  switchMap,
-} from 'rxjs';
+import { first, forkJoin, Subscription, switchMap } from 'rxjs';
 import { ModalConfig } from 'src/app/models/interfaces';
 import { ModalService } from 'src/app/modules/shared/services/modal.service';
 import {
   Account,
+  AcctType,
   Expense,
 } from 'src/app/store/user-account/user-account.reducers';
 import {
@@ -41,58 +37,11 @@ export interface Transfer {
 export class BudgetAcctsComponent implements OnInit, OnDestroy {
   accounts: Account[];
   expenses: Expense[];
-  subscriptions = new Subscription();
-  depositModalConfig: ModalConfig;
-  transferModalConfig: ModalConfig;
-
-  addAcctModalConfig: ModalConfig = {
-    title: 'Add Account',
-    contentList: [],
-    fieldsets: [
-      {
-        name: 'Account Info',
-        inputs: [
-          {
-            formControlName: 'acctName',
-            label: 'Account Name',
-            type: 'text',
-            hidden: false,
-            validators: [Validators.required],
-          },
-          {
-            formControlName: 'acctType',
-            label: 'Account Type',
-            type: 'select',
-            hidden: false,
-            validators: [Validators.required],
-          },
-          {
-            formControlName: 'acctName',
-            label: 'Account Balance',
-            type: 'text',
-            hidden: false,
-            validators: [Validators.required],
-          },
-        ],
-      },
-    ],
-    modalButtons: [
-      {
-        buttonText: 'Cancel',
-        type: 'neutral',
-        dataTest: 'modal-cancel-btn',
-        clickFn: () => {
-          this.modalService.closeModal();
-        },
-      },
-      {
-        buttonText: 'Save',
-        type: 'primary',
-        dataTest: 'modal-save-btn',
-        clickFn: () => console.log('Saving'),
-      },
-    ],
-  };
+  private subscriptions = new Subscription();
+  private depositModalConfig: ModalConfig;
+  private transferModalConfig: ModalConfig;
+  private withdrawalModalConfig: ModalConfig;
+  private addAcctModalConfig: ModalConfig;
 
   constructor(
     private modalService: ModalService,
@@ -105,8 +54,6 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
       .select(selectUserAccounts)
       .subscribe((accounts) => {
         this.accounts = accounts;
-
-        console.log(this.accounts);
 
         this.depositModalConfig = {
           title: 'Transactions',
@@ -271,16 +218,18 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
                       ) as Account;
                       const updatedToAcct: Account = {
                         ...toAcct,
-                        acctBalance: toAcct.acctBalance + Number(payload.amount)
-                      }
+                        acctBalance:
+                          toAcct.acctBalance + Number(payload.amount),
+                      };
 
                       const fromAcct = accts.find(
                         (acct) => acct.acctName === payload.fromAcct
                       ) as Account;
                       const updatedFromAcct: Account = {
                         ...fromAcct,
-                        acctBalance: fromAcct.acctBalance + Number(payload.amount)
-                      }
+                        acctBalance:
+                          fromAcct.acctBalance + Number(payload.amount),
+                      };
 
                       return this.store.select(selectUserId).pipe(
                         switchMap((id) => {
@@ -307,6 +256,157 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
             },
           ],
         };
+
+        this.withdrawalModalConfig = {
+          title: 'Transactions',
+          contentList: [],
+          fieldsets: [
+            {
+              name: 'Withdrawal',
+              inputs: [
+                {
+                  formControlName: 'transactionType',
+                  label: 'Transaction Type',
+                  type: 'select',
+                  hidden: false,
+                  options: ['Withdrawal', 'Deposit', 'Transfer'],
+                  validators: [],
+                  onInputChange: (val: TransactionType) => {
+                    return this.onTransactionTypeChange(val);
+                  },
+                },
+                {
+                  formControlName: 'acctName',
+                  label: 'Account',
+                  type: 'select',
+                  hidden: false,
+                  options: this.accounts.map((acct) => acct.acctName),
+                  validators: [],
+                },
+                {
+                  formControlName: 'amount',
+                  label: 'Amount',
+                  type: 'text',
+                  hidden: false,
+                  validators: [Validators.required],
+                },
+              ],
+            },
+          ],
+          modalButtons: [
+            {
+              buttonText: 'Cancel',
+              type: 'neutral',
+              dataTest: 'modal-cancel-btn',
+              clickFn: () => {
+                this.modalService.closeModal();
+              },
+            },
+            {
+              buttonText: 'Withdraw',
+              type: 'primary',
+              dataTest: 'modal-save-btn',
+              submitFn: (payload) => {
+                this.store
+                  .select(selectUserAccounts)
+                  .pipe(
+                    first(),
+                    switchMap((accts) => {
+                      const acctToUpdate = accts.find(
+                        (acct) => acct.acctName === payload.acctName
+                      ) as Account;
+
+                      const updatedAccount: Account = {
+                        ...acctToUpdate,
+                        acctBalance:
+                          acctToUpdate.acctBalance - Number(payload.amount),
+                      };
+
+                      return this.store.select(selectUserId).pipe(
+                        switchMap((id) =>
+                          this.afs
+                            .collection('users')
+                            .doc(id)
+                            .collection('accounts')
+                            .doc(updatedAccount?.id)
+                            .update(updatedAccount as Account)
+                        )
+                      );
+                    })
+                  )
+                  .subscribe(() => this.modalService.closeModal());
+              },
+            },
+          ],
+        };
+
+        this.addAcctModalConfig = {
+          title: 'Add Account',
+          contentList: [],
+          fieldsets: [
+            {
+              name: 'Account Info',
+              inputs: [
+                {
+                  formControlName: 'acctName',
+                  label: 'Account Name',
+                  type: 'text',
+                  hidden: false,
+                  placeholder: 'Account name',
+                  validators: [Validators.required],
+                },
+                {
+                  formControlName: 'acctType',
+                  label: 'Account Type',
+                  type: 'select',
+                  hidden: false,
+                  placeholder: 'Account type',
+                  options: [
+                    'chequings',
+                    'credit',
+                    'savings',
+                    'rrsp',
+                    'loan',
+                  ].map((acctType) => {
+                    if (acctType === 'rrsp') return acctType.toUpperCase();
+                    return acctType[0].toUpperCase() + acctType.slice(1);
+                  }),
+                  onInputChange: (val: AcctType) => {
+                    return this.onAddAccountTypeChange(val);
+                  },
+                  validators: [Validators.required],
+                },
+                {
+                  formControlName: 'acctBalance',
+                  label: 'Account Balance',
+                  type: 'text',
+                  hidden: false,
+                  placeholder: 'Account balance',
+                  validators: [Validators.required],
+                },
+              ],
+            },
+          ],
+          modalButtons: [
+            {
+              buttonText: 'Cancel',
+              type: 'neutral',
+              dataTest: 'modal-cancel-btn',
+              clickFn: () => {
+                this.modalService.closeModal();
+              },
+            },
+            {
+              buttonText: 'Save',
+              type: 'primary',
+              dataTest: 'modal-save-btn',
+              submitFn: (payload) => {
+                // const newAcct: Account = {
+                // }
+              },
+            },
+          ],
+        };
       });
     this.subscriptions.add(userAcctSub);
   }
@@ -328,11 +428,50 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
       case 'Deposit':
         return this.modalService.updateModal(this.depositModalConfig);
       case 'Withdrawal':
-        return this.modalService.updateModal(this.depositModalConfig);
+        return this.modalService.updateModal(this.withdrawalModalConfig);
       case 'Transfer':
         return this.modalService.updateModal(this.transferModalConfig);
       default:
         break;
+    }
+  }
+
+  onAddAccountTypeChange(acctType: AcctType) {
+    console.log(acctType);
+    
+    switch (acctType) {
+      case 'credit':
+        if(this.addAcctModalConfig.fieldsets[0].inputs.length === 4) {
+          return this.modalService.updateModal(this.addAcctModalConfig);
+        }
+        this.addAcctModalConfig.fieldsets[0].inputs.push({
+          formControlName: 'acctLimit',
+          label: 'Account Limit',
+          type: 'text',
+          hidden: false,
+          placeholder: 'Account limit',
+          validators: [Validators.required],
+        });
+        return this.modalService.updateModal(this.addAcctModalConfig);
+      case 'loan':
+        if(this.addAcctModalConfig.fieldsets[0].inputs.length === 4) {
+          return this.modalService.updateModal(this.addAcctModalConfig);
+        }
+        this.addAcctModalConfig.fieldsets[0].inputs.push({
+          formControlName: 'acctLimit',
+          label: 'Account Limit',
+          type: 'text',
+          hidden: false,
+          placeholder: 'Account limit',
+          validators: [Validators.required],
+        });
+        return this.modalService.updateModal(this.addAcctModalConfig);
+      default:
+        if (this.addAcctModalConfig.fieldsets[0].inputs.length === 3) {
+          return this.modalService.updateModal(this.addAcctModalConfig);
+        }
+        this.addAcctModalConfig.fieldsets[0].inputs.pop();
+        return this.modalService.updateModal(this.addAcctModalConfig);
     }
   }
 }

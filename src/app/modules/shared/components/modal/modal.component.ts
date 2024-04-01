@@ -36,6 +36,7 @@ export class ModalComponent implements OnInit, OnDestroy, AfterViewInit {
   private submitFn: PayloadFunction;
   private subs = new Subscription();
   private currentTransactionType = 'Deposit';
+  private currentAccountType = 'chequings';
 
   constructor(
     private modalService: ModalService,
@@ -77,9 +78,8 @@ export class ModalComponent implements OnInit, OnDestroy, AfterViewInit {
           input.validators
         );
       });
-      if(this.modal?.fieldsets[1]) {
+      if (this.modal?.fieldsets[1]) {
         modal?.fieldsets[1].inputs.forEach((input) => {
-
           group[input.formControlName] = new UntypedFormControl(
             {
               value:
@@ -102,23 +102,40 @@ export class ModalComponent implements OnInit, OnDestroy, AfterViewInit {
 
       console.log(this.form);
 
+      const formSub = this.form.valueChanges.subscribe((changes) => {
       if (modal?.title === 'Transactions') {
-        const formSub = this.form.valueChanges.subscribe((changes) => {
-          if (changes.transactionType !== this.currentTransactionType) {
-            this.currentTransactionType = changes.transactionType;
+        if (changes.transactionType !== this.currentTransactionType) {
+          this.currentTransactionType = changes.transactionType;
 
-            const transactionChangeFunction = modal.fieldsets[0].inputs.find(
-              (input) => input.formControlName === 'transactionType'
-            )?.onInputChange;
+          const transactionChangeFunction = modal.fieldsets[0].inputs.find(
+            (input) => input.formControlName === 'transactionType'
+          )?.onInputChange;
 
-            if (transactionChangeFunction) {
-              transactionChangeFunction(changes.transactionType);
-            }
+          if (transactionChangeFunction) {
+            transactionChangeFunction(changes.transactionType);
           }
-        });
-
-        this.subs.add(formSub);
+        }
       }
+
+      if(modal?.title === 'Add Account') {
+        const lowerCasedAcct = changes.acctType.toLowerCase();
+        
+        if (lowerCasedAcct !== this.currentAccountType) {
+          this.currentAccountType = lowerCasedAcct;
+
+          const accountChangeFunction = modal.fieldsets[0].inputs.find(
+            (input) => input.formControlName === 'acctType'
+          )?.onInputChange;
+
+          if (accountChangeFunction) {
+            accountChangeFunction(lowerCasedAcct);
+          }
+        }
+      }
+        
+      });
+
+      this.subs.add(formSub);
     });
     this.subs.add(modalSub);
   }

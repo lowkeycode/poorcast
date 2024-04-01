@@ -6,12 +6,14 @@ export interface Timestamp {
   nanoseconds: number;
 }
 
+export type AcctType = 'chequings' | 'credit' | 'savings' | 'rrsp' | 'loan'
+
 export interface Account {
   id: string;
   acctBalance: number;
   acctLimit: number;
   acctName: string;
-  acctType: 'chequings' | 'credit' | 'savings' | 'rrsp' | 'loan';
+  acctType: AcctType;
 }
 
 export interface Expense {
