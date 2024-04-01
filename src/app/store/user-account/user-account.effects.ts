@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import * as UserAccountActions from './user-account.actions';
-import { catchError, combineLatest, from, map, of, switchMap } from 'rxjs';
+import { catchError, combineLatest, distinctUntilChanged, first, from, map, of, switchMap } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { selectUserId } from '../user/user.selectors';
 import { AngularFirestore } from '@angular/fire/compat/firestore';

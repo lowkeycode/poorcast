@@ -80,20 +80,4 @@ export const userAcctReducer = createReducer(
     ...state,
     categories,
   })),
-
-  on(UserAccountActions.depositAccount, (state, deposit) => {
-    return {
-      ...state,
-      accounts: state.accounts.map((acct) => {
-        if (acct.acctName === deposit.acctName) {
-          const newValue = acct.acctBalance + deposit.amount;
-          return {
-            ...acct,
-            acctBalance: newValue
-          };
-        }
-        return acct;
-      }),
-    };
-  })
 );

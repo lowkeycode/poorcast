@@ -39,7 +39,7 @@ export interface FieldsetInput {
   showFeedback?: boolean;
   defaultValue?: string | Date | number;
   dataTest?: string;
-  onInputChange?: (input: string) => any
+  onInputChange?: (input: any) => any
 }
 
 export type PayloadFunction = (payload: any) => any;

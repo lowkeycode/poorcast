@@ -6,8 +6,6 @@ import {
   AfterViewInit,
   ViewChildren,
   QueryList,
-  OnChanges,
-  SimpleChanges,
 } from '@angular/core';
 import {
   UntypedFormBuilder,
@@ -26,7 +24,7 @@ import { UserAccount } from 'src/app/store/user-account/user-account.reducers';
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.scss'],
 })
-export class ModalComponent implements OnInit, OnChanges, OnDestroy, AfterViewInit {
+export class ModalComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChildren(TextInputComponent)
   genericInputs: QueryList<TextInputComponent>;
   @ViewChildren(SelectInputComponent)
@@ -37,19 +35,22 @@ export class ModalComponent implements OnInit, OnChanges, OnDestroy, AfterViewIn
   private modal: ModalConfig | null;
   private submitFn: PayloadFunction;
   private subs = new Subscription();
+  private currentTransactionType = 'Deposit';
 
   constructor(
     private modalService: ModalService,
     private fb: UntypedFormBuilder,
-    private store: Store<UserAccount>,
+    private store: Store<UserAccount>
   ) {}
 
   ngOnInit(): void {
     this.modal$ = this.modalService.modalState$;
     const modalSub = this.modal$.subscribe((modal) => {
+      console.log('firing');
+
       this.modal = modal;
       this.contentList = this.modal?.contentList.categories;
-      
+
       this.submitFn = this.modal?.modalButtons.find(
         (button) => button.type === 'primary'
       )?.submitFn as PayloadFunction;
@@ -59,7 +60,6 @@ export class ModalComponent implements OnInit, OnChanges, OnDestroy, AfterViewIn
       //! This might bite me when it comes to two fieldsets
 
       modal?.fieldsets[0].inputs.forEach((input) => {
-
         group[input.formControlName] = new UntypedFormControl(
           {
             value:
@@ -77,15 +77,50 @@ export class ModalComponent implements OnInit, OnChanges, OnDestroy, AfterViewIn
           input.validators
         );
       });
+      if(this.modal?.fieldsets[1]) {
+        modal?.fieldsets[1].inputs.forEach((input) => {
+
+          group[input.formControlName] = new UntypedFormControl(
+            {
+              value:
+                input.type === 'select' && !!input?.options
+                  ? input.options[0] || input.defaultValue
+                  : input.type === 'text' && input.defaultValue
+                  ? input.defaultValue
+                  : input.type === 'date' && input.defaultValue
+                  ? input.defaultValue
+                  : input.defaultValue === 0
+                  ? input.defaultValue.toString()
+                  : null,
+              disabled: false,
+            },
+            input.validators
+          );
+        });
+      }
       this.form = this.fb.group(group);
+
+      console.log(this.form);
+
+      if (modal?.title === 'Transactions') {
+        const formSub = this.form.valueChanges.subscribe((changes) => {
+          if (changes.transactionType !== this.currentTransactionType) {
+            this.currentTransactionType = changes.transactionType;
+
+            const transactionChangeFunction = modal.fieldsets[0].inputs.find(
+              (input) => input.formControlName === 'transactionType'
+            )?.onInputChange;
+
+            if (transactionChangeFunction) {
+              transactionChangeFunction(changes.transactionType);
+            }
+          }
+        });
+
+        this.subs.add(formSub);
+      }
     });
     this.subs.add(modalSub);
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    console.log(changes);
-    console.log(this.form.value);
-    
   }
 
   ngOnDestroy(): void {
@@ -102,7 +137,9 @@ export class ModalComponent implements OnInit, OnChanges, OnDestroy, AfterViewIn
   }
 
   onSubmit() {
-    const payload = this.modal?.contentList.length ? this.modal.contentList.categories : this.form.value;
+    const payload = this.modal?.contentList.length
+      ? this.modal.contentList.categories
+      : this.form.value;
     this.submitFn(payload);
   }
 }

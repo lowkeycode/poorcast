@@ -18,7 +18,6 @@ export class SelectInputComponent implements ControlValueAccessor, OnInit  {
   @Input() label: string;
   @Input() placeholder?: string;
   @Input() formControlName: string;
-  @Input()
   inputValue;
 
   touched = false;
