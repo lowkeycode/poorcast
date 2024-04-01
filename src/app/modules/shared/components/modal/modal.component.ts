@@ -100,28 +100,24 @@ export class ModalComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       this.form = this.fb.group(group);
 
-      console.log(this.form);
-
+      // ! Is the issue a nested subscription??
       const formSub = this.form.valueChanges.subscribe((changes) => {
-      if (modal?.title === 'Transactions') {
-        if (changes.transactionType !== this.currentTransactionType) {
-          this.currentTransactionType = changes.transactionType;
+        if (modal?.title === 'Transactions') {
+          if (changes.transactionType !== this.currentTransactionType) {
+            this.currentTransactionType = changes.transactionType;
 
-          const transactionChangeFunction = modal.fieldsets[0].inputs.find(
-            (input) => input.formControlName === 'transactionType'
-          )?.onInputChange;
+            const transactionChangeFunction = modal.fieldsets[0].inputs.find(
+              (input) => input.formControlName === 'transactionType'
+            )?.onInputChange;
 
-          if (transactionChangeFunction) {
-            transactionChangeFunction(changes.transactionType);
+            if (transactionChangeFunction) {
+              transactionChangeFunction(changes.transactionType);
+            }
           }
         }
-      }
 
-      if(modal?.title === 'Add Account') {
-        const lowerCasedAcct = changes.acctType.toLowerCase();
-        
-        if (lowerCasedAcct !== this.currentAccountType) {
-          this.currentAccountType = lowerCasedAcct;
+        if (modal?.title === 'Add Account') {
+          const lowerCasedAcct = changes.acctType.toLowerCase();
 
           const accountChangeFunction = modal.fieldsets[0].inputs.find(
             (input) => input.formControlName === 'acctType'
@@ -131,8 +127,6 @@ export class ModalComponent implements OnInit, OnDestroy, AfterViewInit {
             accountChangeFunction(lowerCasedAcct);
           }
         }
-      }
-        
       });
 
       this.subs.add(formSub);
