@@ -63,50 +63,31 @@ export class ModalComponent implements OnInit, OnDestroy, AfterViewInit {
       // TODO Spent a ton of time trying to figure out default values on selects. Fix this bug if you can.
 
       modal?.fieldsets[0].inputs.forEach((input) => {
-        if(input?.options && input?.defaultValue) {
-          const defaultValue = input.defaultValue as string;
-          input.defaultValue = defaultValue[0].toUpperCase() + defaultValue.slice(1);
-          input.options = input.options.map(option => option[0].toUpperCase() + option.slice(1))
-        }     
-
-        let formControl = {
-          value:
-            input.type === 'text' && input.defaultValue
-              ? input.defaultValue
-              : input.type === 'date' && input.defaultValue
-              ? input.defaultValue
-              : input.defaultValue === 0
-              ? input.defaultValue.toString()
-              : null,
-          disabled: false,
-        }
-
-        if(input?.options && input?.defaultValue) {
-          formControl = {
-            ...formControl,
-            value: input.defaultValue,
-            defaultValue: input.defaultValue
-          } as any;
-        console.log(formControl);
-
-        }
-
         group[input.formControlName] = new UntypedFormControl(
-          formControl,
+          {
+            value:
+              input.type === 'select' && !!input?.options
+                ? input?.defaultValue || input.options[0]
+                : input.type === 'text' && input.defaultValue
+                ? input.defaultValue
+                : input.type === 'date' && input.defaultValue
+                ? input.defaultValue
+                : input.defaultValue === 0
+                ? input.defaultValue.toString()
+                : null,
+            disabled: false,
+          },
           input.validators
         );
       });
 
-      
-
       if (this.modal?.fieldsets[1]) {
         modal?.fieldsets[1].inputs.forEach((input) => {
-          
           group[input.formControlName] = new UntypedFormControl(
             {
               value:
                 input.type === 'select' && !!input?.options
-                  ? input?.defaultValue || input.options[0] 
+                  ? input?.defaultValue || input.options[0]
                   : input.type === 'text' && input.defaultValue
                   ? input.defaultValue
                   : input.type === 'date' && input.defaultValue
@@ -175,6 +156,7 @@ export class ModalComponent implements OnInit, OnDestroy, AfterViewInit {
     const payload = this.modal?.contentList.length
       ? this.modal.contentList.categories
       : this.form.value;
+      
     this.submitFn(payload);
   }
 }

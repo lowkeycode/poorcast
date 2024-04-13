@@ -9,7 +9,7 @@ export interface Timestamp {
 export type AcctType = 'chequings' | 'credit' | 'savings' | 'rrsp' | 'loan'
 
 export interface Account {
-  id?: string;
+  id: string;
   acctBalance: number;
   acctLimit?: number;
   acctName: string;

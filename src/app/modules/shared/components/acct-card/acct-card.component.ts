@@ -74,7 +74,7 @@ export class AcctCardComponent implements OnInit {
           buttonText: 'Save',
           type: 'primary',
           dataTest: 'modal-save-btn',
-          submitFn: (payload: Account) => {
+          submitFn: (payload) => {
             let formattedPayload = {
               ...payload,
               acctBalance: Number(payload.acctBalance),
@@ -91,7 +91,7 @@ export class AcctCardComponent implements OnInit {
               .collection('users')
               .doc(this.userId)
               .collection('accounts')
-              .doc(payload.id)
+              .doc(this.account.id)
               .update(formattedPayload);
             this.modalService.closeModal();
           },
@@ -110,7 +110,6 @@ export class AcctCardComponent implements OnInit {
   }
 
   onEditAcct(account: Account) {
-    console.log(account);
     if (account?.acctLimit) {
       this.editAcctModalConfig.fieldsets[0].inputs.push({
         formControlName: 'acctLimit',

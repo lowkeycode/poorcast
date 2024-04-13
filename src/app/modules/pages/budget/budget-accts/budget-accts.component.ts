@@ -395,8 +395,8 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
               buttonText: 'Save',
               type: 'primary',
               dataTest: 'modal-save-btn',
-              submitFn: (payload: Account) => {
-                let newAcct: Account = {
+              submitFn: (payload) => {
+                let newAcct = {
                   acctBalance: Number(payload.acctBalance),
                   acctName: payload.acctName,
                   acctType: payload.acctType.toLowerCase() as AcctType,
@@ -405,8 +405,8 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
                 if (!!payload?.acctLimit) {
                   newAcct = {
                     ...newAcct,
-                    acctLimit: payload.acctLimit,
-                  };
+                    acctLimit: Number(payload.acctLimit),
+                  } as any;
                 }
                 this.store
                   .select(selectUserId)
