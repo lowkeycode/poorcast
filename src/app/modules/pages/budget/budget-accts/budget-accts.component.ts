@@ -69,9 +69,7 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
                   hidden: false,
                   options: ['Deposit', 'Withdrawal', 'Transfer'],
                   validators: [],
-                  onInputChange: (val: TransactionType) => {
-                    return this.onTransactionTypeChange(val);
-                  },
+                  onInputChange: (val: TransactionType) => this.onTransactionTypeChange(val),
                 },
                 {
                   formControlName: 'acctName',
@@ -371,9 +369,7 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
                     if (acctType === 'rrsp') return acctType.toUpperCase();
                     return acctType[0].toUpperCase() + acctType.slice(1);
                   }),
-                  onInputChange: (val: AcctType) => {
-                    return this.onAddAccountTypeChange(val);
-                  },
+                  onInputChange: (val: AcctType) => this.onAddAccountTypeChange(val),
                   validators: [Validators.required],
                 },
                 {
@@ -400,9 +396,31 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
               buttonText: 'Save',
               type: 'primary',
               dataTest: 'modal-save-btn',
-              submitFn: (payload) => {
-                // const newAcct: Account = {
-                // }
+              submitFn: (payload: Account) => {
+                let newAcct: Account = {
+                  acctBalance: Number(payload.acctBalance),
+                  acctName: payload.acctName,
+                  acctType: payload.acctType.toLowerCase() as AcctType,
+                };
+
+                if (!!payload?.acctLimit) {
+                  newAcct = {
+                    ...newAcct,
+                    acctLimit: payload.acctLimit,
+                  };
+                }
+                this.store
+                  .select(selectUserId)
+                  .pipe(
+                    switchMap((id) =>
+                      this.afs
+                        .collection('users')
+                        .doc(id)
+                        .collection('accounts')
+                        .add(newAcct)
+                    )
+                  )
+                  .subscribe(() => this.modalService.closeModal());
               },
             },
           ],
@@ -437,16 +455,9 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
   }
 
   onAddAccountTypeChange(acctType: AcctType) {
-    //!  Account type is ending up as chequings even when changed
-    console.log(acctType);
-
-    console.log(this.addAcctModalConfig.fieldsets[0].inputs.length);
-    
     switch (acctType) {
-
       case 'credit':
-        if(this.addAcctModalConfig.fieldsets[0].inputs.length === 4) {
-          console.log(this.addAcctModalConfig.fieldsets[0].inputs.length);
+        if (this.addAcctModalConfig.fieldsets[0].inputs.length === 4) {
           return this.modalService.updateModal(this.addAcctModalConfig);
         }
 
@@ -458,12 +469,10 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
           placeholder: 'Account limit',
           validators: [Validators.required],
         });
-        console.log(this.addAcctModalConfig.fieldsets[0].inputs.length);
         return this.modalService.updateModal(this.addAcctModalConfig);
 
       case 'loan':
-        if(this.addAcctModalConfig.fieldsets[0].inputs.length === 4) {
-          console.log(this.addAcctModalConfig.fieldsets[0].inputs.length);
+        if (this.addAcctModalConfig.fieldsets[0].inputs.length === 4) {
           return this.modalService.updateModal(this.addAcctModalConfig);
         }
 
@@ -475,17 +484,15 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
           placeholder: 'Account limit',
           validators: [Validators.required],
         });
-        console.log(this.addAcctModalConfig.fieldsets[0].inputs.length);
         return this.modalService.updateModal(this.addAcctModalConfig);
 
       default:
         if (this.addAcctModalConfig.fieldsets[0].inputs.length === 3) {
           return this.modalService.updateModal(this.addAcctModalConfig);
         }
+
         this.addAcctModalConfig.fieldsets[0].inputs.pop();
-        console.log(this.addAcctModalConfig.fieldsets[0].inputs.length);
         return this.modalService.updateModal(this.addAcctModalConfig);
     }
-    
   }
 }

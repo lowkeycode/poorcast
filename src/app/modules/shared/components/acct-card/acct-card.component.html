@@ -13,7 +13,10 @@
   </div>
   <div class="card__heading">
     <p class="card__heading--available">Available Balance</p>
-    <h3 class="card__heading--acct-name">{{ account.acctName }}</h3>
+    <div class="card__heading--acct-info">
+      <h3 class="card__heading--acct-info-name">{{ account.acctName }}</h3>
+      <p class="card__heading--acct-info-type">({{ account.acctType[0].toUpperCase() + account.acctType.slice(1) }})</p>
+    </div>
   </div>
   <div class="card__balance">
     <p class="card__balance--amount">${{ account.acctBalance.toFixed(2) }}</p>

@@ -17,7 +17,7 @@ import { ModalConfig, PayloadFunction } from 'src/app/models/interfaces';
 import { TextInputComponent } from '../forms/text-input/text-input.component';
 import { SelectInputComponent } from '../forms/select-input/select-input.component';
 import { Store } from '@ngrx/store';
-import { UserAccount } from 'src/app/store/user-account/user-account.reducers';
+import { AcctType, UserAccount } from 'src/app/store/user-account/user-account.reducers';
 
 @Component({
   selector: 'app-modal',
@@ -36,7 +36,7 @@ export class ModalComponent implements OnInit, OnDestroy, AfterViewInit {
   private submitFn: PayloadFunction;
   private subs = new Subscription();
   private currentTransactionType = 'Deposit';
-  private currentAccountType = 'credit';
+  private currentAccountType: AcctType = 'chequings';
 
   constructor(
     private modalService: ModalService,
@@ -47,8 +47,6 @@ export class ModalComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnInit(): void {
     this.modal$ = this.modalService.modalState$;
     const modalSub = this.modal$.subscribe((modal) => {
-      console.log('firing');
-
       this.modal = modal;
       this.contentList = this.modal?.contentList.categories;
 
@@ -98,10 +96,7 @@ export class ModalComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       this.form = this.fb.group(group);
 
-      // ! Is the issue a nested subscription??
-
       const formSub = this.form.valueChanges.subscribe((changes) => {
-        console.log('changes', changes)
         if (modal?.title === 'Transactions') {
           if (changes.transactionType !== this.currentTransactionType) {
             this.currentTransactionType = changes.transactionType;
@@ -117,21 +112,19 @@ export class ModalComponent implements OnInit, OnDestroy, AfterViewInit {
         }
 
         if (modal?.title === 'Add Account') {
-          console.log('wtf');
-          
-          // ! See above but it might be here specific and need to check for aconditional like above
           const lowerCasedAcct = changes.acctType.toLowerCase();
+          if (lowerCasedAcct !== this.currentAccountType) {
+            this.currentAccountType = lowerCasedAcct;
 
-          const accountChangeFunction = modal.fieldsets[0].inputs.find(
-            (input) => input.formControlName === 'acctType'
-          )?.onInputChange;
-
-          if (accountChangeFunction) {
-            accountChangeFunction(lowerCasedAcct);
+            const accountChangeFunction = modal.fieldsets[0].inputs.find(
+              (input) => input.formControlName === 'acctType'
+            )?.onInputChange;
+  
+            if (accountChangeFunction) {
+              accountChangeFunction(lowerCasedAcct);
+            }
           }
         }
-
-        this.currentAccountType = changes.acctType.toLowerCase();
       });
 
       this.subs.add(formSub);
