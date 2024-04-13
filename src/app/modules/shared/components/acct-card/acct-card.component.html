@@ -4,11 +4,12 @@
       [appIconSize]="0.9"
       [iconName]="'ellipsisHorizontal'"
       [attr.data-test]="'edit-acct-btn-' + index"
-      (click)="onEditAcct(index)"
+      (click)="onEditAcct(account)"
     ></app-solo-icon>
     <app-solo-icon
       [appIconSize]="0.9"
       [iconName]="'closeCircle'"
+      (click)="onDeleteAcct(account)"
     ></app-solo-icon>
   </div>
   <div class="card__heading">

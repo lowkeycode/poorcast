@@ -3,6 +3,9 @@ import { ModalConfig } from 'src/app/models/interfaces';
 import { ModalService } from '../../services/modal.service';
 import { Account } from 'src/app/store/user-account/user-account.reducers';
 import { Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { selectUserId } from 'src/app/store/user/user.selectors';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Component({
   selector: 'app-acct-card',
@@ -63,11 +66,19 @@ export class AcctCardComponent implements OnInit {
     ],
   };
 
-  constructor(private modalService: ModalService) {}
+  constructor(private modalService: ModalService, private store: Store, private afs: AngularFirestore) {}
 
   ngOnInit(): void {}
 
-  onEditAcct(index) {
-    this.modalService.updateModal(this.editAcctModalConfig);
+  onDeleteAcct(account: Account) {
+    this.store.select(selectUserId).subscribe(id => {
+      this.afs.collection('users').doc(id).collection('accounts').doc(account.id).delete();
+    })
+  }
+
+  onEditAcct(account) {
+    console.log(account);
+    
+    // this.modalService.updateModal(this.editAcctModalConfig);
   }
 }
