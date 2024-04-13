@@ -36,7 +36,7 @@ export class ModalComponent implements OnInit, OnDestroy, AfterViewInit {
   private submitFn: PayloadFunction;
   private subs = new Subscription();
   private currentTransactionType = 'Deposit';
-  private currentAccountType = 'chequings';
+  private currentAccountType = 'credit';
 
   constructor(
     private modalService: ModalService,
@@ -57,8 +57,6 @@ export class ModalComponent implements OnInit, OnDestroy, AfterViewInit {
       )?.submitFn as PayloadFunction;
 
       const group = {} as UntypedFormGroup;
-
-      //! This might bite me when it comes to two fieldsets
 
       modal?.fieldsets[0].inputs.forEach((input) => {
         group[input.formControlName] = new UntypedFormControl(
@@ -101,7 +99,9 @@ export class ModalComponent implements OnInit, OnDestroy, AfterViewInit {
       this.form = this.fb.group(group);
 
       // ! Is the issue a nested subscription??
+
       const formSub = this.form.valueChanges.subscribe((changes) => {
+        console.log('changes', changes)
         if (modal?.title === 'Transactions') {
           if (changes.transactionType !== this.currentTransactionType) {
             this.currentTransactionType = changes.transactionType;
@@ -117,6 +117,9 @@ export class ModalComponent implements OnInit, OnDestroy, AfterViewInit {
         }
 
         if (modal?.title === 'Add Account') {
+          console.log('wtf');
+          
+          // ! See above but it might be here specific and need to check for aconditional like above
           const lowerCasedAcct = changes.acctType.toLowerCase();
 
           const accountChangeFunction = modal.fieldsets[0].inputs.find(
@@ -127,6 +130,8 @@ export class ModalComponent implements OnInit, OnDestroy, AfterViewInit {
             accountChangeFunction(lowerCasedAcct);
           }
         }
+
+        this.currentAccountType = changes.acctType.toLowerCase();
       });
 
       this.subs.add(formSub);

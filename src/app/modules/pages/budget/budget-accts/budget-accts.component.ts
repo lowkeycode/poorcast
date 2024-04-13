@@ -228,7 +228,7 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
                       const updatedFromAcct: Account = {
                         ...fromAcct,
                         acctBalance:
-                          fromAcct.acctBalance + Number(payload.amount),
+                          fromAcct.acctBalance - Number(payload.amount),
                       };
 
                       return this.store.select(selectUserId).pipe(
@@ -437,13 +437,19 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
   }
 
   onAddAccountTypeChange(acctType: AcctType) {
+    //!  Account type is ending up as chequings even when changed
     console.log(acctType);
+
+    console.log(this.addAcctModalConfig.fieldsets[0].inputs.length);
     
     switch (acctType) {
+
       case 'credit':
         if(this.addAcctModalConfig.fieldsets[0].inputs.length === 4) {
+          console.log(this.addAcctModalConfig.fieldsets[0].inputs.length);
           return this.modalService.updateModal(this.addAcctModalConfig);
         }
+
         this.addAcctModalConfig.fieldsets[0].inputs.push({
           formControlName: 'acctLimit',
           label: 'Account Limit',
@@ -452,11 +458,15 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
           placeholder: 'Account limit',
           validators: [Validators.required],
         });
+        console.log(this.addAcctModalConfig.fieldsets[0].inputs.length);
         return this.modalService.updateModal(this.addAcctModalConfig);
+
       case 'loan':
         if(this.addAcctModalConfig.fieldsets[0].inputs.length === 4) {
+          console.log(this.addAcctModalConfig.fieldsets[0].inputs.length);
           return this.modalService.updateModal(this.addAcctModalConfig);
         }
+
         this.addAcctModalConfig.fieldsets[0].inputs.push({
           formControlName: 'acctLimit',
           label: 'Account Limit',
@@ -465,13 +475,17 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
           placeholder: 'Account limit',
           validators: [Validators.required],
         });
+        console.log(this.addAcctModalConfig.fieldsets[0].inputs.length);
         return this.modalService.updateModal(this.addAcctModalConfig);
+
       default:
         if (this.addAcctModalConfig.fieldsets[0].inputs.length === 3) {
           return this.modalService.updateModal(this.addAcctModalConfig);
         }
         this.addAcctModalConfig.fieldsets[0].inputs.pop();
+        console.log(this.addAcctModalConfig.fieldsets[0].inputs.length);
         return this.modalService.updateModal(this.addAcctModalConfig);
     }
+    
   }
 }
