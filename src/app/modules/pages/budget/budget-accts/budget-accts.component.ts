@@ -16,7 +16,7 @@ import {
 } from 'src/app/store/user-account/user-account.selectors';
 import { selectUserId } from 'src/app/store/user/user.selectors';
 
-type TransactionType = 'Deposit' | 'Withdrawal' | 'Transfer';
+export type TransactionType = 'Deposit' | 'Withdrawal' | 'Transfer';
 
 export interface Deposit {
   acctName: string;
@@ -37,6 +37,12 @@ export interface Transfer {
 export class BudgetAcctsComponent implements OnInit, OnDestroy {
   accounts: Account[];
   expenses: Expense[];
+  acctTypes = ['chequings', 'credit', 'savings', 'rrsp', 'loan'].map(
+    (acctType) => {
+      if (acctType === 'rrsp') return acctType.toUpperCase();
+      return acctType[0].toUpperCase() + acctType.slice(1);
+    }
+  );
   private subscriptions = new Subscription();
   private depositModalConfig: ModalConfig;
   private transferModalConfig: ModalConfig;
@@ -69,7 +75,8 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
                   hidden: false,
                   options: ['Deposit', 'Withdrawal', 'Transfer'],
                   validators: [],
-                  onInputChange: (val: TransactionType) => this.onTransactionTypeChange(val),
+                  onInputChange: (val: TransactionType) =>
+                    this.onTransactionTypeChange(val),
                 },
                 {
                   formControlName: 'acctName',
@@ -359,17 +366,9 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
                   type: 'select',
                   hidden: false,
                   placeholder: 'Account type',
-                  options: [
-                    'chequings',
-                    'credit',
-                    'savings',
-                    'rrsp',
-                    'loan',
-                  ].map((acctType) => {
-                    if (acctType === 'rrsp') return acctType.toUpperCase();
-                    return acctType[0].toUpperCase() + acctType.slice(1);
-                  }),
-                  onInputChange: (val: AcctType) => this.onAddAccountTypeChange(val),
+                  options: this.acctTypes,
+                  onInputChange: (val: AcctType) =>
+                    this.onAddAccountTypeChange(val),
                   validators: [Validators.required],
                 },
                 {

@@ -4,6 +4,6 @@
     <button class="btn btn-primary" data-test="add-acct-btn" type="button" (click)="onAddAccount()">Add Account</button>
   </div>
   <div class="accts__cards">
-    <app-acct-card *ngFor="let account of accounts; let i = index;" [account]="account" [isBudgetCard]="true" [index]="i"></app-acct-card>
+    <app-acct-card *ngFor="let account of accounts; let i = index;" [account]="account" [isBudgetCard]="true" [index]="i" [selectOptions]="{acctTypes}"></app-acct-card>
   </div>
 </div>

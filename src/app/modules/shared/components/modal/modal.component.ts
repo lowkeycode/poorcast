@@ -17,7 +17,11 @@ import { ModalConfig, PayloadFunction } from 'src/app/models/interfaces';
 import { TextInputComponent } from '../forms/text-input/text-input.component';
 import { SelectInputComponent } from '../forms/select-input/select-input.component';
 import { Store } from '@ngrx/store';
-import { AcctType, UserAccount } from 'src/app/store/user-account/user-account.reducers';
+import {
+  AcctType,
+  UserAccount,
+} from 'src/app/store/user-account/user-account.reducers';
+import { TransactionType } from 'src/app/modules/pages/budget/budget-accts/budget-accts.component';
 
 @Component({
   selector: 'app-modal',
@@ -35,7 +39,7 @@ export class ModalComponent implements OnInit, OnDestroy, AfterViewInit {
   private modal: ModalConfig | null;
   private submitFn: PayloadFunction;
   private subs = new Subscription();
-  private currentTransactionType = 'Deposit';
+  private currentTransactionType: TransactionType = 'Deposit';
   private currentAccountType: AcctType = 'chequings';
 
   constructor(
@@ -56,31 +60,53 @@ export class ModalComponent implements OnInit, OnDestroy, AfterViewInit {
 
       const group = {} as UntypedFormGroup;
 
+      // TODO Spent a ton of time trying to figure out default values on selects. Fix this bug if you can.
+
       modal?.fieldsets[0].inputs.forEach((input) => {
+        if(input?.options && input?.defaultValue) {
+          const defaultValue = input.defaultValue as string;
+          input.defaultValue = defaultValue[0].toUpperCase() + defaultValue.slice(1);
+          input.options = input.options.map(option => option[0].toUpperCase() + option.slice(1))
+        }     
+
+        let formControl = {
+          value:
+            input.type === 'text' && input.defaultValue
+              ? input.defaultValue
+              : input.type === 'date' && input.defaultValue
+              ? input.defaultValue
+              : input.defaultValue === 0
+              ? input.defaultValue.toString()
+              : null,
+          disabled: false,
+        }
+
+        if(input?.options && input?.defaultValue) {
+          formControl = {
+            ...formControl,
+            value: input.defaultValue,
+            defaultValue: input.defaultValue
+          } as any;
+        console.log(formControl);
+
+        }
+
         group[input.formControlName] = new UntypedFormControl(
-          {
-            value:
-              input.type === 'select' && !!input?.options
-                ? input.options[0] || input.defaultValue
-                : input.type === 'text' && input.defaultValue
-                ? input.defaultValue
-                : input.type === 'date' && input.defaultValue
-                ? input.defaultValue
-                : input.defaultValue === 0
-                ? input.defaultValue.toString()
-                : null,
-            disabled: false,
-          },
+          formControl,
           input.validators
         );
       });
+
+      
+
       if (this.modal?.fieldsets[1]) {
         modal?.fieldsets[1].inputs.forEach((input) => {
+          
           group[input.formControlName] = new UntypedFormControl(
             {
               value:
                 input.type === 'select' && !!input?.options
-                  ? input.options[0] || input.defaultValue
+                  ? input?.defaultValue || input.options[0] 
                   : input.type === 'text' && input.defaultValue
                   ? input.defaultValue
                   : input.type === 'date' && input.defaultValue
@@ -119,7 +145,7 @@ export class ModalComponent implements OnInit, OnDestroy, AfterViewInit {
             const accountChangeFunction = modal.fieldsets[0].inputs.find(
               (input) => input.formControlName === 'acctType'
             )?.onInputChange;
-  
+
             if (accountChangeFunction) {
               accountChangeFunction(lowerCasedAcct);
             }
