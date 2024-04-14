@@ -1,5 +1,6 @@
 import { createAction, props } from "@ngrx/store";
 import { Categories, UserAccount } from "./user-account.reducers";
+import { Deposit, Transfer } from "src/app/modules/pages/budget/budget-accts/budget-accts.component";
 
 export const loadUserAccount = createAction('[ Global ] Load User Account')
 

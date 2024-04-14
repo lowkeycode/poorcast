@@ -6,7 +6,6 @@ import {
   AfterViewInit,
   ViewChildren,
   QueryList,
-  ChangeDetectorRef,
 } from '@angular/core';
 import {
   UntypedFormBuilder,
@@ -18,7 +17,11 @@ import { ModalConfig, PayloadFunction } from 'src/app/models/interfaces';
 import { TextInputComponent } from '../forms/text-input/text-input.component';
 import { SelectInputComponent } from '../forms/select-input/select-input.component';
 import { Store } from '@ngrx/store';
-import { UserAccount } from 'src/app/store/user-account/user-account.reducers';
+import {
+  AcctType,
+  UserAccount,
+} from 'src/app/store/user-account/user-account.reducers';
+import { TransactionType } from 'src/app/modules/pages/budget/budget-accts/budget-accts.component';
 
 @Component({
   selector: 'app-modal',
@@ -32,38 +35,43 @@ export class ModalComponent implements OnInit, OnDestroy, AfterViewInit {
   selectInputs: QueryList<SelectInputComponent>;
   modal$: Observable<ModalConfig | null>;
   form!: UntypedFormGroup;
+  formSub: Subscription;
   contentList: string[];
   private modal: ModalConfig | null;
   private submitFn: PayloadFunction;
   private subs = new Subscription();
+  private currentTransactionType: TransactionType = 'Deposit';
+  private currentAccountType: AcctType = 'chequings';
 
   constructor(
     private modalService: ModalService,
     private fb: UntypedFormBuilder,
-    private store: Store<UserAccount>,
+    private store: Store<UserAccount>
   ) {}
 
   ngOnInit(): void {
     this.modal$ = this.modalService.modalState$;
     const modalSub = this.modal$.subscribe((modal) => {
+      // if(this.formSub) this.formSub.unsubscribe();
+      // this.form = this.fb.group({});
+
       this.modal = modal;
       this.contentList = this.modal?.contentList.categories;
-      
+
       this.submitFn = this.modal?.modalButtons.find(
         (button) => button.type === 'primary'
       )?.submitFn as PayloadFunction;
 
       const group = {} as UntypedFormGroup;
 
-      //! This might bite me when it comes to two fieldsets
-
       modal?.fieldsets[0].inputs.forEach((input) => {
-
         group[input.formControlName] = new UntypedFormControl(
           {
             value:
-              input.type === 'select' && !!input?.options
-                ? input.options[0] || input.defaultValue
+              input.type === 'select' && input?.defaultValue
+                ? input.defaultValue
+                : input.type === 'select' && !!input?.options
+                ? input.options[0]
                 : input.type === 'text' && input.defaultValue
                 ? input.defaultValue
                 : input.type === 'date' && input.defaultValue
@@ -76,7 +84,64 @@ export class ModalComponent implements OnInit, OnDestroy, AfterViewInit {
           input.validators
         );
       });
+
+
+      if (this.modal?.fieldsets[1]) {
+        modal?.fieldsets[1].inputs.forEach((input) => {
+          group[input.formControlName] = new UntypedFormControl(
+            {
+              value:
+                input.type === 'select' && input?.defaultValue
+                  ? input.defaultValue
+                  : input.type === 'select' && !!input?.options
+                  ? input.options[0]
+                  : input.type === 'text' && input.defaultValue
+                  ? input.defaultValue
+                  : input.type === 'date' && input.defaultValue
+                  ? input.defaultValue
+                  : input.defaultValue === 0
+                  ? input.defaultValue.toString()
+                  : null,
+              disabled: false,
+            },
+            input.validators
+          );
+        });
+      }
       this.form = this.fb.group(group);
+
+      this.formSub = this.form.valueChanges.subscribe((changes) => {
+        if (modal?.title === 'Transactions') {
+          if (changes.transactionType !== this.currentTransactionType) {
+            this.currentTransactionType = changes.transactionType;
+
+            const transactionChangeFunction = modal.fieldsets[0].inputs.find(
+              (input) => input.formControlName === 'transactionType'
+            )?.onInputChange;
+
+            if (transactionChangeFunction) {
+              transactionChangeFunction(changes.transactionType);
+            }
+          }
+        }
+
+        if (modal?.title === 'Add Account') {
+          const lowerCasedAcct = changes.acctType.toLowerCase();
+          if (lowerCasedAcct !== this.currentAccountType) {
+            this.currentAccountType = lowerCasedAcct;
+
+            const accountChangeFunction = modal.fieldsets[0].inputs.find(
+              (input) => input.formControlName === 'acctType'
+            )?.onInputChange;
+
+            if (accountChangeFunction) {
+              accountChangeFunction(lowerCasedAcct);
+            }
+          }
+        }
+      });
+
+      this.subs.add(this.formSub);
     });
     this.subs.add(modalSub);
   }
@@ -95,7 +160,10 @@ export class ModalComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onSubmit() {
-    const payload = this.modal?.contentList.length ? this.modal.contentList.categories : this.form.value;
+    const payload = this.modal?.contentList.length
+      ? this.modal.contentList.categories
+      : this.form.value;
+
     this.submitFn(payload);
   }
 }
