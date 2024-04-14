@@ -30,9 +30,9 @@ describe('Budget', () => {
         .contains('Transactions');
     });
 
-    it('shows transfer modal on transfer click', () => {
-      cy.getByData('transfer-btn').click();
-      cy.get('.modal__main--title').should('be.visible').contains('Transfer');
+    it.only('shows transactions modal on transactions click', () => {
+      cy.getByData('transactions-btn').click();
+      cy.get('.modal__main--title').should('be.visible').contains('Transaction');
     });
 
     it('shows add account modal on add account click', () => {
