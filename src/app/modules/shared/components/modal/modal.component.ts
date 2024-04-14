@@ -35,6 +35,7 @@ export class ModalComponent implements OnInit, OnDestroy, AfterViewInit {
   selectInputs: QueryList<SelectInputComponent>;
   modal$: Observable<ModalConfig | null>;
   form!: UntypedFormGroup;
+  formSub: Subscription;
   contentList: string[];
   private modal: ModalConfig | null;
   private submitFn: PayloadFunction;
@@ -51,6 +52,9 @@ export class ModalComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnInit(): void {
     this.modal$ = this.modalService.modalState$;
     const modalSub = this.modal$.subscribe((modal) => {
+      // if(this.formSub) this.formSub.unsubscribe();
+      // this.form = this.fb.group({});
+
       this.modal = modal;
       this.contentList = this.modal?.contentList.categories;
 
@@ -60,14 +64,14 @@ export class ModalComponent implements OnInit, OnDestroy, AfterViewInit {
 
       const group = {} as UntypedFormGroup;
 
-      // TODO Spent a ton of time trying to figure out default values on selects. Fix this bug if you can.
-
       modal?.fieldsets[0].inputs.forEach((input) => {
         group[input.formControlName] = new UntypedFormControl(
           {
             value:
-              input.type === 'select' && !!input?.options
-                ? input?.defaultValue || input.options[0]
+              input.type === 'select' && input?.defaultValue
+                ? input.defaultValue
+                : input.type === 'select' && !!input?.options
+                ? input.options[0]
                 : input.type === 'text' && input.defaultValue
                 ? input.defaultValue
                 : input.type === 'date' && input.defaultValue
@@ -81,13 +85,16 @@ export class ModalComponent implements OnInit, OnDestroy, AfterViewInit {
         );
       });
 
+
       if (this.modal?.fieldsets[1]) {
         modal?.fieldsets[1].inputs.forEach((input) => {
           group[input.formControlName] = new UntypedFormControl(
             {
               value:
-                input.type === 'select' && !!input?.options
-                  ? input?.defaultValue || input.options[0]
+                input.type === 'select' && input?.defaultValue
+                  ? input.defaultValue
+                  : input.type === 'select' && !!input?.options
+                  ? input.options[0]
                   : input.type === 'text' && input.defaultValue
                   ? input.defaultValue
                   : input.type === 'date' && input.defaultValue
@@ -103,7 +110,7 @@ export class ModalComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       this.form = this.fb.group(group);
 
-      const formSub = this.form.valueChanges.subscribe((changes) => {
+      this.formSub = this.form.valueChanges.subscribe((changes) => {
         if (modal?.title === 'Transactions') {
           if (changes.transactionType !== this.currentTransactionType) {
             this.currentTransactionType = changes.transactionType;
@@ -134,7 +141,7 @@ export class ModalComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       });
 
-      this.subs.add(formSub);
+      this.subs.add(this.formSub);
     });
     this.subs.add(modalSub);
   }
@@ -156,7 +163,7 @@ export class ModalComponent implements OnInit, OnDestroy, AfterViewInit {
     const payload = this.modal?.contentList.length
       ? this.modal.contentList.categories
       : this.form.value;
-      
+
     this.submitFn(payload);
   }
 }

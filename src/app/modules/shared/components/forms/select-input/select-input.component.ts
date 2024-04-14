@@ -1,5 +1,5 @@
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-select-input',
@@ -11,13 +11,14 @@ import { Component, Input, OnInit } from '@angular/core';
     multi: true
   }]
 })
-export class SelectInputComponent implements ControlValueAccessor, OnInit  {
+export class SelectInputComponent implements ControlValueAccessor{
   @Input() options: string[];
   @Input() showFeedback: boolean;
   @Input() feedBackMsg: string;
   @Input() label: string;
   @Input() placeholder?: string;
   @Input() formControlName: string;
+  @Input() defaultValue?: string | number | Date | undefined;
   inputValue;
 
   touched = false;
@@ -25,14 +26,8 @@ export class SelectInputComponent implements ControlValueAccessor, OnInit  {
   onTouched = () => {}
   onChange = (input: string) => {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-      this.inputValue = this.options[0];
-  }
-
   writeValue(value: string) {
-      this.inputValue = value;
+    this.inputValue = value;
   }
 
   registerOnTouched(onTouched: any) {

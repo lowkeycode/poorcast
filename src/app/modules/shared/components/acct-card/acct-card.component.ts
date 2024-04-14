@@ -123,6 +123,8 @@ export class AcctCardComponent implements OnInit {
     const acctKeyVals: Array<[string, string]> = Object.entries(account);
 
     acctKeyVals.forEach((keyVal) => {
+      console.log(keyVal);
+      
       const input = this.editAcctModalConfig.fieldsets[0].inputs.find(
         (input) => {
           return input.formControlName === keyVal[0];
@@ -131,6 +133,10 @@ export class AcctCardComponent implements OnInit {
 
       if (input) {
         input['defaultValue'] = keyVal[1];
+      }
+
+      if (input && keyVal[0] === 'acctType') {
+        input['defaultValue'] = keyVal[1][0].toUpperCase() + keyVal[1].slice(1);
       }
     });
 

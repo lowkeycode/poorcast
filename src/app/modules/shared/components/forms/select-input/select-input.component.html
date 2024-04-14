@@ -2,7 +2,7 @@
   <label for="select-{{ label }}">{{ label }}</label>
 
   <select (change)="onInput($event)">
-    <option *ngFor="let option of options; let i = index" [value]="option">{{option}}</option>
+    <option *ngFor="let option of options; let i = index" [selected]="option === defaultValue" [value]="option" >{{option}}</option>
   </select>
   
   <div @container *ngIf="showFeedback">

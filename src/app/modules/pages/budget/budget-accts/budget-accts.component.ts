@@ -370,6 +370,7 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
                   onInputChange: (val: AcctType) =>
                     this.onAddAccountTypeChange(val),
                   validators: [Validators.required],
+                  defaultValue: 'Chequings'
                 },
                 {
                   formControlName: 'acctBalance',
@@ -454,6 +455,9 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
   }
 
   onAddAccountTypeChange(acctType: AcctType) {
+    const acctTypeInput = this.addAcctModalConfig.fieldsets[0].inputs.find(input => input.formControlName === 'acctType');
+    if(acctTypeInput) acctTypeInput['defaultValue'] = acctType[0].toUpperCase() + acctType.slice(1);
+
     switch (acctType) {
       case 'credit':
         if (this.addAcctModalConfig.fieldsets[0].inputs.length === 4) {
