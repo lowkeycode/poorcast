@@ -10,3 +10,19 @@
   --tui-chart-2: var(--tui-support-03);
   --tui-chart-3: var(--tui-support-09);
 }
+
+.chart-copy {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+
+  & > div:first-of-type {
+    padding-right: 5px;
+    border-right: 2px solid var(--grey-light);
+  }
+}
+
+.pipe {
+  font-size: 3rem;
+}
