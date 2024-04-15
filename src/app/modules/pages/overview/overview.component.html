@@ -1,5 +1,5 @@
 <div *ngIf="!isLoading">
-  <div class="period-btn">
+  <!-- <div class="period-btn">
     <button
       class="btn btn-primary"
       data-test="period-btn"
@@ -13,7 +13,7 @@
       [label]="'Budget Period'"
       [options]="periodOptions"
     ></app-select-input>
-  </div>
+  </div> -->
 
   <div class="chart-grid">
     <app-arc-chart [maxValue]="stats.totalAvailable" [minLabel]="'$' + expenseTotal" [maxLabel]="'$' + stats.totalAvailable"></app-arc-chart>
