@@ -97,7 +97,7 @@ export class TableRowComponent {
               type: 'select',
               hidden: false,
               validators: [Validators.required],
-              options: this.selectOptions['categories'],
+              options: this.selectOptions ? this.selectOptions['categories'] : [],
             },
           ],
         },

@@ -52,11 +52,8 @@ export class ModalComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnInit(): void {
     this.modal$ = this.modalService.modalState$;
     const modalSub = this.modal$.subscribe((modal) => {
-      // if(this.formSub) this.formSub.unsubscribe();
-      // this.form = this.fb.group({});
-
       this.modal = modal;
-      this.contentList = this.modal?.contentList.categories;
+      this.contentList = this.modal?.contentList;
 
       this.submitFn = this.modal?.modalButtons.find(
         (button) => button.type === 'primary'

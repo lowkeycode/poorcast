@@ -89,6 +89,8 @@
       & > ul {
         display: flex;
         list-style: none;
+        flex-wrap: wrap;
+        justify-content: center;
         gap: var(--space-xs);
         padding: 0 var(--space-xs) var(--space-xs) var(--space-xs);
 
