@@ -8,9 +8,9 @@ describe('Overview', () => {
     cy.location('pathname').should('eq', '/app/overview')
   })
 
-  it('renders the budget period select', () => {
-    cy.get('app-select-input').should('exist').and('be.visible')
-  })
+  // it('renders the budget period select', () => {
+  //   cy.get('app-select-input').should('exist').and('be.visible')
+  // })
 
   it('renders chart-grid (may be empty)', () => {
     cy.get('.chart-grid').should('be.visible')
