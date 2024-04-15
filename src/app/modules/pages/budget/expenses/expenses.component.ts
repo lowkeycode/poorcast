@@ -16,7 +16,6 @@ import {
 import {
   AppState,
   selectUserAccount,
-  selectUserExpenses,
 } from 'src/app/store/user-account/user-account.selectors';
 import { selectUserId } from 'src/app/store/user/user.selectors';
 
@@ -29,6 +28,7 @@ export class ExpensesComponent implements OnInit, OnDestroy {
   expenses: Expense[];
   accounts: Account[];
   subscriptions = new Subscription();
+  categories: Categories;
 
   manageCategoriesConfig: ModalConfig = {
     title: 'Categories',
@@ -43,7 +43,7 @@ export class ExpensesComponent implements OnInit, OnDestroy {
           categories: [...newList],
         };
         this.store.dispatch(updateCategories(updatedCategories));
-        this.manageCategoriesConfig.contentList = this.categories;
+        this.manageCategoriesConfig.contentList = this.categories.categories;
         this.modalService.updateModal(this.manageCategoriesConfig);
       },
     },
@@ -72,7 +72,7 @@ export class ExpensesComponent implements OnInit, OnDestroy {
                 categories: [...this.categories.categories, category],
               })
             );
-            this.manageCategoriesConfig.contentList = this.categories;
+            this.manageCategoriesConfig.contentList = this.categories.categories;
             this.modalService.updateModal(this.manageCategoriesConfig);
           },
         },
@@ -103,7 +103,6 @@ export class ExpensesComponent implements OnInit, OnDestroy {
       },
     ],
   };
-  categories: Categories;
 
   private payExpenseModalConfig: ModalConfig;
 
@@ -357,7 +356,7 @@ export class ExpensesComponent implements OnInit, OnDestroy {
   }
 
   manageCategories() {
-    this.manageCategoriesConfig.contentList = this.categories;
+    this.manageCategoriesConfig.contentList = this.categories.categories;
     this.modalService.updateModal(this.manageCategoriesConfig);
   }
 }

@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 import { selectUserId } from '../user/user.selectors';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { UserAccount } from './user-account.reducers';
+import { cloneDeep } from 'lodash';
 
 @Injectable()
 export class UserAccountEffects {
@@ -92,10 +93,12 @@ export class UserAccountEffects {
           new Set([...existingExpenseCategories, ...existingCategories].map(category => category.toLowerCase()))
         );
 
+        const budgetPeriodKeys = Object.keys(cloneDeep(budgetPeriods[0]));
 
         const userAccount = {
           accounts,
           budgetPeriods: budgetPeriods[0],
+          budgetPeriodKeys,
           expenses,
           categories: { categories: allUniqueCategories },
           status: 'success',

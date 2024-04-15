@@ -48,7 +48,7 @@ export class AcctCardComponent implements OnInit {
               label: 'Account Type',
               type: 'select',
               hidden: false,
-              options: this.selectOptions['acctTypes'],
+              options: this.selectOptions ? this.selectOptions['acctTypes'] : [],
               validators: [Validators.required],
             },
             {

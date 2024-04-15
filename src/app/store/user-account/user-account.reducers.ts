@@ -6,7 +6,7 @@ export interface Timestamp {
   nanoseconds: number;
 }
 
-export type AcctType = 'chequings' | 'credit' | 'savings' | 'rrsp' | 'loan'
+export type AcctType = 'chequings' | 'credit' | 'savings' | 'rrsp' | 'loan';
 
 export interface Account {
   id: string;
@@ -37,9 +37,14 @@ export interface Categories {
   categories: string[];
 }
 
+export interface BudgetPeriodKeys {
+  keys: string[];
+}
+
 export interface UserAccount {
   accounts: Account[];
   budgetPeriods: { [key: string]: BudgetPeriod };
+  budgetPeriodKeys: string[];
   expenses: Expense[];
   categories: Categories;
   status: 'pending' | 'loading' | 'error' | 'success';
@@ -49,6 +54,7 @@ export interface UserAccount {
 const initialState: UserAccount = {
   accounts: [],
   budgetPeriods: {},
+  budgetPeriodKeys: [],
   expenses: [],
   categories: {
     id: '',
@@ -60,7 +66,7 @@ const initialState: UserAccount = {
 
 export const userAcctReducer = createReducer(
   initialState,
-  on(UserAccountActions.loadUserAccount, (state, userAcct) => ({
+  on(UserAccountActions.loadUserAccount, (state) => ({
     ...state,
     status: 'loading' as const,
   })),
@@ -76,10 +82,15 @@ export const userAcctReducer = createReducer(
     error,
   })),
 
-  on(UserAccountActions.signOutUserAccount, (state) => initialState),
+  on(UserAccountActions.signOutUserAccount, () => initialState),
 
   on(UserAccountActions.updateCategories, (state, categories) => ({
     ...state,
     categories,
   })),
+
+  on(UserAccountActions.updateBudgetPeriodKeys, (state, budgetPeriodKeys) => ({
+    ...state,
+    budgetPeriodKeys: budgetPeriodKeys.keys,
+  }))
 );
