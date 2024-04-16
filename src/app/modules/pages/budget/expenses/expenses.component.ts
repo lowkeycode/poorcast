@@ -5,7 +5,6 @@ import { Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { first, forkJoin, Subscription, switchMap } from 'rxjs';
 import { ModalConfig } from 'src/app/models/interfaces';
-import { SnackComponent } from 'src/app/modules/shared/components/snack/snack.component';
 import { ModalService } from 'src/app/modules/shared/services/modal.service';
 import { updateCategories } from 'src/app/store/user-account/user-account.actions';
 import {
@@ -66,13 +65,22 @@ export class ExpensesComponent implements OnInit, OnDestroy {
           dataTest: 'add-category-btn',
           clickFn: (formValue) => {
             const { category } = formValue;
+
+            const categoryExists = this.categories.categories.find(exisitingCategory => exisitingCategory === category);
+
+            if(categoryExists) {
+              this.errorService.error.next(new Error('A category with this name already exists. Please provide a unique name.'));
+              this.modalService.closeModal();
+            }
+
             this.store.dispatch(
               updateCategories({
                 id: this.categories.id,
                 categories: [...this.categories.categories, category],
               })
             );
-            this.manageCategoriesConfig.contentList = this.categories.categories;
+            this.manageCategoriesConfig.contentList =
+              this.categories.categories;
             this.modalService.updateModal(this.manageCategoriesConfig);
           },
         },
@@ -195,43 +203,47 @@ export class ExpensesComponent implements OnInit, OnDestroy {
                     const calculatedBalance =
                       fromAcct.acctBalance - Number(payload.fromAmount);
 
-                    if (calculatedRemaining >= 0 && calculatedBalance >= 0) {
-                      this.store
-                        .select(selectUserId)
-                        .pipe(
-                          switchMap((id) => {
-                            return forkJoin([
-                              this.afStore
-                                .collection('users')
-                                .doc(id)
-                                .collection('expenses')
-                                .doc(targetExpense.id)
-                                .update({
-                                  ...targetExpense,
-                                  remaining: calculatedRemaining,
-                                }),
-                              this.afStore
-                                .collection('users')
-                                .doc(id)
-                                .collection('accounts')
-                                .doc(fromAcct.id)
-                                .update({
-                                  ...fromAcct,
-                                  acctBalance: calculatedBalance,
-                                }),
-                            ]);
-                          })
-                        )
-                        .subscribe(() => {
-                          this.modalService.closeModal();
-                        });
-                    } else {
+                    if (calculatedRemaining < 0) {
                       this.errorService.error.next(
-                        new Error(
-                          'There must be enough remaining in the account and the expense cannot be overpaid.'
-                        )
+                        new Error('Cannot overpay an expense.')
                       );
+                      this.modalService.closeModal();
                     }
+
+                    if (calculatedBalance < 0) {
+                      this.errorService.error.next(new Error('Cannot overdraw on the account'));
+                      this.modalService.closeModal();
+                    }
+
+                    this.store
+                      .select(selectUserId)
+                      .pipe(
+                        switchMap((id) => {
+                          return forkJoin([
+                            this.afStore
+                              .collection('users')
+                              .doc(id)
+                              .collection('expenses')
+                              .doc(targetExpense.id)
+                              .update({
+                                ...targetExpense,
+                                remaining: calculatedRemaining,
+                              }),
+                            this.afStore
+                              .collection('users')
+                              .doc(id)
+                              .collection('accounts')
+                              .doc(fromAcct.id)
+                              .update({
+                                ...fromAcct,
+                                acctBalance: calculatedBalance,
+                              }),
+                          ]);
+                        })
+                      )
+                      .subscribe(() => {
+                        this.modalService.closeModal();
+                      });
                   }
                 });
             },
@@ -330,10 +342,34 @@ export class ExpensesComponent implements OnInit, OnDestroy {
           type: 'primary',
           dataTest: 'modal-save-btn',
           submitFn: (payload) => {
+            const amount = Number(payload.amount);
+            const remaining = Number(payload.remaining);
+
+            if(remaining < 0) {
+              this.errorService.error.next(new Error('The amount remaining cannot be less than 0.'))
+              this.modalService.closeModal();
+            }
+
+            if(amount < 0) {
+              this.errorService.error.next(new Error('The expense amount cannot be less than 0.'))
+              this.modalService.closeModal();
+            }
+
+            if(remaining > amount) {
+              this.errorService.error.next(new Error('The remaining amount cannot be more than the expense amount.'))
+              this.modalService.closeModal();
+            }
+
+            const expenseNameExists = this.expenses.find(expense => expense.name === payload.name);
+
+            if(expenseNameExists){
+              this.errorService.error.next(new Error('An expense with this name already exists. Please provide a unique name.'))
+            }
+
             const formattedPayload = {
               ...payload,
-              amount: Number(payload.amount),
-              remaining: Number(payload.remaining),
+              amount,
+              remaining,
               due: new Date(payload.due),
               category: payload.category ?? null,
             };

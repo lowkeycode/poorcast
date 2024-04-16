@@ -2,8 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { first, forkJoin, Subscription, switchMap } from 'rxjs';
+import { first, forkJoin, of, Subscription, switchMap } from 'rxjs';
 import { ModalConfig } from 'src/app/models/interfaces';
+import { ErrorService } from 'src/app/modules/shared/services/error.service';
 import { ModalService } from 'src/app/modules/shared/services/modal.service';
 import {
   Account,
@@ -52,7 +53,8 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
   constructor(
     private modalService: ModalService,
     private store: Store<AppState>,
-    private afs: AngularFirestore
+    private afs: AngularFirestore,
+    private errorService: ErrorService
   ) {}
 
   ngOnInit(): void {
@@ -110,6 +112,8 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
               type: 'primary',
               dataTest: 'modal-save-btn',
               submitFn: (payload) => {
+                const amount = Number(payload.amount);
+
                 this.store
                   .select(selectUserAccounts)
                   .pipe(
@@ -119,10 +123,17 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
                         (acct) => acct.acctName === payload.acctName
                       ) as Account;
 
+                      if(acctToUpdate.acctType === 'credit' || acctToUpdate.acctType === 'loan') {
+                        if(acctToUpdate.acctBalance - amount < 0) {
+                          this.errorService.error.next(new Error('Cannot deposit over the account limit on loan or credit accounts.'));
+                          return of(null);
+                        }
+                      }
+
                       const updatedAccount: Account = {
                         ...acctToUpdate,
                         acctBalance:
-                          acctToUpdate.acctBalance + Number(payload.amount),
+                          acctToUpdate.acctBalance + amount,
                       };
 
                       return this.store.select(selectUserId).pipe(
@@ -210,9 +221,7 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
               type: 'primary',
               dataTest: 'modal-save-btn',
               submitFn: (payload) => {
-                if (payload.toAcct === payload.fromAcct)
-                  return this.modalService.closeModal();
-
+                const amount = Number(payload.amount);
                 this.store
                   .select(selectUserAccounts)
                   .pipe(
@@ -221,20 +230,48 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
                       const toAcct = accts.find(
                         (acct) => acct.acctName === payload.toAcct
                       ) as Account;
-                      const updatedToAcct: Account = {
-                        ...toAcct,
-                        acctBalance:
-                          toAcct.acctBalance + Number(payload.amount),
-                      };
-
                       const fromAcct = accts.find(
                         (acct) => acct.acctName === payload.fromAcct
                       ) as Account;
+
+                      console.log({payload, fromAcct, toAcct});
+
+                      if(fromAcct.acctName === toAcct.acctName) {
+                        this.errorService.error.next(new Error('Cannot transfer to the same account.'))
+                        return of('null')
+                      }
+
+                      if(fromAcct.acctBalance - amount < 0) {
+                        this.errorService.error.next(new Error('Cannot overdraw on the account transferring from.'))
+                        return of(null)
+                      }
+
+                      console.log(toAcct.acctBalance + amount);
+                      console.log(toAcct?.acctLimit);
+                      
+
+
+                      if(toAcct?.acctLimit) {
+                        if(toAcct.acctBalance + amount > toAcct.acctLimit) {
+                          
+                          this.errorService.error.next(new Error('Cannot transfer to an account with an amount that will be over the limit on loan or credit accounts.'));
+                          return of(null);
+                        }
+                      }
+
+
                       const updatedFromAcct: Account = {
                         ...fromAcct,
                         acctBalance:
-                          fromAcct.acctBalance - Number(payload.amount),
+                          fromAcct.acctBalance - amount,
                       };
+                      const updatedToAcct: Account = {
+                        ...toAcct,
+                        acctBalance:
+                          toAcct.acctBalance + amount,
+                      };
+
+
 
                       return this.store.select(selectUserId).pipe(
                         switchMap((id) => {
@@ -312,6 +349,7 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
               type: 'primary',
               dataTest: 'modal-save-btn',
               submitFn: (payload) => {
+                const amount = Number(payload.amount);
                 this.store
                   .select(selectUserAccounts)
                   .pipe(
@@ -320,6 +358,11 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
                       const acctToUpdate = accts.find(
                         (acct) => acct.acctName === payload.acctName
                       ) as Account;
+
+                      if(acctToUpdate.acctBalance - amount < 0) {
+                        this.errorService.error.next(new Error('Cannot overdraw on the account.'))
+                        return of(null);
+                      }
 
                       const updatedAccount: Account = {
                         ...acctToUpdate,
@@ -397,18 +440,44 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
               type: 'primary',
               dataTest: 'modal-save-btn',
               submitFn: (payload) => {
+                const acctBalance = Number(payload.acctBalance);
+
                 let newAcct = {
-                  acctBalance: Number(payload.acctBalance),
+                  acctBalance,
                   acctName: payload.acctName,
                   acctType: payload.acctType.toLowerCase() as AcctType,
                 };
 
-                if (!!payload?.acctLimit) {
+                const accountNameExists = this.accounts.find(acct => acct.acctName === payload.acctName);
+
+                if(accountNameExists) {
+                  this.errorService.error.next(new Error('An account with this name already exists. Please provide a unique name.'));
+                  this.modalService.closeModal();
+                }
+
+                if('acctLimit' in payload) {
+                  const acctLimit = payload.acctLimit;
+                  if(acctLimit <= 0) {
+                    this.errorService.error.next(new Error('Account limit must be greater than 0.'));
+                    this.modalService.closeModal();
+                  }
+
+                  if(acctBalance > acctLimit) {
+                    this.errorService.error.next(new Error('Account balance cannot be greater than the account limit.'))
+                    this.modalService.closeModal();
+                  }
+
                   newAcct = {
                     ...newAcct,
                     acctLimit: Number(payload.acctLimit),
                   } as any;
                 }
+
+                if(acctBalance < 0) {
+                  this.errorService.error.next(new Error('Account balance cannot be less than 0.'))
+                  this.modalService.closeModal();
+                }
+
                 this.store
                   .select(selectUserId)
                   .pipe(
