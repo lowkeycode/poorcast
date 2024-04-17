@@ -1,5 +1,5 @@
 import { ErrorService } from './../../../shared/services/error.service';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
@@ -8,9 +8,7 @@ import { ModalConfig } from 'src/app/models/interfaces';
 import { ModalService } from 'src/app/modules/shared/services/modal.service';
 import { updateCategories } from 'src/app/store/user-account/user-account.actions';
 import {
-  Account,
-  Categories,
-  Expense,
+  UserAccount,
 } from 'src/app/store/user-account/user-account.reducers';
 import {
   AppState,
@@ -24,94 +22,12 @@ import { selectUserId } from 'src/app/store/user/user.selectors';
   styleUrls: ['./expenses.component.scss'],
 })
 export class ExpensesComponent implements OnInit, OnDestroy {
-  expenses: Expense[];
-  accounts: Account[];
+  @Output() isLoading = new EventEmitter<string>();
+  @Input() account: UserAccount;
   subscriptions = new Subscription();
-  categories: Categories;
 
-  manageCategoriesConfig: ModalConfig = {
-    title: 'Categories',
-    contentList: {},
-    contentListActions: {
-      delete: (item) => {
-        const newList = this.categories.categories.filter(
-          (listItem) => listItem !== item
-        );
-        const updatedCategories = {
-          id: this.categories.id,
-          categories: [...newList],
-        };
-        this.store.dispatch(updateCategories(updatedCategories));
-        this.manageCategoriesConfig.contentList = this.categories.categories;
-        this.modalService.updateModal(this.manageCategoriesConfig);
-      },
-    },
-    fieldsets: [
-      {
-        name: 'Add Category',
-        inputs: [
-          {
-            formControlName: 'category',
-            label: '',
-            type: 'text',
-            hidden: false,
-            validators: [],
-            dataTest: 'category',
-          },
-        ],
-        button: {
-          buttonText: 'Add',
-          type: 'neutral',
-          dataTest: 'add-category-btn',
-          clickFn: (formValue) => {
-            const { category } = formValue;
-
-            const categoryExists = this.categories.categories.find(exisitingCategory => exisitingCategory === category);
-
-            if(categoryExists) {
-              this.errorService.error.next(new Error('A category with this name already exists. Please provide a unique name.'));
-              this.modalService.closeModal();
-            }
-
-            this.store.dispatch(
-              updateCategories({
-                id: this.categories.id,
-                categories: [...this.categories.categories, category],
-              })
-            );
-            this.manageCategoriesConfig.contentList =
-              this.categories.categories;
-            this.modalService.updateModal(this.manageCategoriesConfig);
-          },
-        },
-      },
-    ],
-    modalButtons: [
-      {
-        buttonText: 'Cancel',
-        type: 'neutral',
-        dataTest: 'modal-cancel-btn',
-        clickFn: () => this.modalService.closeModal(),
-      },
-      {
-        buttonText: 'Save',
-        type: 'primary',
-        dataTest: 'modal-save-btn',
-        submitFn: () => {
-          this.store.select(selectUserId).subscribe((id) => {
-            this.afStore
-              .collection('users')
-              .doc(id)
-              .collection('categories')
-              .doc(this.categories.id)
-              .update({ categories: this.categories.categories });
-          });
-          this.modalService.closeModal();
-        },
-      },
-    ],
-  };
-
+  
+  private manageCategoriesConfig: ModalConfig;
   private payExpenseModalConfig: ModalConfig;
 
   constructor(
@@ -122,11 +38,89 @@ export class ExpensesComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.manageCategoriesConfig = {
+      title: 'Categories',
+      contentList: {},
+      contentListActions: {
+        delete: (item) => {
+          const newList = this.account.categories.categories.filter(
+            (listItem) => listItem !== item
+          );
+          const updatedCategories = {
+            id: this.account.categories.id,
+            categories: [...newList],
+          };
+          this.store.dispatch(updateCategories(updatedCategories));
+          this.manageCategoriesConfig.contentList = this.account.categories.categories;
+          this.modalService.updateModal(this.manageCategoriesConfig);
+        },
+      },
+      fieldsets: [
+        {
+          name: 'Add Category',
+          inputs: [
+            {
+              formControlName: 'category',
+              label: '',
+              type: 'text',
+              hidden: false,
+              validators: [],
+              dataTest: 'category',
+            },
+          ],
+          button: {
+            buttonText: 'Add',
+            type: 'neutral',
+            dataTest: 'add-category-btn',
+            clickFn: (formValue) => {
+              const { category } = formValue;
+  
+              const categoryExists = this.account.categories.categories.find(exisitingCategory => exisitingCategory === category);
+  
+              if(categoryExists) {
+                this.errorService.error.next(new Error('A category with this name already exists. Please provide a unique name.'));
+                this.modalService.closeModal();
+              }
+  
+              this.store.dispatch(
+                updateCategories({
+                  id: this.account.categories.id,
+                  categories: [...this.account.categories.categories, category],
+                })
+              );
+              this.manageCategoriesConfig.contentList = this.account.categories.categories;
+              this.modalService.updateModal(this.manageCategoriesConfig);
+            },
+          },
+        },
+      ],
+      modalButtons: [
+        {
+          buttonText: 'Cancel',
+          type: 'neutral',
+          dataTest: 'modal-cancel-btn',
+          clickFn: () => this.modalService.closeModal(),
+        },
+        {
+          buttonText: 'Save',
+          type: 'primary',
+          dataTest: 'modal-save-btn',
+          submitFn: () => {
+            this.store.select(selectUserId).subscribe((id) => {
+              this.afStore
+                .collection('users')
+                .doc(id)
+                .collection('categories')
+                .doc(this.account.categories.id)
+                .update({ categories: this.account.categories.categories });
+            });
+            this.modalService.closeModal();
+          },
+        },
+      ],
+    };
+    
     const sub = this.store.select(selectUserAccount).subscribe((acct) => {
-      this.expenses = acct.expenses;
-      this.categories = acct.categories;
-      this.accounts = acct.accounts;
-
       this.payExpenseModalConfig = {
         title: 'Pay Expense',
         contentList: [],
@@ -143,7 +137,7 @@ export class ExpensesComponent implements OnInit, OnDestroy {
                 label: 'Account',
                 type: 'select',
                 hidden: false,
-                options: this.accounts.map((acct) => acct.acctName),
+                options: this.account.accounts.map((acct) => acct.acctName),
                 validators: [],
               },
               {
@@ -163,7 +157,7 @@ export class ExpensesComponent implements OnInit, OnDestroy {
                 label: 'Expense',
                 type: 'select',
                 hidden: false,
-                options: this.expenses
+                options: this.account.expenses
                   .filter((expense) => expense.remaining !== 0)
                   .map((expense) => expense.name),
                 validators: [Validators.required],
@@ -251,6 +245,7 @@ export class ExpensesComponent implements OnInit, OnDestroy {
         ],
       };
     });
+
     this.subscriptions.add(sub);
   }
 
@@ -318,9 +313,9 @@ export class ExpensesComponent implements OnInit, OnDestroy {
               formControlName: 'category',
               label: 'Category',
               type: 'select',
-              options: this.categories.categories,
-              hidden: !this.categories.categories.length,
-              validators: !this.categories.categories.length
+              options: this.account.categories.categories,
+              hidden: !this.account.categories.categories.length,
+              validators: !this.account.categories.categories.length
                 ? []
                 : [Validators.required],
               dataTest: 'category-input',
@@ -360,7 +355,7 @@ export class ExpensesComponent implements OnInit, OnDestroy {
               this.modalService.closeModal();
             }
 
-            const expenseNameExists = this.expenses.find(expense => expense.name === payload.name);
+            const expenseNameExists = this.account.expenses.find(expense => expense.name === payload.name);
 
             if(expenseNameExists){
               this.errorService.error.next(new Error('An expense with this name already exists. Please provide a unique name.'))
@@ -392,7 +387,7 @@ export class ExpensesComponent implements OnInit, OnDestroy {
   }
 
   manageCategories() {
-    this.manageCategoriesConfig.contentList = this.categories.categories;
+    this.manageCategoriesConfig.contentList = this.account.categories.categories;
     this.modalService.updateModal(this.manageCategoriesConfig);
   }
 }

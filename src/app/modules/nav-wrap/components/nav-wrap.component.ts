@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LoadingService } from '../../shared/services/loading.service';
 
 @Component({
   selector: 'app-nav-wrap',
@@ -8,6 +9,10 @@ import { Component, OnInit } from '@angular/core';
 export class NavWrapComponent {
   pageName = 'overview';
   isNavOpen = true;
+
+  isLoading$ = this.loadingService.isLoading;
+
+  constructor(private loadingService: LoadingService){}
 
   onPageNameChange($event: string) {
     this.pageName = $event;

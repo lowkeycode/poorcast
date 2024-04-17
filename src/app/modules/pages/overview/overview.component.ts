@@ -14,8 +14,8 @@ import {
   selectUserOverview,
 } from 'src/app/store/user-account/user-account.selectors';
 import { ModalService } from '../../shared/services/modal.service';
-import { cloneDeep } from 'lodash';
 import { ErrorService } from '../../shared/services/error.service';
+import { LoadingService } from '../../shared/services/loading.service';
 
 @Component({
   selector: 'app-overview',
@@ -23,7 +23,7 @@ import { ErrorService } from '../../shared/services/error.service';
   styleUrls: ['./overview.component.scss'],
 })
 export class OverviewComponent implements OnInit, OnDestroy {
-  isLoading = true;
+  isLoading$ = this.loadingService.isLoading;
   accounts: Account[] = [];
   budgetPeriods: BudgetPeriods;
   budgetPeriodKeys: string[];
@@ -139,7 +139,8 @@ export class OverviewComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<AppState>,
     private modalService: ModalService,
-    private errorService: ErrorService
+    private errorService: ErrorService,
+    private loadingService: LoadingService
   ) {}
 
   ngOnInit(): void {
@@ -166,7 +167,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
           .sort((a, b) => a[1][0].seconds - b[1][0].seconds)
           .map((period) => period[0]);
 
-        this.isLoading = false;
+          this.loadingService.isLoading.next(false);
       }
     });
     this.subscriptions.add(sub);
