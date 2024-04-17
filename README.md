@@ -1,27 +1,43 @@
 # Poorcast
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.2.3.
+A budget application allowing for adding, deleting, editing accounts and expenses along with an overview page providing a small analysis account/expense data.
 
-## Development server
+## Description
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+The project was built for a capstone project for [my portfolio](https://www.cameronremesz.com/). It was used to learn every step of the product development lifecycle from  initiation, planning, execution, monitoring & control, and closure.
+ 
+This included:
+- Building user stories to determine features
+- Prototyping to test assumptions
+- Logo/Brand graphic design in Figma/Affinity Serif
+- Implementing a design system with CSS custom properties
+- Determining the tech stack
+- Implementing the front-end with Angular/RxJS
+- Researching and implementing a data model for the backend in Google Firestore
+- Implementing user authentication and password reset
+- Implementing CI/CD with github actions
+- Implementing automated testing with Cypress/Github actions
 
-## Code scaffolding
+![Sign in page](/dist/assets/sign-in.png)
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+![Sign in page](/dist/assets/budget.png)
 
-## Build
+## Getting Started
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### Installing
 
-## Running unit tests
+`https://github.com/low-key-code/poorcast.git`
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Executing program
 
-## Running end-to-end tests
+Install dependencies
+`npm ci`
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Run application on port 4200
+`npm start`
 
-## Further help
+## Author
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Cameron Remesz 
+[www.cameronrremesz.com](https://cameronremesz.com)
+
