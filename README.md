@@ -18,9 +18,9 @@ This included:
 - Implementing CI/CD with github actions
 - Implementing automated testing with Cypress/Github actions
 
-![Sign in page](/dist/assets/sign-in.png)
+![Sign in page](/assets/sign-in.png)
 
-![Sign in page](/dist/assets/budget.png)
+![Sign in page](/assets/budget.png)
 
 ## Getting Started
 
