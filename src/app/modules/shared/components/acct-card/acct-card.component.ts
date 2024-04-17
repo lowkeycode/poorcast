@@ -123,8 +123,6 @@ export class AcctCardComponent implements OnInit {
     const acctKeyVals: Array<[string, string]> = Object.entries(account);
 
     acctKeyVals.forEach((keyVal) => {
-      console.log(keyVal);
-      
       const input = this.editAcctModalConfig.fieldsets[0].inputs.find(
         (input) => {
           return input.formControlName === keyVal[0];

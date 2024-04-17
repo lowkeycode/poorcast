@@ -3,7 +3,6 @@ import {
   Component,
   OnDestroy,
   OnInit,
-  AfterViewInit,
   ViewChildren,
   QueryList,
 } from '@angular/core';
@@ -28,7 +27,7 @@ import { TransactionType } from 'src/app/modules/pages/budget/budget-accts/budge
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.scss'],
 })
-export class ModalComponent implements OnInit, OnDestroy, AfterViewInit {
+export class ModalComponent implements OnInit, OnDestroy {
   @ViewChildren(TextInputComponent)
   genericInputs: QueryList<TextInputComponent>;
   @ViewChildren(SelectInputComponent)
@@ -145,11 +144,6 @@ export class ModalComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnDestroy(): void {
     this.subs.unsubscribe();
-  }
-
-  ngAfterViewInit() {
-    // console.log('this.genericInputs', this.genericInputs);
-    // console.log('this.selects', this.selectInputs);
   }
 
   closeModal() {

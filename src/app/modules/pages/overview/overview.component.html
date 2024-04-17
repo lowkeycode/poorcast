@@ -1,4 +1,4 @@
-<div *ngIf="!isLoading">
+<ng-container *ngIf="(isLoading$ | async) === false">
   <!-- <div class="period-btn">
     <button
       class="btn btn-primary"
@@ -49,4 +49,4 @@
   <div class="upcoming">
     <app-table [listItems]="expenses" [isEditable]="false"></app-table>
   </div>
-</div>
+</ng-container>

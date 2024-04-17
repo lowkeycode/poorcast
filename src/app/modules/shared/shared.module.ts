@@ -16,6 +16,7 @@ import { ArcChartComponent } from './components/arc-chart/arc-chart.component';
 import { TuiArcChartModule } from '@taiga-ui/addon-charts';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormatDatePipe } from './pipes/format-date.pipe';
+import { LoadingComponent } from './components/loading/loading.component';
 
 const components = [
   LogoComponent,
@@ -28,6 +29,7 @@ const components = [
   AcctCardComponent,
   ModalComponent,
   TableComponent,
+  LoadingComponent,
   TableRowComponent,
   ArcChartComponent
 ];

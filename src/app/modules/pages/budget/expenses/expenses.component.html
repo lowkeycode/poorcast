@@ -23,9 +23,9 @@
     </button>
   </div>
   <app-table
-    [listItems]="expenses"
+    [listItems]="account.expenses"
     [isEditable]="true"
     [collectionName]="'expenses'"
-    [selectOptions]="{ categories: categories.categories }"
+    [selectOptions]="{ categories: account.categories.categories }"
   ></app-table>
 </div>

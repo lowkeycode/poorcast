@@ -2,5 +2,6 @@
   'nav-closed': !isNavOpen
 }"></app-side-nav>
 <app-top-bar>
+  <app-loading *ngIf="isLoading$ | async"></app-loading>
   <router-outlet></router-outlet>
 </app-top-bar>

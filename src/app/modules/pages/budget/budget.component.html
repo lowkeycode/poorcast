@@ -1,2 +1,4 @@
-<app-budget-accts></app-budget-accts>
-<app-expenses></app-expenses>
+<ng-container *ngIf="(isLoading$ | async) === false">
+  <app-budget-accts [account]="account"></app-budget-accts>
+  <app-expenses [account]="account"></app-expenses>
+</ng-container>
