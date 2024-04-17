@@ -151,8 +151,6 @@ export class OverviewComponent implements OnInit, OnDestroy {
         this.accounts = userAcct.accounts;
         this.budgetPeriods = userAcct.budgetPeriods;
         this.budgetPeriodKeys = userAcct.budgetPeriodKeys;
-        console.log('this.budgetPeriodKeys', this.budgetPeriodKeys);
-
         this.stats = stats;
         this.expenses = userAcct.expenses;
 
@@ -167,7 +165,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
           .sort((a, b) => a[1][0].seconds - b[1][0].seconds)
           .map((period) => period[0]);
 
-          this.loadingService.isLoading.next(false);
+        this.loadingService.isLoading.next(false);
       }
     });
     this.subscriptions.add(sub);

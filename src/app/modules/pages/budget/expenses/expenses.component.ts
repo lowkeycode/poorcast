@@ -21,11 +21,9 @@ import { selectUserId } from 'src/app/store/user/user.selectors';
   templateUrl: './expenses.component.html',
   styleUrls: ['./expenses.component.scss'],
 })
-export class ExpensesComponent implements OnInit, OnDestroy {
-  @Output() isLoading = new EventEmitter<string>();
+export class ExpensesComponent implements OnInit {
+  isLoading = true;
   @Input() account: UserAccount;
-  subscriptions = new Subscription();
-
   
   private manageCategoriesConfig: ModalConfig;
   private payExpenseModalConfig: ModalConfig;
@@ -119,138 +117,129 @@ export class ExpensesComponent implements OnInit, OnDestroy {
         },
       ],
     };
-    
-    const sub = this.store.select(selectUserAccount).subscribe((acct) => {
-      this.payExpenseModalConfig = {
-        title: 'Pay Expense',
-        contentList: [],
-        icon: {
-          iconName: 'arrowForward',
-          iconSize: 2,
+    this.payExpenseModalConfig = {
+      title: 'Pay Expense',
+      contentList: [],
+      icon: {
+        iconName: 'arrowForward',
+        iconSize: 2,
+      },
+      fieldsets: [
+        {
+          name: 'From',
+          inputs: [
+            {
+              formControlName: 'fromAcct',
+              label: 'Account',
+              type: 'select',
+              hidden: false,
+              options: this.account.accounts.map((acct) => acct.acctName),
+              validators: [],
+            },
+            {
+              formControlName: 'fromAmount',
+              label: 'Amount',
+              type: 'text',
+              hidden: false,
+              validators: [Validators.required],
+            },
+          ],
         },
-        fieldsets: [
-          {
-            name: 'From',
-            inputs: [
-              {
-                formControlName: 'fromAcct',
-                label: 'Account',
-                type: 'select',
-                hidden: false,
-                options: this.account.accounts.map((acct) => acct.acctName),
-                validators: [],
-              },
-              {
-                formControlName: 'fromAmount',
-                label: 'Amount',
-                type: 'text',
-                hidden: false,
-                validators: [Validators.required],
-              },
-            ],
-          },
-          {
-            name: 'Expense',
-            inputs: [
-              {
-                formControlName: 'expenseName',
-                label: 'Expense',
-                type: 'select',
-                hidden: false,
-                options: this.account.expenses
-                  .filter((expense) => expense.remaining !== 0)
-                  .map((expense) => expense.name),
-                validators: [Validators.required],
-              },
-            ],
-          },
-        ],
-        modalButtons: [
-          {
-            buttonText: 'Cancel',
-            type: 'neutral',
-            dataTest: 'modal-cancel-btn',
-            clickFn: () => {
-              this.modalService.closeModal();
+        {
+          name: 'Expense',
+          inputs: [
+            {
+              formControlName: 'expenseName',
+              label: 'Expense',
+              type: 'select',
+              hidden: false,
+              options: this.account.expenses
+                .filter((expense) => expense.remaining !== 0)
+                .map((expense) => expense.name),
+              validators: [Validators.required],
             },
+          ],
+        },
+      ],
+      modalButtons: [
+        {
+          buttonText: 'Cancel',
+          type: 'neutral',
+          dataTest: 'modal-cancel-btn',
+          clickFn: () => {
+            this.modalService.closeModal();
           },
-          {
-            buttonText: 'Pay Expense',
-            type: 'primary',
-            dataTest: 'modal-save-btn',
-            submitFn: (payload) => {
-              this.store
-                .select(selectUserAccount)
-                .pipe(first())
-                .subscribe((acct) => {
-                  const targetExpense = acct.expenses.find(
-                    (expense) => expense.name === payload.expenseName
-                  );
-                  const fromAcct = acct.accounts.find(
-                    (acct) => acct.acctName === payload.fromAcct
-                  );
+        },
+        {
+          buttonText: 'Pay Expense',
+          type: 'primary',
+          dataTest: 'modal-save-btn',
+          submitFn: (payload) => {
+            this.store
+              .select(selectUserAccount)
+              .pipe(first())
+              .subscribe((acct) => {
+                const targetExpense = acct.expenses.find(
+                  (expense) => expense.name === payload.expenseName
+                );
+                const fromAcct = acct.accounts.find(
+                  (acct) => acct.acctName === payload.fromAcct
+                );
 
-                  if (targetExpense && fromAcct) {
-                    const calculatedRemaining =
-                      targetExpense.remaining - Number(payload.fromAmount);
+                if (targetExpense && fromAcct) {
+                  const calculatedRemaining =
+                    targetExpense.remaining - Number(payload.fromAmount);
 
-                    const calculatedBalance =
-                      fromAcct.acctBalance - Number(payload.fromAmount);
+                  const calculatedBalance =
+                    fromAcct.acctBalance - Number(payload.fromAmount);
 
-                    if (calculatedRemaining < 0) {
-                      this.errorService.error.next(
-                        new Error('Cannot overpay an expense.')
-                      );
-                      this.modalService.closeModal();
-                    }
-
-                    if (calculatedBalance < 0) {
-                      this.errorService.error.next(new Error('Cannot overdraw on the account'));
-                      this.modalService.closeModal();
-                    }
-
-                    this.store
-                      .select(selectUserId)
-                      .pipe(
-                        switchMap((id) => {
-                          return forkJoin([
-                            this.afStore
-                              .collection('users')
-                              .doc(id)
-                              .collection('expenses')
-                              .doc(targetExpense.id)
-                              .update({
-                                ...targetExpense,
-                                remaining: calculatedRemaining,
-                              }),
-                            this.afStore
-                              .collection('users')
-                              .doc(id)
-                              .collection('accounts')
-                              .doc(fromAcct.id)
-                              .update({
-                                ...fromAcct,
-                                acctBalance: calculatedBalance,
-                              }),
-                          ]);
-                        })
-                      )
-                      .subscribe(() => {
-                        this.modalService.closeModal();
-                      });
+                  if (calculatedRemaining < 0) {
+                    this.errorService.error.next(
+                      new Error('Cannot overpay an expense.')
+                    );
+                    this.modalService.closeModal();
                   }
-                });
-            },
+
+                  if (calculatedBalance < 0) {
+                    this.errorService.error.next(new Error('Cannot overdraw on the account'));
+                    this.modalService.closeModal();
+                  }
+
+                  this.store
+                    .select(selectUserId)
+                    .pipe(
+                      switchMap((id) => {
+                        return forkJoin([
+                          this.afStore
+                            .collection('users')
+                            .doc(id)
+                            .collection('expenses')
+                            .doc(targetExpense.id)
+                            .update({
+                              ...targetExpense,
+                              remaining: calculatedRemaining,
+                            }),
+                          this.afStore
+                            .collection('users')
+                            .doc(id)
+                            .collection('accounts')
+                            .doc(fromAcct.id)
+                            .update({
+                              ...fromAcct,
+                              acctBalance: calculatedBalance,
+                            }),
+                        ]);
+                      })
+                    )
+                    .subscribe(() => {
+                      this.modalService.closeModal();
+                    });
+                }
+              });
           },
-        ],
-      };
-    });
-
-    this.subscriptions.add(sub);
-  }
-
-  ngOnDestroy(): void {
-    this.subscriptions.unsubscribe();
+        },
+      ],
+    };
   }
 
   onPayExpense() {

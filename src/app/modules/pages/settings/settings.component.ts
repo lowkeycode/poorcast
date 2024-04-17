@@ -7,7 +7,7 @@ type DeleteStates = 'delete' | 'confirm' | 'success';
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.scss']
+  styleUrls: ['./settings.component.scss'],
 })
 export class SettingsComponent implements OnInit {
   isLoading$ = this.loadingService.isLoading;
@@ -16,7 +16,7 @@ export class SettingsComponent implements OnInit {
   constructor(private pcAuth: AuthService, private loadingService: LoadingService) {}
 
   ngOnInit(): void {
-      this.loadingService.isLoading.next(false);
+      setTimeout(() => this.loadingService.isLoading.next(false))
   }
 
   onDelete() {

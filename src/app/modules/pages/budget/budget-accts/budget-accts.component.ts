@@ -228,8 +228,6 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
                     (acct) => acct.acctName === payload.fromAcct
                   ) as Account;
 
-                  console.log({payload, fromAcct, toAcct});
-
                   if(fromAcct.acctName === toAcct.acctName) {
                     this.errorService.error.next(new Error('Cannot transfer to the same account.'))
                     return of('null')
@@ -239,11 +237,6 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
                     this.errorService.error.next(new Error('Cannot overdraw on the account transferring from.'))
                     return of(null)
                   }
-
-                  console.log(toAcct.acctBalance + amount);
-                  console.log(toAcct?.acctLimit);
-                  
-
 
                   if(toAcct?.acctLimit) {
                     if(toAcct.acctBalance + amount > toAcct.acctLimit) {
@@ -488,7 +481,6 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
         },
       ],
     };
-  
   }
 
   ngOnDestroy(): void {
