@@ -1,3 +1,5 @@
+@import '../../../../../styles.scss';
+
 .overlay {
   z-index: 1;
   position: fixed;
@@ -141,4 +143,20 @@
 
 app-fieldset {
   width: 30%;
+}
+
+@media only screen and (max-width: $bp-med) {
+  app-fieldset {
+    width: 80%;
+  }
+
+  .modal__main {
+    &--fieldsets {
+      gap: var(--space-xs);
+    }
+
+    &--icon {
+      display: none;
+    }
+  }
 }

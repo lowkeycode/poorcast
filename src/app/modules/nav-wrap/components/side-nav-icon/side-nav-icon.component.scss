@@ -1,3 +1,9 @@
+@import '../../../../../styles.scss';
+
+.icon-container-closed {
+  margin: 0 auto;
+}
+
 .label {
   font-size: var(--fs-xs-1);
   font-weight: 300;
@@ -10,5 +16,12 @@ img {
   width: 100%;
   height: 100%;
   display: block;
+}
+
+@media only screen and (max-width: $bp-med) {
+  .label {
+    font-size: var(--fs-xs-2);
+    margin-top: 2px;
+  }
 }
 

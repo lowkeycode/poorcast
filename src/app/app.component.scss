@@ -17,3 +17,9 @@
     height: min-content;
   }
 }
+
+@media only screen and (max-width: $bp-med) {
+  :host ::ng-deep app-nav-wrap {
+    display: block;
+  }
+}

@@ -26,10 +26,8 @@
     height: 2.5rem;
     color: var(--white-light);
     font-weight: 300;
-    font-size: var(--fs-sml);
 
     & > * {
-      // border: 1px solid red;
       padding: var(--space-xs-3);
     }
   }
@@ -52,20 +50,17 @@
 @media only screen and (max-width: $bp-xl) {
   .table {
     &__header {
-      font-size: var(--fs-sml);
+      overflow-wrap: break-word;
     }
   }
+  
 }
 
-@media only screen and (max-width: $bp-xl) {
-
+@media only screen and (max-width: $bp-lrg) {
   .table {
     &__header {
-      font-size: var(--fs-xs);
-    }
-
-    & * > {
-      overflow: scroll;
+      font-size: var(--fs-xs-1);
     }
   }
+  
 }

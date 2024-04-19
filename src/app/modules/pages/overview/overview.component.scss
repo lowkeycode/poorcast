@@ -41,14 +41,12 @@
   justify-content: center;
   flex-wrap: wrap;
   gap: .25rem;
-  border: 1px solid red;
   width: 65%;
 
   & > * {
     width: calc(45%);
     display: flex;
     gap: var(--space-xs-1);
-    border: 1px solid blue;
 
 
     & p {
@@ -56,14 +54,10 @@
       font-size: var(--fs-xs);
       margin-right: var(--space-xs);
       width: 50%;
-      border: 1px solid green;
-
     }
 
     & span {
       font-weight: 500;
-      border: 1px solid green;
-
     }
   }
 }

@@ -60,6 +60,7 @@
 $bp-xxl: 75em; /* 1200px */
 $bp-xl: 64em; /* 1024px */
 $bp-lrg: 56.25em; /* 900px */
+$bp-med: 48em;
 
 *,
 *::before,
@@ -344,6 +345,13 @@ button:active {
 
 @media only screen and (max-width: $bp-xl) {
   html {
-    font-size: 119%;
+    font-size: 100%;
+  }
+}
+
+@media only screen and (max-width: $bp-med) {
+  :host ::ng-deep .btn {
+    font-size: var(--fs-xs-1);
+    padding: 5px 10px;
   }
 }

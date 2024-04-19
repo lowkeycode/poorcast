@@ -1,38 +1,45 @@
-<app-solo-icon [iconName]="isOpen ? 'minimize' : 'menu'" [appIconSize]="1.25" (click)="toggleSideNavOpen()" [ngClass]="{
-  'center': !isOpen
-}" data-test="open-close"></app-solo-icon>
+<app-solo-icon
+  [iconName]="isOpen ? 'minimize' : 'menu'"
+  [appIconSize]="1.25"
+  (click)="toggleSideNavOpen()"
+  [ngClass]="{
+    center: !isOpen
+  }"
+  data-test="open-close"
+></app-solo-icon>
 
 <app-logo [appIconSize]="3.9"></app-logo>
 
-<div class="icons">
+<div class="icons" >
+  <a routerLink="overview" routerLinkActive="side-icon-active">
+    <app-side-nav-icon
+      class="icon"
+      [iconName]="'chart'"
+      [alt]="'To overview page'"
+      [label]="'Overview'"
+      [navOpen]="isOpen"
+    ></app-side-nav-icon>
+  </a>
 
-<a routerLink="overview" routerLinkActive="side-icon-active">
-  <app-side-nav-icon class="icon"
-  [iconName]="'chart'"
-  [alt]="'To overview page'"
-  [label]="'Overview'"
-  [navOpen]="isOpen"
-  ></app-side-nav-icon>
-</a>
+  <a routerLink="budget" routerLinkActive="side-icon-active">
+    <app-side-nav-icon
+      class="icon"
+      [iconName]="'calendar'"
+      [alt]="'To budget page'"
+      [label]="'Budget'"
+      [navOpen]="isOpen"
+    ></app-side-nav-icon>
+  </a>
 
-<a routerLink="budget" routerLinkActive="side-icon-active">
-  <app-side-nav-icon class="icon"
-  [iconName]="'calendar'"
-  [alt]="'To budget page'"
-  [label]="'Budget'"
-  [navOpen]="isOpen"
-  ></app-side-nav-icon>
-</a>
-
-<a routerLink="settings" routerLinkActive="side-icon-active">
-  <app-side-nav-icon class="icon"
-  [iconName]="'settings'"
-  [alt]="'Settings page'"
-  [label]="'Settings'"
-  [navOpen]="isOpen"
-  ></app-side-nav-icon>
-</a>
-  
+  <a routerLink="settings" routerLinkActive="side-icon-active">
+    <app-side-nav-icon
+      class="icon"
+      [iconName]="'settings'"
+      [alt]="'Settings page'"
+      [label]="'Settings'"
+      [navOpen]="isOpen"
+    ></app-side-nav-icon>
+  </a>
 </div>
 
 <app-user-profile [showInfo]="isOpen"></app-user-profile>

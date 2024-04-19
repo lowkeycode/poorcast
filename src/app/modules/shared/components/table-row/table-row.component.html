@@ -6,7 +6,7 @@
 <p class="row-copy row-notes">{{ item.notes }}</p>
 <p class="row-copy category-container">
   <span class="category" [hidden]="!item.category">{{ item.category }}</span>
-  <span *ngIf="!item.remaining" class="paid">PAID</span>
+  <span *ngIf="!item.remaining" class="category paid">PAID</span>
 </p>
 <div class="btns">
   <ng-container *ngIf="isEditable">
