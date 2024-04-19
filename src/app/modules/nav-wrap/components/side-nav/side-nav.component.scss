@@ -23,6 +23,7 @@ app-logo {
   display: flex;
   flex-direction: column;
   gap: var(--space-xs);
+  border: 1px solid red;
 
   & a {
     text-decoration: none;
@@ -31,10 +32,14 @@ app-logo {
     transition: all .2s;
     border-radius: var(--br-med);
     text-align: center;
+    border: 1px solid blue;
 
     & app-side-nav-icon {
       display: flex;
       align-items: center;
+      gap: var(--space-xs);
+      border: 1px solid green;
+      padding: 0 var(--space-xs-2);
     }
   }
 
@@ -55,6 +60,7 @@ app-logo {
 app-user-profile {
   height: min-content;
   margin-top: auto;
+  border: 1px solid red;
 }
 
 

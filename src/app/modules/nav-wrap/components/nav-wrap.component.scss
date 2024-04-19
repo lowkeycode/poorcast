@@ -6,7 +6,7 @@ app-top-bar {
 }
 
 app-side-nav {
-  width: 18%;
+  width: 11rem;
   height: 100vh;
   background-color: var(--grey-dark);
   border-radius: 0 var(--br-sml) var(--br-sml) 0;
@@ -16,6 +16,7 @@ app-side-nav {
   top: 0;
   left: 0;
   transition: all .2s;
+  word-break: break-all;
 }
 
 .nav-closed {

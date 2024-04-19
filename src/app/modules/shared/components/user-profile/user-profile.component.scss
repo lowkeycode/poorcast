@@ -32,9 +32,15 @@
     font-size: var(--fs-xs-1);
     color: var(--white-light);
 
+
     &--name,
     &--email {
-    margin: var(--space-xs-4) 0;
+      margin: var(--space-xs-4) 0;
+      text-align: center;
+    }
+
+    &--email {
+      font-size: var(--fs-xs-2);
     }
   }
 }

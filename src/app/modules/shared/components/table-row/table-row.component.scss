@@ -1,5 +1,8 @@
+@import '../../../../../styles.scss';
+
 .row-copy {
-  padding-right: 5px;
+  overflow-wrap: break-word;
+  hyphens: manual;
 }
 
 .row-name {
@@ -46,5 +49,22 @@
 
   & > *:active {
     transform: translateY(0px);
+  }
+}
+
+.row-copy,
+.btns {
+  padding: var(--space-xs-3);
+  border: 1px solid red;
+}
+
+@media only screen and (max-width: $bp-lrg) {
+  .row-copy {
+    font-size: var(--fs-xs-1);
+  }
+
+  .row-due,
+  .row-notes {
+    font-size: var(--fs-xs-2);
   }
 }

@@ -58,7 +58,8 @@
 
 // Breakpoints
 $bp-xxl: 75em; /* 1200px */
-$bp-xl: 56.25em; /* 900px */
+$bp-xl: 64em; /* 1024px */
+$bp-lrg: 56.25em; /* 900px */
 
 *,
 *::before,
@@ -74,8 +75,6 @@ html {
   font-family: "Poppins", sans-serif;
   color: var(--black);
 }
-
-
 
 h1 {
   margin: 0;
@@ -340,4 +339,11 @@ button:active {
   background: linear-gradient(122deg, var(--grey-dark) 62%, var(--primary-light) 62%);
   border-radius: var(--br-sml);
   box-shadow: var(--bs-secondary);
+}
+
+
+@media only screen and (max-width: $bp-xl) {
+  html {
+    font-size: 119%;
+  }
 }
