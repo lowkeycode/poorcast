@@ -81,29 +81,51 @@ export class UserAccountEffects {
           return UserAccountActions.loadUserAccountError(response);
         }
 
+        // ! This is a fucking shit show. Clean this up.
+
+        console.log(response);
+
+        
         const [accounts, budgetPeriods, expenses, categories] = response;
 
         // Need to do determine unique categories for category management on client side because we don't have an API to interact with our DB
         const existingExpenseCategories = expenses.map(
           (expense) => expense['category']
-        );
-        const existingCategories = categories[0]['categories'];
+        ) as string[];
+        const existingCategories = categories[0]['categories'] as string[];
 
-        const allUniqueCategories = Array.from(
-          new Set([...existingExpenseCategories, ...existingCategories].map(category => category.toLowerCase()))
-        );
+        let allUniqueCategories: string[] = [];
+        if(existingCategories.length) {
+          allUniqueCategories = Array.from(
+            new Set([...existingExpenseCategories, ...existingCategories].map(category => category.toLowerCase()))
+          ) as string[];
+        }
 
-        const budgetPeriodKeys = Object.keys(cloneDeep(budgetPeriods[0]));
+        let budgetPeriodKeys = [] as string[];
+
+        if(budgetPeriods[0]) {
+          budgetPeriodKeys = Object.keys(cloneDeep(budgetPeriods[0]));
+        }
+
+        console.log('categories', categories);
+        
+        let categoryId = '';
+        if(categories[0]['id']) {
+          categoryId = categories[0]['id'];
+        }
 
         const userAccount = {
           accounts,
-          budgetPeriods: budgetPeriods[0],
+          budgetPeriods: budgetPeriods[0] || {},
           budgetPeriodKeys,
           expenses,
-          categories: { categories: allUniqueCategories },
+          categories: { categories: allUniqueCategories, id: categoryId },
           status: 'success',
           error: null,
         };
+
+        console.log(userAccount);
+        
 
         return UserAccountActions.loadUserAccountSuccess(
           userAccount as UserAccount

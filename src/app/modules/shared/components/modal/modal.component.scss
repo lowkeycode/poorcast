@@ -133,11 +133,6 @@
     & > button:not(:last-of-type) {
       margin-right: var(--space-xs-2);
     }
-
-    & button:disabled {
-      filter: grayscale(50%);
-      cursor: not-allowed;
-    }
   }
 }
 

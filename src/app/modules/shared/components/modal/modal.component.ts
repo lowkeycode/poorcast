@@ -32,10 +32,12 @@ export class ModalComponent implements OnInit, OnDestroy {
   genericInputs: QueryList<TextInputComponent>;
   @ViewChildren(SelectInputComponent)
   selectInputs: QueryList<SelectInputComponent>;
+
   modal$: Observable<ModalConfig | null>;
   form!: UntypedFormGroup;
   formSub: Subscription;
   contentList: string[];
+
   private modal: ModalConfig | null;
   private submitFn: PayloadFunction;
   private subs = new Subscription();
@@ -58,9 +60,11 @@ export class ModalComponent implements OnInit, OnDestroy {
         (button) => button.type === 'primary'
       )?.submitFn as PayloadFunction;
 
+      
       const group = {} as UntypedFormGroup;
-
+      
       modal?.fieldsets[0].inputs.forEach((input) => {
+        const group = {} as UntypedFormGroup;
         group[input.formControlName] = new UntypedFormControl(
           {
             value:

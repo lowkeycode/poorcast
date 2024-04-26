@@ -57,6 +57,7 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    console.log('this.account', this.account)
     this.depositModalConfig = {
       title: 'Transactions',
       contentList: [],

@@ -104,6 +104,11 @@ app-loading {
   align-items: center;
 }
 
+button:disabled {
+  filter: grayscale(50%) !important;
+  cursor: not-allowed !important;
+}
+
 // Forms
 
 form {
