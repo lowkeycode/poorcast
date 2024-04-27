@@ -5,6 +5,7 @@ import {
   OnInit,
   ViewChildren,
   QueryList,
+  ChangeDetectorRef,
 } from '@angular/core';
 import {
   UntypedFormBuilder,
@@ -46,8 +47,7 @@ export class ModalComponent implements OnInit, OnDestroy {
 
   constructor(
     private modalService: ModalService,
-    private fb: UntypedFormBuilder,
-    private store: Store<UserAccount>
+    private fb: UntypedFormBuilder
   ) {}
 
   ngOnInit(): void {
@@ -59,12 +59,10 @@ export class ModalComponent implements OnInit, OnDestroy {
       this.submitFn = this.modal?.modalButtons.find(
         (button) => button.type === 'primary'
       )?.submitFn as PayloadFunction;
-
       
       const group = {} as UntypedFormGroup;
       
       modal?.fieldsets[0].inputs.forEach((input) => {
-        const group = {} as UntypedFormGroup;
         group[input.formControlName] = new UntypedFormControl(
           {
             value:
@@ -108,6 +106,9 @@ export class ModalComponent implements OnInit, OnDestroy {
           );
         });
       }
+
+      console.log('group', group);
+      
       this.form = this.fb.group(group);
 
       this.formSub = this.form.valueChanges.subscribe((changes) => {

@@ -73,7 +73,7 @@ export class ExpensesComponent implements OnInit {
             clickFn: (formValue) => {
               const { category } = formValue;
   
-              const categoryExists = this.account.categories.categories.find(exisitingCategory => exisitingCategory === category);
+              const categoryExists = this.account.categories.categories.find(existingCategory => existingCategory === category);
   
               if(categoryExists) {
                 this.errorService.error.next(new Error('A category with this name already exists. Please provide a unique name.'));
@@ -104,13 +104,14 @@ export class ExpensesComponent implements OnInit {
           type: 'primary',
           dataTest: 'modal-save-btn',
           submitFn: () => {
+            const uniqueCategories = new Set(this.account.categories.categories.map(category => category.toLowerCase()));
             this.store.select(selectUserId).subscribe((id) => {
               this.afStore
                 .collection('users')
                 .doc(id)
                 .collection('categories')
                 .doc(this.account.categories.id)
-                .update({ categories: this.account.categories.categories });
+                .update({ categories: uniqueCategories });
             });
             this.modalService.closeModal();
           },

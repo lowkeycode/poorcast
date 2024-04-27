@@ -19,30 +19,30 @@ export class UserAccountEffects {
   loadUserAccount$ = createEffect(() =>
     this.actions$.pipe(
       ofType(UserAccountActions.loadUserAccount),
-      switchMap(() => {
-        return this.store.select(selectUserId);
-      }),
-      switchMap((userId) =>
-        this.afs
-          .collection('users')
-          .doc(userId)
-          .collection('categories')
-          .valueChanges({ idField: 'id' })
-      ),
-      switchMap((categories) => {
-        if (!categories.length) {
-          return this.store.select(selectUserId).pipe(
-            switchMap((userId) => {
-              return this.afs
-                .collection('users')
-                .doc(userId)
-                .collection('categories')
-                .add({ categories: [] });
-            })
-          );
-        }
-        return of(null);
-      }),
+      // switchMap(() => {
+      //   return this.store.select(selectUserId);
+      // }),
+      // switchMap((userId) =>
+      //   this.afs
+      //     .collection('users')
+      //     .doc(userId)
+      //     .collection('categories')
+      //     .valueChanges({ idField: 'id' })
+      // ),
+      // switchMap((categories) => {
+      //   if (!categories.length) {
+      //     return this.store.select(selectUserId).pipe(
+      //       switchMap((userId) => {
+      //         return this.afs
+      //           .collection('users')
+      //           .doc(userId)
+      //           .collection('categories')
+      //           .add({ categories: [] });
+      //       })
+      //     );
+      //   }
+      //   return of(null);
+      // }),
       switchMap(() => {
         return this.store.select(selectUserId);
       }),
@@ -81,25 +81,9 @@ export class UserAccountEffects {
           return UserAccountActions.loadUserAccountError(response);
         }
 
-        // ! This is a fucking shit show. Clean this up.
-
-        console.log(response);
-
+        console.log('response', response);
         
         const [accounts, budgetPeriods, expenses, categories] = response;
-
-        // Need to do determine unique categories for category management on client side because we don't have an API to interact with our DB
-        const existingExpenseCategories = expenses.map(
-          (expense) => expense['category']
-        ) as string[];
-        const existingCategories = categories[0]['categories'] as string[];
-
-        let allUniqueCategories: string[] = [];
-        if(existingCategories.length) {
-          allUniqueCategories = Array.from(
-            new Set([...existingExpenseCategories, ...existingCategories].map(category => category.toLowerCase()))
-          ) as string[];
-        }
 
         let budgetPeriodKeys = [] as string[];
 
@@ -107,25 +91,17 @@ export class UserAccountEffects {
           budgetPeriodKeys = Object.keys(cloneDeep(budgetPeriods[0]));
         }
 
-        console.log('categories', categories);
-        
-        let categoryId = '';
-        if(categories[0]['id']) {
-          categoryId = categories[0]['id'];
-        }
-
         const userAccount = {
           accounts,
           budgetPeriods: budgetPeriods[0] || {},
           budgetPeriodKeys,
           expenses,
-          categories: { categories: allUniqueCategories, id: categoryId },
+          categories: categories[0] || {categories: []},
           status: 'success',
           error: null,
         };
 
-        console.log(userAccount);
-        
+        console.log('userAccount', userAccount);
 
         return UserAccountActions.loadUserAccountSuccess(
           userAccount as UserAccount
