@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { first, forkJoin, Subscription, switchMap } from 'rxjs';
+import { filter, first, forkJoin, Subscription, switchMap } from 'rxjs';
 import { ModalConfig } from 'src/app/models/interfaces';
 import { ModalService } from 'src/app/modules/shared/services/modal.service';
 import { updateCategories } from 'src/app/store/user-account/user-account.actions';
@@ -15,6 +15,8 @@ import {
   selectUserAccount,
 } from 'src/app/store/user-account/user-account.selectors';
 import { selectUserId } from 'src/app/store/user/user.selectors';
+import { Actions } from '@ngrx/effects';
+import * as UserAccountActions from '../../../../store/user-account/user-account.actions';
 
 @Component({
   selector: 'app-expenses',
@@ -24,7 +26,8 @@ import { selectUserId } from 'src/app/store/user/user.selectors';
 export class ExpensesComponent implements OnInit {
   isLoading = true;
   @Input() account: UserAccount;
-  
+
+  private currentCategories: string[];
   private manageCategoriesConfig: ModalConfig;
   private payExpenseModalConfig: ModalConfig;
 
@@ -32,24 +35,21 @@ export class ExpensesComponent implements OnInit {
     private modalService: ModalService,
     private store: Store<AppState>,
     private afStore: AngularFirestore,
-    private errorService: ErrorService
+    private errorService: ErrorService,
   ) {}
 
   ngOnInit(): void {
+    this.currentCategories = [...this.account.categories.categories];
     this.manageCategoriesConfig = {
       title: 'Categories',
       contentList: {},
       contentListActions: {
         delete: (item) => {
-          const newList = this.account.categories.categories.filter(
+          this.currentCategories = this.currentCategories.filter(
             (listItem) => listItem !== item
           );
-          const updatedCategories = {
-            id: this.account.categories.id,
-            categories: [...newList],
-          };
-          this.store.dispatch(updateCategories(updatedCategories));
-          this.manageCategoriesConfig.contentList = this.account.categories.categories;
+          
+          this.manageCategoriesConfig.contentList = this.currentCategories;
           this.modalService.updateModal(this.manageCategoriesConfig);
         },
       },
@@ -73,20 +73,16 @@ export class ExpensesComponent implements OnInit {
             clickFn: (formValue) => {
               const { category } = formValue;
   
-              const categoryExists = this.account.categories.categories.find(existingCategory => existingCategory === category);
+              const categoryExists = this.account.categories.categories.find(existingCategory => existingCategory.trim().toLowerCase() === category.trim().toLowerCase());
   
               if(categoryExists) {
                 this.errorService.error.next(new Error('A category with this name already exists. Please provide a unique name.'));
                 this.modalService.closeModal();
               }
-  
-              this.store.dispatch(
-                updateCategories({
-                  id: this.account.categories.id,
-                  categories: [...this.account.categories.categories, category],
-                })
-              );
-              this.manageCategoriesConfig.contentList = this.account.categories.categories;
+
+              this.currentCategories = [...this.currentCategories, category]
+
+              this.manageCategoriesConfig.contentList = this.currentCategories;
               this.modalService.updateModal(this.manageCategoriesConfig);
             },
           },
@@ -104,15 +100,26 @@ export class ExpensesComponent implements OnInit {
           type: 'primary',
           dataTest: 'modal-save-btn',
           submitFn: () => {
-            const uniqueCategories = new Set(this.account.categories.categories.map(category => category.toLowerCase()));
-            this.store.select(selectUserId).subscribe((id) => {
-              this.afStore
-                .collection('users')
-                .doc(id)
-                .collection('categories')
-                .doc(this.account.categories.id)
-                .update({ categories: uniqueCategories });
-            });
+
+            if(!this.account.categories.categories.length) {
+              this.store.select(selectUserId).subscribe((id) => {
+                this.afStore
+                  .collection('users')
+                  .doc(id)
+                  .collection('categories')
+                  .add({ categories: this.currentCategories });
+              });
+            } else {
+              this.store.select(selectUserId).subscribe((id) => {
+                this.afStore
+                  .collection('users')
+                  .doc(id)
+                  .collection('categories')
+                  .doc(this.account.categories.id)
+                  .update({ categories: this.currentCategories });
+              });
+            }
+            
             this.modalService.closeModal();
           },
         },
@@ -279,7 +286,7 @@ export class ExpensesComponent implements OnInit {
               type: 'text',
               placeholder: '$0.00',
               hidden: false,
-              validators: [Validators.required],
+              validators: [],
               dataTest: 'remaining-input',
             },
             {
