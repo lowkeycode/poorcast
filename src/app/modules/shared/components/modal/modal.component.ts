@@ -5,7 +5,6 @@ import {
   OnInit,
   ViewChildren,
   QueryList,
-  ChangeDetectorRef,
 } from '@angular/core';
 import {
   UntypedFormBuilder,
@@ -16,10 +15,8 @@ import { Observable, Subscription } from 'rxjs';
 import { ModalConfig, PayloadFunction } from 'src/app/models/interfaces';
 import { TextInputComponent } from '../forms/text-input/text-input.component';
 import { SelectInputComponent } from '../forms/select-input/select-input.component';
-import { Store } from '@ngrx/store';
 import {
   AcctType,
-  UserAccount,
 } from 'src/app/store/user-account/user-account.reducers';
 import { TransactionType } from 'src/app/modules/pages/budget/budget-accts/budget-accts.component';
 
@@ -106,8 +103,6 @@ export class ModalComponent implements OnInit, OnDestroy {
           );
         });
       }
-
-      console.log('group', group);
       
       this.form = this.fb.group(group);
 

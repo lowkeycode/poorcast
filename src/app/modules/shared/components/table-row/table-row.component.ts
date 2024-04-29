@@ -95,8 +95,8 @@ export class TableRowComponent {
               formControlName: 'category',
               label: 'Category',
               type: 'select',
-              hidden: false,
-              validators: [Validators.required],
+              hidden: !this.selectOptions['categories'].length,
+              validators: [],
               options: this.selectOptions ? this.selectOptions['categories'] : [],
             },
           ],
@@ -116,6 +116,12 @@ export class TableRowComponent {
           type: 'primary',
           dataTest: 'modal-save-btn',
           submitFn: (payload) => {
+            console.log(payload);
+
+            for(const key in payload) {
+              if(payload[key] === undefined) delete payload[key];
+            }
+            
             const formattedPayload = {
               ...payload,
               amount: Number(payload.amount),

@@ -27,6 +27,6 @@
     [listItems]="account.expenses"
     [isEditable]="true"
     [collectionName]="'expenses'"
-    [selectOptions]="{ categories: account.categories.categories }"
+    [selectOptions]="{ categories: currentCategories }"
   ></app-table>
 </div>

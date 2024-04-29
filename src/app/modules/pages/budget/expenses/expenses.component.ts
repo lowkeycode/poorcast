@@ -3,10 +3,9 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { filter, first, forkJoin, Subscription, switchMap } from 'rxjs';
+import { first, forkJoin, switchMap } from 'rxjs';
 import { ModalConfig } from 'src/app/models/interfaces';
 import { ModalService } from 'src/app/modules/shared/services/modal.service';
-import { updateCategories } from 'src/app/store/user-account/user-account.actions';
 import {
   UserAccount,
 } from 'src/app/store/user-account/user-account.reducers';
@@ -15,8 +14,6 @@ import {
   selectUserAccount,
 } from 'src/app/store/user-account/user-account.selectors';
 import { selectUserId } from 'src/app/store/user/user.selectors';
-import { Actions } from '@ngrx/effects';
-import * as UserAccountActions from '../../../../store/user-account/user-account.actions';
 
 @Component({
   selector: 'app-expenses',
@@ -27,7 +24,7 @@ export class ExpensesComponent implements OnInit {
   isLoading = true;
   @Input() account: UserAccount;
 
-  private currentCategories: string[];
+  currentCategories: string[];
   private manageCategoriesConfig: ModalConfig;
   private payExpenseModalConfig: ModalConfig;
 
@@ -73,11 +70,10 @@ export class ExpensesComponent implements OnInit {
             clickFn: (formValue) => {
               const { category } = formValue;
   
-              const categoryExists = this.account.categories.categories.find(existingCategory => existingCategory.trim().toLowerCase() === category.trim().toLowerCase());
+              const categoryExists = this.currentCategories.find(existingCategory => existingCategory.trim().toLowerCase() === category.trim().toLowerCase());
   
               if(categoryExists) {
-                this.errorService.error.next(new Error('A category with this name already exists. Please provide a unique name.'));
-                this.modalService.closeModal();
+                return this.errorService.error.next(new Error('A category with this name already exists. Please provide a unique name.'));
               }
 
               this.currentCategories = [...this.currentCategories, category]
@@ -101,22 +97,36 @@ export class ExpensesComponent implements OnInit {
           dataTest: 'modal-save-btn',
           submitFn: () => {
 
-            if(!this.account.categories.categories.length) {
+            if(!this.account.categories.id) {
               this.store.select(selectUserId).subscribe((id) => {
+                console.log(this.currentCategories )
                 this.afStore
                   .collection('users')
                   .doc(id)
                   .collection('categories')
-                  .add({ categories: this.currentCategories });
+                  .add({ categories: this.currentCategories })
+                  .then(() => {
+                    
+                    this.currentCategories = this.account.categories.categories
+                    console.log(this.currentCategories);
+                    
+                  });
               });
             } else {
               this.store.select(selectUserId).subscribe((id) => {
+                console.log(this.currentCategories )
                 this.afStore
                   .collection('users')
                   .doc(id)
                   .collection('categories')
                   .doc(this.account.categories.id)
-                  .update({ categories: this.currentCategories });
+                  .update({ categories: this.currentCategories })
+                  .then(() => {
+                    
+                    this.currentCategories = this.account.categories.categories
+                    console.log(this.currentCategories);
+                    
+                  });
               });
             }
             

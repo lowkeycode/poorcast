@@ -32,6 +32,8 @@ export class BudgetComponent implements OnInit, OnDestroy {
       .subscribe((account) => {
         if (account.status === 'success') {
           this.account = account;
+          console.log(this.account.categories);
+          
           this.loadingService.isLoading.next(false);
         }
       });

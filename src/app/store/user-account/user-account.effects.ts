@@ -59,6 +59,9 @@ export class UserAccountEffects {
 
         const [accounts, budgetPeriods, expenses, categories] = response;
 
+        console.log('response', response);
+        
+
         let budgetPeriodKeys = [] as string[];
 
         if (budgetPeriods[0]) {
