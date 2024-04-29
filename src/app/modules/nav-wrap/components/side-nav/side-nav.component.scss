@@ -1,3 +1,5 @@
+@import '../../../../../styles.scss';
+
 app-solo-icon {
   align-self: end;
   transition: all .2s;
@@ -35,6 +37,8 @@ app-logo {
     & app-side-nav-icon {
       display: flex;
       align-items: center;
+      gap: var(--space-xs);
+      padding: 0 var(--space-xs-2);
     }
   }
 
@@ -57,4 +61,32 @@ app-user-profile {
   margin-top: auto;
 }
 
+.justify-center {
+  justify-content: center !important;
+}
+
+@media only screen and (max-width: $bp-med) {
+  [data-test="open-close"] {
+    display: none;
+  }
+
+  app-logo {
+    margin: 0;
+  }
+
+  .icons {
+    height: 100%;
+    flex-direction: row;
+    justify-content: center;
+
+    & a {
+      padding: var(--space-xs-2);
+      font-size: 14px;
+      & app-side-nav-icon {
+        flex-direction: column;
+        gap: 0;
+      }
+    }
+  }
+}
 

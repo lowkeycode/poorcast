@@ -58,7 +58,9 @@
 
 // Breakpoints
 $bp-xxl: 75em; /* 1200px */
-$bp-xl: 56.25em; /* 900px */
+$bp-xl: 64em; /* 1024px */
+$bp-lrg: 56.25em; /* 900px */
+$bp-med: 48em;
 
 *,
 *::before,
@@ -74,8 +76,6 @@ html {
   font-family: "Poppins", sans-serif;
   color: var(--black);
 }
-
-
 
 h1 {
   margin: 0;
@@ -102,6 +102,11 @@ app-loading {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+button:disabled {
+  filter: grayscale(50%) !important;
+  cursor: not-allowed !important;
 }
 
 // Forms
@@ -340,4 +345,18 @@ button:active {
   background: linear-gradient(122deg, var(--grey-dark) 62%, var(--primary-light) 62%);
   border-radius: var(--br-sml);
   box-shadow: var(--bs-secondary);
+}
+
+
+@media only screen and (max-width: $bp-xl) {
+  html {
+    font-size: 100%;
+  }
+}
+
+@media only screen and (max-width: $bp-med) {
+  :host ::ng-deep .btn {
+    font-size: var(--fs-xs-1);
+    padding: 5px 10px;
+  }
 }

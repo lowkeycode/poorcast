@@ -1,5 +1,8 @@
+@import '../../../../../styles.scss';
+
 .row-copy {
-  padding-right: 5px;
+  overflow-wrap: break-word;
+  hyphens: manual;
 }
 
 .row-name {
@@ -28,7 +31,7 @@
 
 .btns {
   display: flex;
-  padding: 0 var(--space-xs-3);
+  gap: var(--space-xs-4);
 
   & > *:first-of-type {
     margin-right: 2px;
@@ -46,5 +49,33 @@
 
   & > *:active {
     transform: translateY(0px);
+  }
+}
+
+.row-copy,
+.btns {
+  padding: var(--space-xs-3);
+}
+
+@media only screen and (max-width: $bp-lrg) {
+  .row-copy {
+    font-size: var(--fs-xs-1);
+  }
+
+  .row-due,
+  .row-notes {
+    font-size: var(--fs-xs-2);
+  }
+}
+
+@media only screen and (max-width: $bp-med) {
+  .btns {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .category {
+    font-size: var(--fs-xs-2);
+    overflow: hidden;
   }
 }

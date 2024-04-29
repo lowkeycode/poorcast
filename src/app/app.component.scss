@@ -12,8 +12,14 @@
   position: relative;
 }
 
-@media only screen and (max-width: $bp-xl) {
+@media only screen and (max-width: $bp-lrg) {
   :host ::ng-deep app-sign-in-page {
     height: min-content;
+  }
+}
+
+@media only screen and (max-width: $bp-med) {
+  :host ::ng-deep app-nav-wrap {
+    display: block;
   }
 }

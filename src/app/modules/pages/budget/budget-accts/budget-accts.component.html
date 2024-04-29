@@ -1,6 +1,6 @@
 <div class="accts">
   <div class="accts__btns">
-    <button class="btn btn-primary" data-test="transactions-btn" type="button" (click)="onTransactions()">Transactions</button>
+    <button class="btn btn-primary" data-test="transactions-btn" type="button" (click)="onTransactions()" [disabled]="!account.accounts.length">Transactions</button>
     <button class="btn btn-primary" data-test="add-acct-btn" type="button" (click)="onAddAccount()">Add Account</button>
   </div>
   <div class="accts__cards">

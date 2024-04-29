@@ -14,9 +14,10 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 })
 export class AcctCardComponent implements OnInit {
   @Input() isBudgetCard = false;
-  @Input() account: Account;
+  @Input() account: Account = {} as Account;
   @Input() index: number;
   @Input() selectOptions: { [key: string]: string[] };
+  remaining: number;
   private editAcctModalConfig: ModalConfig;
   private userId: string;
 
@@ -27,6 +28,7 @@ export class AcctCardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.remaining = this.account.acctLimit ? this.account.acctLimit - this.account.acctBalance : this.account.acctBalance;
     this.store.select(selectUserId).subscribe((id) => (this.userId = id));
 
     this.editAcctModalConfig = {

@@ -4,6 +4,7 @@
       class="btn btn-primary"
       data-test="pay-expense-btn"
       (click)="onPayExpense()"
+      [disabled]="!account.accounts.length"
     >
       Pay Expense
     </button>
@@ -26,6 +27,6 @@
     [listItems]="account.expenses"
     [isEditable]="true"
     [collectionName]="'expenses'"
-    [selectOptions]="{ categories: account.categories.categories }"
+    [selectOptions]="{ categories: currentCategories }"
   ></app-table>
 </div>

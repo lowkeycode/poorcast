@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import * as UserAccountActions from './user-account.actions';
-import { catchError, combineLatest, distinctUntilChanged, first, from, map, of, switchMap } from 'rxjs';
+import { catchError, combineLatest, map, of, switchMap } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { selectUserId } from '../user/user.selectors';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
@@ -19,30 +19,6 @@ export class UserAccountEffects {
   loadUserAccount$ = createEffect(() =>
     this.actions$.pipe(
       ofType(UserAccountActions.loadUserAccount),
-      switchMap(() => {
-        return this.store.select(selectUserId);
-      }),
-      switchMap((userId) =>
-        this.afs
-          .collection('users')
-          .doc(userId)
-          .collection('categories')
-          .valueChanges({ idField: 'id' })
-      ),
-      switchMap((categories) => {
-        if (!categories.length) {
-          return this.store.select(selectUserId).pipe(
-            switchMap((userId) => {
-              return this.afs
-                .collection('users')
-                .doc(userId)
-                .collection('categories')
-                .add({ categories: [] });
-            })
-          );
-        }
-        return of(null);
-      }),
       switchMap(() => {
         return this.store.select(selectUserId);
       }),
@@ -83,24 +59,18 @@ export class UserAccountEffects {
 
         const [accounts, budgetPeriods, expenses, categories] = response;
 
-        // Need to do determine unique categories for category management on client side because we don't have an API to interact with our DB
-        const existingExpenseCategories = expenses.map(
-          (expense) => expense['category']
-        );
-        const existingCategories = categories[0]['categories'];
+        let budgetPeriodKeys = [] as string[];
 
-        const allUniqueCategories = Array.from(
-          new Set([...existingExpenseCategories, ...existingCategories].map(category => category.toLowerCase()))
-        );
-
-        const budgetPeriodKeys = Object.keys(cloneDeep(budgetPeriods[0]));
+        if (budgetPeriods[0]) {
+          budgetPeriodKeys = Object.keys(cloneDeep(budgetPeriods[0]));
+        }
 
         const userAccount = {
           accounts,
-          budgetPeriods: budgetPeriods[0],
+          budgetPeriods: budgetPeriods[0] || {},
           budgetPeriodKeys,
           expenses,
-          categories: { categories: allUniqueCategories },
+          categories: categories[0] || { categories: [] },
           status: 'success',
           error: null,
         };

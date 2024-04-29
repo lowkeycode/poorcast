@@ -1,3 +1,5 @@
+@import '../../../../../styles.scss';
+
 .overlay {
   z-index: 1;
   position: fixed;
@@ -131,14 +133,25 @@
     & > button:not(:last-of-type) {
       margin-right: var(--space-xs-2);
     }
-
-    & button:disabled {
-      filter: grayscale(50%);
-      cursor: not-allowed;
-    }
   }
 }
 
 app-fieldset {
   width: 30%;
+}
+
+@media only screen and (max-width: $bp-med) {
+  app-fieldset {
+    width: 80%;
+  }
+
+  .modal__main {
+    &--fieldsets {
+      gap: var(--space-xs);
+    }
+
+    &--icon {
+      display: none;
+    }
+  }
 }

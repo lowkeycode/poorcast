@@ -17,11 +17,27 @@ import { Validators } from '@angular/forms';
   providers: [FormatDatePipe],
 })
 export class TableRowComponent {
+  private _selectOptions: {[key: string]: string[]};
+
+  @Input() set selectOptions(selectOptions: { [key: string]: string[] }) {
+    this._selectOptions = selectOptions;
+    if('categories' in this._selectOptions) {
+      this.isCategoriesHidden = !this._selectOptions['categories'].length
+      this.categories = this._selectOptions['categories'];
+    }
+    this.updateEditExpenseConfig();
+  };
+
+  get selectOptions() {
+    return this.selectOptions
+  }
+
   @Input() item: any;
   @Input() index: number;
   @Input() isEditable: boolean;
   @Input() collectionName: string;
-  @Input() selectOptions: { [key: string]: string[] };
+  private categories: string[];
+  private isCategoriesHidden: boolean = true;
   private subscriptions = new Subscription();
   private userId: string;
 
@@ -40,6 +56,14 @@ export class TableRowComponent {
       .subscribe((uid) => (this.userId = uid));
     this.subscriptions.add(userIdSub);
 
+    this.updateEditExpenseConfig();
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
+  }
+
+  updateEditExpenseConfig() {
     this.editExpenseModalConfig = {
       title: 'Edit Expense',
       contentList: [],
@@ -95,9 +119,9 @@ export class TableRowComponent {
               formControlName: 'category',
               label: 'Category',
               type: 'select',
-              hidden: false,
-              validators: [Validators.required],
-              options: this.selectOptions ? this.selectOptions['categories'] : [],
+              hidden: this.isCategoriesHidden,
+              validators: [],
+              options: this.categories,
             },
           ],
         },
@@ -116,6 +140,10 @@ export class TableRowComponent {
           type: 'primary',
           dataTest: 'modal-save-btn',
           submitFn: (payload) => {
+            for(const key in payload) {
+              if(payload[key] === undefined) delete payload[key];
+            }
+            
             const formattedPayload = {
               ...payload,
               amount: Number(payload.amount),
@@ -134,10 +162,6 @@ export class TableRowComponent {
         },
       ],
     };
-  }
-
-  ngOnDestroy() {
-    this.subscriptions.unsubscribe();
   }
 
   onEditExpense(item: any) {

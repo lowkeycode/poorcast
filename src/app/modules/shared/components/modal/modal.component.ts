@@ -15,10 +15,8 @@ import { Observable, Subscription } from 'rxjs';
 import { ModalConfig, PayloadFunction } from 'src/app/models/interfaces';
 import { TextInputComponent } from '../forms/text-input/text-input.component';
 import { SelectInputComponent } from '../forms/select-input/select-input.component';
-import { Store } from '@ngrx/store';
 import {
   AcctType,
-  UserAccount,
 } from 'src/app/store/user-account/user-account.reducers';
 import { TransactionType } from 'src/app/modules/pages/budget/budget-accts/budget-accts.component';
 
@@ -32,10 +30,12 @@ export class ModalComponent implements OnInit, OnDestroy {
   genericInputs: QueryList<TextInputComponent>;
   @ViewChildren(SelectInputComponent)
   selectInputs: QueryList<SelectInputComponent>;
+
   modal$: Observable<ModalConfig | null>;
   form!: UntypedFormGroup;
   formSub: Subscription;
   contentList: string[];
+
   private modal: ModalConfig | null;
   private submitFn: PayloadFunction;
   private subs = new Subscription();
@@ -44,8 +44,7 @@ export class ModalComponent implements OnInit, OnDestroy {
 
   constructor(
     private modalService: ModalService,
-    private fb: UntypedFormBuilder,
-    private store: Store<UserAccount>
+    private fb: UntypedFormBuilder
   ) {}
 
   ngOnInit(): void {
@@ -57,9 +56,9 @@ export class ModalComponent implements OnInit, OnDestroy {
       this.submitFn = this.modal?.modalButtons.find(
         (button) => button.type === 'primary'
       )?.submitFn as PayloadFunction;
-
+      
       const group = {} as UntypedFormGroup;
-
+      
       modal?.fieldsets[0].inputs.forEach((input) => {
         group[input.formControlName] = new UntypedFormControl(
           {
@@ -104,6 +103,7 @@ export class ModalComponent implements OnInit, OnDestroy {
           );
         });
       }
+      
       this.form = this.fb.group(group);
 
       this.formSub = this.form.valueChanges.subscribe((changes) => {

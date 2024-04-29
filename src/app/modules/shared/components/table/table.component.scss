@@ -1,3 +1,5 @@
+@import '../../../../../styles.scss';
+
 .table {
   min-height: 100%;
   width: 100%;
@@ -8,7 +10,7 @@
 
   & > * {
     display: grid;
-    grid-template-columns: repeat(4, 1fr) 2fr 1fr 60px;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) minmax(0, 2fr) minmax(0, 1fr) 3rem;
     align-items: center;
     padding: 0 var(--space-xs);
     border-bottom: 1px solid var(--grey-light);
@@ -24,6 +26,10 @@
     height: 2.5rem;
     color: var(--white-light);
     font-weight: 300;
+
+    & > * {
+      padding: var(--space-xs-3);
+    }
   }
 
   & > app-table-row:last-of-type  {
@@ -37,6 +43,24 @@
 
   & > app-table-row:nth-of-type(even) {
     background: #f2f2f2;
+  }
+  
+}
+
+@media only screen and (max-width: $bp-xl) {
+  .table {
+    &__header {
+      overflow-wrap: break-word;
+    }
+  }
+  
+}
+
+@media only screen and (max-width: $bp-lrg) {
+  .table {
+    &__header {
+      font-size: var(--fs-xs-1);
+    }
   }
   
 }
