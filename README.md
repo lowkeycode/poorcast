@@ -20,8 +20,6 @@ This included:
 
 ![Sign in page](/src/assets/sign-in.png)
 
-![Sign in page](/src/assets/budget.png)
-
 ## Getting Started
 
 ### Installing
