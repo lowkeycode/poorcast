@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
@@ -36,13 +43,23 @@ export interface Transfer {
   styleUrls: ['./budget-accts.component.scss'],
 })
 export class BudgetAcctsComponent implements OnInit, OnDestroy {
-  @Input() account: UserAccount;
+  @Input() set account(account: UserAccount) {
+    this._account = account;
+    this.updateConfigsOnInput();
+  }
+
+  get account() {
+    return this._account;
+  }
+
   acctTypes = ['chequings', 'credit', 'savings', 'rrsp', 'loan'].map(
     (acctType) => {
       if (acctType === 'rrsp') return acctType.toUpperCase();
       return acctType[0].toUpperCase() + acctType.slice(1);
     }
   );
+
+  private _account: UserAccount;
   private subscriptions = new Subscription();
   private depositModalConfig: ModalConfig;
   private transferModalConfig: ModalConfig;
@@ -57,7 +74,14 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    console.log('this.account', this.account)
+    this.updateConfigsOnInput();
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
+  }
+
+  updateConfigsOnInput() {
     this.depositModalConfig = {
       title: 'Transactions',
       contentList: [],
@@ -118,17 +142,23 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
                     (acct) => acct.acctName === payload.acctName
                   ) as Account;
 
-                  if(acctToUpdate.acctType === 'credit' || acctToUpdate.acctType === 'loan') {
-                    if(acctToUpdate.acctBalance - amount < 0) {
-                      this.errorService.error.next(new Error('Cannot deposit over the account limit on loan or credit accounts.'));
-                      return of(null);
-                    }
+                  if (
+                    acctToUpdate?.acctLimit &&
+                    acctToUpdate.acctBalance - amount < 0
+                  ) {
+                    this.errorService.error.next(
+                      new Error(
+                        'Cannot deposit over the account limit on loan or credit accounts.'
+                      )
+                    );
+                    return of(null);
                   }
 
                   const updatedAccount: Account = {
                     ...acctToUpdate,
-                    acctBalance:
-                      acctToUpdate.acctBalance + amount,
+                    acctBalance: acctToUpdate.acctLimit
+                      ? acctToUpdate.acctBalance - amount
+                      : acctToUpdate.acctBalance + amount,
                   };
 
                   return this.store.select(selectUserId).pipe(
@@ -229,37 +259,58 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
                     (acct) => acct.acctName === payload.fromAcct
                   ) as Account;
 
-                  if(fromAcct.acctName === toAcct.acctName) {
-                    this.errorService.error.next(new Error('Cannot transfer to the same account.'))
-                    return of('null')
+                  if (fromAcct.acctName === toAcct.acctName) {
+                    this.errorService.error.next(
+                      new Error('Cannot transfer to the same account.')
+                    );
+                    return of('null');
                   }
 
-                  if(fromAcct.acctBalance - amount < 0) {
-                    this.errorService.error.next(new Error('Cannot overdraw on the account transferring from.'))
-                    return of(null)
+                  if (
+                    fromAcct?.acctLimit &&
+                    fromAcct.acctLimit + amount > fromAcct.acctLimit
+                  ) {
+                    this.errorService.error.next(
+                      new Error(
+                        'Cannot overdraw on the account transferring from.'
+                      )
+                    );
+                    return of(null);
                   }
 
-                  if(toAcct?.acctLimit) {
-                    if(toAcct.acctBalance + amount > toAcct.acctLimit) {
-                      
-                      this.errorService.error.next(new Error('Cannot transfer to an account with an amount that will be over the limit on loan or credit accounts.'));
-                      return of(null);
-                    }
+                  if (fromAcct.acctBalance - amount < 0) {
+                    this.errorService.error.next(
+                      new Error(
+                        'Cannot overdraw on the account transferring from.'
+                      )
+                    );
+                    return of(null);
                   }
 
+                  if (
+                    toAcct?.acctLimit &&
+                    toAcct.acctBalance + amount > toAcct.acctLimit
+                  ) {
+                    this.errorService.error.next(
+                      new Error(
+                        'Cannot transfer to an account with an amount that will be over the limit on loan or credit accounts.'
+                      )
+                    );
+                    return of(null);
+                  }
 
                   const updatedFromAcct: Account = {
                     ...fromAcct,
-                    acctBalance:
-                      fromAcct.acctBalance - amount,
+                    acctBalance: fromAcct.acctLimit
+                      ? fromAcct.acctBalance + amount
+                      : fromAcct.acctBalance - amount,
                   };
                   const updatedToAcct: Account = {
                     ...toAcct,
-                    acctBalance:
-                      toAcct.acctBalance + amount,
+                    acctBalance: toAcct.acctLimit
+                      ? toAcct.acctBalance - amount
+                      : toAcct.acctBalance + amount,
                   };
-
-
 
                   return this.store.select(selectUserId).pipe(
                     switchMap((id) => {
@@ -347,15 +398,28 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
                     (acct) => acct.acctName === payload.acctName
                   ) as Account;
 
-                  if(acctToUpdate.acctBalance - amount < 0) {
-                    this.errorService.error.next(new Error('Cannot overdraw on the account.'))
+                  if (
+                    acctToUpdate?.acctLimit &&
+                    acctToUpdate.acctLimit + amount > acctToUpdate.acctLimit
+                  ) {
+                    this.errorService.error.next(
+                      new Error('Cannot overdraw on the account.')
+                    );
+                    return of(null);
+                  }
+
+                  if (acctToUpdate.acctBalance - amount < 0) {
+                    this.errorService.error.next(
+                      new Error('Cannot overdraw on the account.')
+                    );
                     return of(null);
                   }
 
                   const updatedAccount: Account = {
                     ...acctToUpdate,
-                    acctBalance:
-                      acctToUpdate.acctBalance - Number(payload.amount),
+                    acctBalance: acctToUpdate.acctLimit
+                      ? acctToUpdate.acctBalance + Number(payload.amount)
+                      : acctToUpdate.acctBalance - Number(payload.amount),
                   };
 
                   return this.store.select(selectUserId).pipe(
@@ -401,7 +465,7 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
               onInputChange: (val: AcctType) =>
                 this.onAddAccountTypeChange(val),
               validators: [Validators.required],
-              defaultValue: 'Chequings'
+              defaultValue: 'Chequings',
             },
             {
               formControlName: 'acctBalance',
@@ -436,22 +500,34 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
               acctType: payload.acctType.toLowerCase() as AcctType,
             };
 
-            const accountNameExists = this.account.accounts.find(acct => acct.acctName === payload.acctName);
+            const accountNameExists = this.account.accounts.find(
+              (acct) => acct.acctName === payload.acctName
+            );
 
-            if(accountNameExists) {
-              this.errorService.error.next(new Error('An account with this name already exists. Please provide a unique name.'));
+            if (accountNameExists) {
+              this.errorService.error.next(
+                new Error(
+                  'An account with this name already exists. Please provide a unique name.'
+                )
+              );
               this.modalService.closeModal();
             }
 
-            if('acctLimit' in payload) {
+            if ('acctLimit' in payload) {
               const acctLimit = payload.acctLimit;
-              if(acctLimit <= 0) {
-                this.errorService.error.next(new Error('Account limit must be greater than 0.'));
+              if (acctLimit <= 0) {
+                this.errorService.error.next(
+                  new Error('Account limit must be greater than 0.')
+                );
                 this.modalService.closeModal();
               }
 
-              if(acctBalance > acctLimit) {
-                this.errorService.error.next(new Error('Account balance cannot be greater than the account limit.'))
+              if (acctBalance > acctLimit) {
+                this.errorService.error.next(
+                  new Error(
+                    'Account balance cannot be greater than the account limit.'
+                  )
+                );
                 this.modalService.closeModal();
               }
 
@@ -461,8 +537,10 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
               } as any;
             }
 
-            if(acctBalance < 0) {
-              this.errorService.error.next(new Error('Account balance cannot be less than 0.'))
+            if (acctBalance < 0) {
+              this.errorService.error.next(
+                new Error('Account balance cannot be less than 0.')
+              );
               this.modalService.closeModal();
             }
 
@@ -482,10 +560,6 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
         },
       ],
     };
-  }
-
-  ngOnDestroy(): void {
-    this.subscriptions.unsubscribe();
   }
 
   onAddAccount() {
@@ -510,8 +584,12 @@ export class BudgetAcctsComponent implements OnInit, OnDestroy {
   }
 
   onAddAccountTypeChange(acctType: AcctType) {
-    const acctTypeInput = this.addAcctModalConfig.fieldsets[0].inputs.find(input => input.formControlName === 'acctType');
-    if(acctTypeInput) acctTypeInput['defaultValue'] = acctType[0].toUpperCase() + acctType.slice(1);
+    const acctTypeInput = this.addAcctModalConfig.fieldsets[0].inputs.find(
+      (input) => input.formControlName === 'acctType'
+    );
+    if (acctTypeInput)
+      acctTypeInput['defaultValue'] =
+        acctType[0].toUpperCase() + acctType.slice(1);
 
     switch (acctType) {
       case 'credit':

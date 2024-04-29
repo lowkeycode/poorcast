@@ -17,10 +17,14 @@ import { Validators } from '@angular/forms';
   providers: [FormatDatePipe],
 })
 export class TableRowComponent {
-  private _selectOptions: {[key: string]: string[]} = {};
+  private _selectOptions: {[key: string]: string[]};
 
   @Input() set selectOptions(selectOptions: { [key: string]: string[] }) {
     this._selectOptions = selectOptions;
+    if('categories' in this._selectOptions) {
+      this.isCategoriesHidden = !this._selectOptions['categories'].length
+      this.categories = this._selectOptions['categories'];
+    }
     this.updateEditExpenseConfig();
   };
 
@@ -32,6 +36,8 @@ export class TableRowComponent {
   @Input() index: number;
   @Input() isEditable: boolean;
   @Input() collectionName: string;
+  private categories: string[];
+  private isCategoriesHidden: boolean = true;
   private subscriptions = new Subscription();
   private userId: string;
 
@@ -113,9 +119,9 @@ export class TableRowComponent {
               formControlName: 'category',
               label: 'Category',
               type: 'select',
-              hidden: 'categories' in this._selectOptions && !this._selectOptions['categories'].length,
+              hidden: this.isCategoriesHidden,
               validators: [],
-              options: 'categories' in this._selectOptions ? this._selectOptions['categories'] : [],
+              options: this.categories,
             },
           ],
         },
@@ -134,8 +140,6 @@ export class TableRowComponent {
           type: 'primary',
           dataTest: 'modal-save-btn',
           submitFn: (payload) => {
-            console.log(payload);
-
             for(const key in payload) {
               if(payload[key] === undefined) delete payload[key];
             }

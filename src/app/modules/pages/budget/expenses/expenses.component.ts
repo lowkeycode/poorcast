@@ -21,10 +21,19 @@ import { selectUserId } from 'src/app/store/user/user.selectors';
   styleUrls: ['./expenses.component.scss'],
 })
 export class ExpensesComponent implements OnInit {
-  isLoading = true;
-  @Input() account: UserAccount;
+  @Input() set account(account: UserAccount) {
+    this._account = account;
+    this.updatePayModalOnInput()
+  };
 
+  get account() {
+    return this._account;
+  }
+
+  isLoading = true;
   currentCategories: string[];
+
+  private _account: UserAccount;
   private manageCategoriesConfig: ModalConfig;
   private payExpenseModalConfig: ModalConfig;
 
@@ -99,22 +108,17 @@ export class ExpensesComponent implements OnInit {
 
             if(!this.account.categories.id) {
               this.store.select(selectUserId).subscribe((id) => {
-                console.log(this.currentCategories )
                 this.afStore
                   .collection('users')
                   .doc(id)
                   .collection('categories')
                   .add({ categories: this.currentCategories })
                   .then(() => {
-                    
                     this.currentCategories = this.account.categories.categories
-                    console.log(this.currentCategories);
-                    
                   });
               });
             } else {
               this.store.select(selectUserId).subscribe((id) => {
-                console.log(this.currentCategories )
                 this.afStore
                   .collection('users')
                   .doc(id)
@@ -122,10 +126,7 @@ export class ExpensesComponent implements OnInit {
                   .doc(this.account.categories.id)
                   .update({ categories: this.currentCategories })
                   .then(() => {
-                    
                     this.currentCategories = this.account.categories.categories
-                    console.log(this.currentCategories);
-                    
                   });
               });
             }
@@ -135,6 +136,10 @@ export class ExpensesComponent implements OnInit {
         },
       ],
     };
+    this.updatePayModalOnInput()
+  }
+
+  updatePayModalOnInput() {
     this.payExpenseModalConfig = {
       title: 'Pay Expense',
       contentList: [],
@@ -151,7 +156,7 @@ export class ExpensesComponent implements OnInit {
               label: 'Account',
               type: 'select',
               hidden: false,
-              options: this.account.accounts.map((acct) => acct.acctName),
+              options: this._account.accounts.map((acct) => acct.acctName),
               validators: [],
             },
             {
@@ -171,7 +176,7 @@ export class ExpensesComponent implements OnInit {
               label: 'Expense',
               type: 'select',
               hidden: false,
-              options: this.account.expenses
+              options: this._account.expenses
                 .filter((expense) => expense.remaining !== 0)
                 .map((expense) => expense.name),
               validators: [Validators.required],
