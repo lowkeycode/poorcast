@@ -17,11 +17,21 @@ import { Validators } from '@angular/forms';
   providers: [FormatDatePipe],
 })
 export class TableRowComponent {
+  private _selectOptions: {[key: string]: string[]} = {};
+
+  @Input() set selectOptions(selectOptions: { [key: string]: string[] }) {
+    this._selectOptions = selectOptions;
+    this.updateEditExpenseConfig();
+  };
+
+  get selectOptions() {
+    return this.selectOptions
+  }
+
   @Input() item: any;
   @Input() index: number;
   @Input() isEditable: boolean;
   @Input() collectionName: string;
-  @Input() selectOptions: { [key: string]: string[] };
   private subscriptions = new Subscription();
   private userId: string;
 
@@ -40,6 +50,14 @@ export class TableRowComponent {
       .subscribe((uid) => (this.userId = uid));
     this.subscriptions.add(userIdSub);
 
+    this.updateEditExpenseConfig();
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
+  }
+
+  updateEditExpenseConfig() {
     this.editExpenseModalConfig = {
       title: 'Edit Expense',
       contentList: [],
@@ -95,9 +113,9 @@ export class TableRowComponent {
               formControlName: 'category',
               label: 'Category',
               type: 'select',
-              hidden: !this.selectOptions['categories'].length,
+              hidden: 'categories' in this._selectOptions && !this._selectOptions['categories'].length,
               validators: [],
-              options: this.selectOptions ? this.selectOptions['categories'] : [],
+              options: 'categories' in this._selectOptions ? this._selectOptions['categories'] : [],
             },
           ],
         },
@@ -140,10 +158,6 @@ export class TableRowComponent {
         },
       ],
     };
-  }
-
-  ngOnDestroy() {
-    this.subscriptions.unsubscribe();
   }
 
   onEditExpense(item: any) {
