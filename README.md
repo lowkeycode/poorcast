@@ -4,7 +4,7 @@ A budget application allowing for adding, deleting, editing accounts and expense
 
 ## Description
 
-The project was built for a capstone project for [my portfolio](https://www.cameronremesz.com/). It was used to learn every step of the product development lifecycle from  initiation, planning, execution, monitoring & control, and closure.
+The project was built to learn every step of the product development lifecycle from  initiation, planning, execution, monitoring & control, and closure.
  
 This included:
 - Building user stories to determine features
