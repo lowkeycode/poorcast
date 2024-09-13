@@ -1,4 +1,4 @@
-# Poorcast - [View Live App](https://poorcast.netlify.app/)
+# Poorcast - <ins>[View Live App](https://poorcast.netlify.app/)</ins>
 
 A budget application allowing for adding, deleting, editing accounts and expenses along with an overview page providing a small analysis account/expense data.
 
